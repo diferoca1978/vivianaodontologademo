@@ -1,0 +1,78 @@
+---
+import { generateHomeSchemas, type JSONLDSchema } from "@/config/seo";
+import { LOCALE } from "@/config/companyInfo";
+import type { SEOProps } from "astro-seo";
+import { Font } from "astro:assets";
+import "@/styles/global.css";
+
+import SeoHead from "@/components/SeoHead.astro";
+import Navbar from "@/components/global/NavBar.astro";
+import Footer from "@/components/global/Footer.astro";
+
+interface Props {
+  seoProps: SEOProps;
+  schemas?: JSONLDSchema[];
+}
+
+const { seoProps, schemas = [] } = Astro.props;
+
+// A noindex page gets no JSON-LD at all. Otherwise: the page's own schemas, plus the
+// home schemas (the business, the WebSite and the founders) on '/' only.
+const allSchemas = seoProps.noindex
+  ? []
+  : [...schemas, ...(Astro.url.pathname === "/" ? generateHomeSchemas() : [])];
+---
+
+<!doctype html>
+<html lang={LOCALE} class="scrollbar-hide overflow-x-hidden">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- SEO Head -->
+    <SeoHead seoProps={seoProps} schemas={allSchemas} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- Fonts -->
+    <Font cssVariable="--font-jakarta" />
+    <Font cssVariable="--font-nunito" />
+
+    <!-- SiteMap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- llms.txt -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" />
+
+    <script>
+      import "@/utils/scripts/lennis.js";
+    </script>
+  </head>
+
+  <body>
+    <Navbar />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
