@@ -8,7 +8,7 @@
   "features": [
     {
       "id": "global-navbar",
-      "status": "pending",
+      "status": "done",
       "builders": [
         "front-end-astro"
       ],

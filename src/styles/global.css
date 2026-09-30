@@ -69,6 +69,7 @@
   /* Brand palette — docs/brief/brand.md § Paleta (from the logo) */
   --color-turquoise: oklch(0.6554 0.1111 190.19); /* Turquesa Principal: CTAs, links, icons, header accents */
   --color-turquoise-light: oklch(0.8967 0.056 197.59); /* Turquesa Claro: soft section backgrounds, hover, service cards */
+  --color-turquoise-dark: oklch(0.52 0.1055 190.19); /* Turquesa Oscuro: same hue, ≈4.9:1 on ivory and ≈5.2:1 with white text (passes WCAG AA) */
   --color-gray-neutral: oklch(0.6434 0 0); /* Gris Neutro: secondary text, supporting icons, dividers */
   --color-gray-light: oklch(0.8853 0 0); /* Gris Claro: alternate backgrounds, subtle borders */
   --color-ivory: oklch(0.9771 0.0074 80.72); /* Marfil: page background (instead of pure white) */
