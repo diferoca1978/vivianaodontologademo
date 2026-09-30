@@ -564,6 +564,11 @@ The skills inform technique; the harness owns placement and accessibility:
 
 - **Where**: all GSAP lives in `src/utils/scripts/animations/`, never inside
   components, never in a framework.
+  Organize it **by page**, one subfolder per route: `home/`,
+  `blanqueamiento-dental/`, `rehabilitacion-oral/`, `contacto/`; anything shared
+  across pages (navbar, footer, floating button) goes in `global/`. One file per
+  section, named after it (e.g. `home/hero.ts`), imported by that section's
+  component.
 - **Reduced motion is mandatory**: every timeline must be wrapped in
   `gsap.matchMedia()` with a `prefers-reduced-motion: reduce` branch that lands
   elements in their final, visible state (`autoAlpha: 1`). `gsap-core` documents

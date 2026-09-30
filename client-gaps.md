@@ -75,7 +75,7 @@ la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
 
 ### D4 — Contraste del turquesa (decidir antes de la primera sección)
 
-- [ ] Decidido: ___
+- [x] Decidido: (a) turquesa oscuro para texto y enlaces, token `--color-turquoise-dark` (`oklch(0.52 0.1055 190.19)`, ≈4.9:1 sobre marfil) en `global.css`. Decisión de la clienta (2026-09-30), reemplaza la opción (b) que se había elegido antes.
 - **Problema:** el turquesa sobre marfil da ≈2.8:1, así que falla WCAG incluso
   en texto grande. El gris neutro sobre marfil da ≈3.1:1, así que solo sirve
   para texto grande. Pero brand.md usa el turquesa para enlaces e íconos.
@@ -86,7 +86,7 @@ la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
   - (b) Enlaces en carbón con subrayado o acento turquesa. El turquesa queda
     para fondos de botón (con texto carbón, ≈5.7:1), íconos grandes y
     detalles decorativos.
-- En los botones turquesa el texto va en carbón, nunca en blanco (≈3.0:1).
+- En los botones con fondo `turquoise` el texto va en carbón, nunca en blanco (≈3.0:1). Con fondo `turquoise-dark` el texto blanco/marfil sí pasa (≈5.2:1).
 - **Afecta:** todas las secciones con enlaces o texto turquesa, empezando por
   `global-navbar`.
 
