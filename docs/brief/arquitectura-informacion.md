@@ -61,102 +61,21 @@ Diferenciador frente a la competencia: nadie ocupa el territorio "calma / bienes
 
 ## 5. Contenido por página
 
-### 6.1 Inicio (`/`)
+El texto literal de cada página y servicio (metas, H1, subtítulos, bloques, FAQ y CTA) está en [textos-sitio.md](./textos-sitio.md). Si este archivo y `textos-sitio.md` difieren, manda `textos-sitio.md`. Aquí solo va lo que ese archivo no trae: keywords e intención de búsqueda de cada página.
 
-- **Keyword principal:** odontóloga especialista en Bogotá / odontología sin dolor Bogotá
-- **Meta title:** Odontóloga en Bogotá — Especialista en Rehabilitación Oral
-- **Meta description:** Odontología de Calma Activa en Bogotá (Chicó). Rehabilitación oral, blanqueamiento y diseño de sonrisa con tecnología sin dolor. Agenda tu cita hoy.
-- **H1:** Odontóloga en Bogotá, especialista en Rehabilitación Oral
-- **Tagline (bajo el H1):** Odontología de Calma Activa: cuidamos tu sonrisa y tu tranquilidad
+| Página | Texto en | Keyword principal | Keywords secundarias | Intención |
+| --- | --- | --- | --- | --- |
+| Inicio `/` | `textos-sitio.md` §1 | odontóloga especialista en Bogotá / odontología sin dolor Bogotá | rehabilitación oral Bogotá, blanqueamiento dental Bogotá, diseño de sonrisa Bogotá | Navegacional + local + emocional |
+| Blanqueamiento Dental `/blanqueamiento-dental` | `textos-sitio.md` §2 | blanqueamiento dental Bogotá | aclaramiento dental Bogotá (solo como sinónimo en el texto), blanqueamiento dental precio Bogotá, blanqueamiento dental sin dolor | Transaccional |
+| Rehabilitación Oral `/rehabilitacion-oral` | `textos-sitio.md` §3 | rehabilitación oral Bogotá | especialista en rehabilitación oral Bogotá, qué es la rehabilitación oral, prótesis dental Bogotá | Transaccional + informacional |
+| Contacto `/contacto` | `textos-sitio.md` §4 | citas odontología Chicó Bogotá / contacto odontóloga Bogotá | — | Transaccional / navegacional |
 
-**Secciones, en orden:**
+**Reglas de contenido (aplican a todo el copy):**
 
-1. Hero: H1 + tagline + CTA "Agendar cita por WhatsApp" + foto del consultorio o de la Dra.
-2. Bienvenida breve: +12 años en odontología, especialista en Rehabilitación Oral desde 2019, atención personalizada en Chicó.
-3. "Odontología de Calma Activa": aromaterapia, música relajante, audífonos de cancelación de ruido, anestesia digital y escáner intraoral (responde al miedo al dolor).
-4. Servicios: tarjetas cortas con ancla propia; Blanqueamiento Dental y Rehabilitación Oral enlazan a su página.
-5. Sobre la Dra. Viviana: bio corta, foto profesional, reconocimiento a mejor trabajo de grado, filosofía de atención.
-6. Testimonios / reseñas reales (PENDIENTE contenido de la clienta).
-7. Ubicación: mapa embebido + dirección + zona.
-8. FAQ + CTA final.
-
-**FAQ:**
-
-- **¿Qué diferencia a la Dra. Viviana Rodríguez de otros consultorios en Bogotá?** Su enfoque de "Odontología de Calma Activa": aromaterapia, música relajante, audífonos de cancelación de ruido y anestesia digital para tratamientos sin dolor, combinados con escáner intraoral y más de 12 años de experiencia clínica.
-- **¿Atienden con EPS o seguros dentales?** No. El consultorio es de atención particular. Se aceptan pagos con tarjeta débito, crédito, datáfono o código QR, y existen planes de financiación por estos medios.
-- **¿Dónde queda el consultorio?** En la Carrera 15 # 104-30, Consultorio 302, zona de Chicó, al norte de Bogotá.
-- **¿Cómo agendo una cita?** Por WhatsApp al 302 544 5760, indicando el servicio de tu interés. También puedes escribir a vivianarodriguezod@gmail.com.
-
-### 6.2 Blanqueamiento Dental (`/blanqueamiento-dental`)
-
-- **Keyword principal:** blanqueamiento dental Bogotá
-- **Meta title:** Blanqueamiento Dental en Bogotá | Dra. Viviana Rodríguez
-- **Meta description:** Blanqueamiento dental profesional en Bogotá (Chicó), en un consultorio pensado para tu calma. Resultados visibles, sin dolor y con seguimiento personalizado.
-- **H1:** Blanqueamiento Dental en Bogotá
-- **H2:** Una sonrisa más blanca, sin ansiedad ni sorpresas
-
-**Secciones:**
-
-1. Respuesta directa (50-100 palabras): qué es el blanqueamiento/aclaramiento dental y por qué es de los tratamientos más solicitados.
-2. Beneficios: sonrisa más luminosa, mejora en la autoestima, procedimiento no invasivo.
-3. Cómo se hace en este consultorio: valoración inicial, tecnología, ambiente de calma (aromaterapia, música, audífonos), anestesia digital si hay sensibilidad.
-4. Cuidados antes y después.
-5. Enlace cruzado: "si además buscas corregir forma o alineación, conoce nuestro servicio de Rehabilitación Oral".
-6. FAQ + CTA "Agenda tu valoración".
-
-**FAQ:**
-
-- **¿Es doloroso el blanqueamiento dental?** En la mayoría de los casos no genera dolor; algunos pacientes sienten sensibilidad temporal, que se maneja con productos específicos y, si es necesario, con anestesia digital para mayor comodidad.
-- **¿Cuánto dura el efecto de un blanqueamiento dental?** El resultado suele mantenerse entre 1 y 3 años, dependiendo de hábitos como el consumo de café, vino o cigarrillo, y de los cuidados de higiene oral posteriores.
-- **¿Cuánto cuesta un blanqueamiento dental en Bogotá?** El valor varía según el tipo de blanqueamiento y el estado de tu esmalte. Lo definimos con precisión en tu valoración inicial, sin costos ocultos.
-- **¿Quiénes pueden hacerse un blanqueamiento dental?** La mayoría de personas con buena salud oral son candidatas. En la valoración se revisa el estado de encías y esmalte antes de recomendar el tratamiento más adecuado.
-
-### 6.3 Rehabilitación Oral (`/rehabilitacion-oral`)
-
-- **Keyword principal:** rehabilitación oral Bogotá
-- **Meta title:** Rehabilitación Oral en Bogotá | Especialista — Dra. Viviana
-- **Meta description:** Especialista en Rehabilitación Oral en Bogotá. Recupera función y estética dental con tecnología de punta, cero dolor y un enfoque cálido. Agenda tu cita.
-- **H1:** Rehabilitación Oral en Bogotá
-- **H2:** La especialidad de la Dra. Viviana Rodríguez
-
-**Secciones:**
-
-1. Respuesta directa (50-100 palabras): qué es la rehabilitación oral y para qué sirve.
-2. Cuándo se necesita: desgaste dental, pérdida de piezas, bruxismo, dolor articular, o recuperar función y estética a la vez.
-3. Tratamientos incluidos (enlazan a su tarjeta en Inicio): coronas en zirconio, incrustaciones dentales, prótesis removibles, placas de bruxismo, implantes.
-4. Por qué le apasiona esta especialidad: transformaciones que van más allá de lo estético (pendiente cita textual de la clienta).
-5. Su enfoque: especialista desde 2019, mejor trabajo de grado, escáner intraoral, ambiente de calma.
-6. Primera cita: qué esperar y cómo se hace el diagnóstico.
-7. FAQ + CTA "Agenda tu valoración".
-
-**FAQ:**
-
-- **¿Qué es la rehabilitación oral?** Es la especialidad odontológica que recupera la función, la estética y la salud de la boca cuando hay desgaste, pérdida de dientes o problemas articulares, combinando tratamientos como coronas, prótesis, implantes o placas de bruxismo según cada caso.
-- **¿Cuándo debo consultar a un especialista en rehabilitación oral?** Cuando notas desgaste dental, dolor en la mandíbula, pérdida de una o varias piezas, o cuando tu odontólogo general te refiere para un tratamiento más integral.
-- **¿Qué tratamientos incluye la rehabilitación oral?** Puede incluir coronas en zirconio, incrustaciones dentales, prótesis removibles, placas de bruxismo e implantes, combinados según el diagnóstico de cada paciente.
-- **¿Cuánto dura un tratamiento de rehabilitación oral?** Depende de la complejidad del caso: puede ir desde unas pocas semanas hasta varios meses. En la valoración inicial se define un plan de tiempos claro.
-
-### 6.4 Contacto (`/contacto`)
-
-- **Keyword principal:** citas odontología Chicó Bogotá / contacto odontóloga Bogotá
-- **Meta title:** Contacto y Citas | Dra. Viviana Rodríguez — Odontóloga Bogotá
-- **Meta description:** Agenda tu cita con la Dra. Viviana Rodríguez en Bogotá. WhatsApp, dirección, mapa y horarios de atención. Resolvemos tus dudas antes de tu primera visita.
-- **H1:** Agenda tu Cita — Consultorio en Bogotá (Chicó)
-
-**Secciones:**
-
-1. Botón principal de WhatsApp (302 544 5760) + correo.
-2. Dirección completa + mapa embebido.
-3. Horario de atención (PENDIENTE).
-4. Medios de pago aceptados (ver sección 1).
-5. Enlaces a Instagram y TikTok.
-6. Mini FAQ.
-
-**FAQ:**
-
-- **¿Cuáles son los horarios de atención?** PENDIENTE de confirmar con la Dra. Viviana.
-- **¿Aceptan tarjeta de crédito o débito?** Sí. El consultorio acepta pagos con datáfono (débito y crédito), llave o código QR. No se manejan convenios con EPS ni seguros dentales.
-- **¿Necesito una valoración antes de iniciar un tratamiento?** Sí, toda primera cita incluye una valoración para diagnosticar tu caso y definir contigo el plan de tratamiento y tiempos antes de iniciar cualquier procedimiento.
+- La respuesta directa a la pregunta principal va en los primeros 50-100 palabras de cada página de servicio.
+- Mencionar anestesia digital y ambiente de calma en cada página de servicio.
+- FAQ visible en la página, nunca oculta.
+- Las tarjetas de los 8 servicios sin página propia (ver sección 3) no tienen texto en `textos-sitio.md`: solo nombre. Su descripción de 1-2 líneas está PENDIENTE (ver sección 7).
 
 ## 6. Schema (JSON-LD)
 
@@ -171,5 +90,6 @@ Diferenciador frente a la competencia: nadie ocupa el territorio "calma / bienes
 Además de lo de [brand.md](./brand.md) (logo vectorial, fotos):
 
 - Horario de atención.
+- Descripción de 1-2 líneas para cada tarjeta de servicio de Inicio sin página propia (Odontología General, Odontología Estética, Implantes, Coronas en Zirconio, Incrustaciones Dentales, Placas de Bruxismo, Prótesis Removibles, Diseño de Sonrisa).
 - 3-5 testimonios reales de pacientes.
 - Cita textual sobre por qué le apasiona la Rehabilitación Oral (opcional).
