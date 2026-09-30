@@ -4,6 +4,482 @@
   "_builders": "subset of [front-end-astro, seo-guide-lines]. Sections -> front-end-astro; close each page with seo-guide-lines.",
   "_source": "REQUIRED. The brief section (or other approved document) this feature's content comes from, e.g. \"arquitectura-informacion.md §2.1\". No document → this isn't light-lane work, write a full spec with /spec instead.",
   "_acceptance": "REQUIRED. Boolean checklist derived from _source plus any CHECKPOINTS.md items that apply, e.g. [\"h1 matches the copy in §2.1\", \"CTA links to /contacto\"]. Verified for real by spec-verifier, same as a spec's Acceptance criteria.",
-  "client": null,
-  "features": []
+  "client": "Dra. Viviana Rodríguez — Odontóloga, especialista en Rehabilitación Oral (Bogotá)",
+  "features": [
+    {
+      "id": "global-navbar",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "Resolve D4 (turquoise contrast, client-gaps.md § Decisiones pendientes) before building: it applies to every section with links or turquoise text. Replaces the scaffold stub in src/components/global/NavBar.astro. Logos: src/assets/images/logonobg.png / logobgwhite.png (brand.md § Activos).",
+      "source": "arquitectura-informacion.md §3 Navegación (Header)",
+      "acceptance": [
+        "Header links, in this order, rendered from MainNavigation in src/utils/navigation.ts: Inicio (/), Blanqueamiento Dental (/blanqueamiento-dental/), Rehabilitación Oral (/rehabilitacion-oral/), Contacto (/contacto/)",
+        "A CTA labeled exactly 'Agendar Cita' links to COMPANY_INFO.whatsapp and stays visible while scrolling (fixed/sticky header)",
+        "Logo rendered with <Image> from astro:assets, non-empty alt, linking to /",
+        "All 4 links and the CTA are reachable at mobile width (≤ 375px) and by keyboard",
+        "Colors only via global.css tokens; no inline style, no arbitrary values"
+      ]
+    },
+    {
+      "id": "global-footer",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "Opening hours are PENDING (don't publish until confirmed). The 'aviso legal / tratamiento de datos' link has no page or text in the brief (client-gaps.md), so the footer is blocked on that item.",
+      "source": "arquitectura-informacion.md §3 Navegación (Footer) + §1 Datos del negocio",
+      "acceptance": [
+        "Address rendered from COMPANY_INFO.business.address, reading exactly 'Cra 15 # 104-30, Consultorio 302' + Bogotá (single NAP form, brief §1)",
+        "Phone/WhatsApp from COMPANY_INFO.phone linking to COMPANY_INFO.whatsapp; email from COMPANY_INFO.email as a mailto: link",
+        "Instagram and TikTok links from COMPANY_INFO.socialMedia",
+        "A link to /contacto/",
+        "No opening hours rendered while they are pending",
+        "A link to the aviso legal / tratamiento de datos page (once that client-gaps.md item is resolved)",
+        "The scaffold 'Footer' stub is gone (harness/lint-customization.sh reports no Footer stub)"
+      ]
+    },
+    {
+      "id": "global-whatsapp-float",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "src/components/ui/WhatsApp.astro is the scaffold's version: its tooltip '¿Necesitas asesoría profesional?' and its amber/stone colors are not from this brief.",
+      "source": "arquitectura-informacion.md §3 Navegación (Botón flotante de WhatsApp en todas las páginas)",
+      "acceptance": [
+        "A floating WhatsApp button renders on every page, linking to COMPANY_INFO.whatsapp with target=_blank and rel='noopener noreferrer'",
+        "The button has an accessible name (sr-only text)",
+        "No visible text that isn't in the brief (the scaffold tooltip is removed)",
+        "Colors only via global.css tokens (no amber/stone Tailwind palette)"
+      ]
+    },
+    {
+      "id": "home-hero",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "Visual reference: references/Hero-home-reference.png. Real photos are pending (client-gaps.md). Replaces the scaffold stub 'Nueva web app'.",
+      "source": "textos-sitio.md §1 Inicio › Hero",
+      "acceptance": [
+        "Exactly one <h1> on /, reading 'Odontóloga en Bogotá, especialista en Rehabilitación Oral'",
+        "Tagline 'Odontología de Calma Activa: cuidamos tu sonrisa y tu tranquilidad.' present",
+        "Paragraph present verbatim: 'No solo transformamos sonrisas: cuidamos la tranquilidad de las personas que hay detrás de ellas. Consultorio particular en Chicó, Bogotá, con tecnología sin dolor y atención personalizada.'",
+        "Button 'Agendar por WhatsApp' links to COMPANY_INFO.whatsapp",
+        "Button 'Conocer servicios' links to the Servicios block on / (#servicios)",
+        "Three highlights present: '+12 años en odontología', 'Especialista en Rehabilitación Oral desde 2019', 'Consultorio propio en Chicó, norte de Bogotá'",
+        "Any animation lives in src/utils/scripts/animations/ and uses gsap.matchMedia() with a reduced-motion branch that leaves content visible (autoAlpha: 1)",
+        "The scaffold text 'Nueva web app' is gone"
+      ]
+    },
+    {
+      "id": "home-calma-activa",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Odontología de Calma Activa",
+      "acceptance": [
+        "h2 'Odontología de Calma Activa'",
+        "Intro present verbatim: 'Rediseñamos la consulta odontológica tradicional para convertirla en una experiencia de bienestar, sin sacrificar excelencia clínica.'",
+        "Five items, each title + text verbatim from the brief: Aromaterapia, Música relajante, Cancelación de ruido, Anestesia digital, Escáner intraoral",
+        "Icons (if any) imported from @/assets/icons/, no inline <svg>",
+        "Any animation in src/utils/scripts/animations/ with a gsap.matchMedia() reduced-motion branch"
+      ]
+    },
+    {
+      "id": "home-servicios",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "PARTLY BLOCKED: the 1-2 line descriptions of the 8 short cards are pending from the client (arquitectura §5, §7 — client-gaps.md). The 2 featured cards come from services; the 8 names and anchors from serviceCards (src/config/services.ts).",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Servicios + arquitectura-informacion.md §3 (tarjetas con ancla propia)",
+      "acceptance": [
+        "Section has id='servicios' and h2 'Tratamientos pensados para tu salud y tu confianza'",
+        "Card 'Blanqueamiento Dental' with 'Una sonrisa más blanca, sin ansiedad ni sorpresas. Uno de nuestros tratamientos más solicitados.' and a 'Ver el servicio →' link to /blanqueamiento-dental/",
+        "Card 'Rehabilitación Oral' with 'La especialidad de la Dra. Viviana: recuperar función y estética a la vez, con un enfoque cálido.' and a 'Ver el servicio →' link to /rehabilitacion-oral/",
+        "Featured cards rendered from services in src/config/services.ts, not hardcoded",
+        "'También ofrecemos' renders the 8 serviceCards in brief order, each with its anchor id (e.g. id='implantes')",
+        "Each of the 8 cards shows its client-approved 1-2 line description; no invented description text"
+      ]
+    },
+    {
+      "id": "home-sobre",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "Rendered from AUTHORS in src/config/authorBio.ts. The doctor's photo and the optional quote about Rehabilitación Oral are pending (client-gaps.md).",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Sobre la Dra. Viviana",
+      "acceptance": [
+        "h2 'Más de una década cuidando sonrisas en Bogotá'",
+        "The 'Ejerzo la odontología desde 2014…' paragraph rendered verbatim from the Author bio",
+        "The 4 credentials rendered verbatim from Author.credentials",
+        "No stock or invented photo; any image uses <Image> with a descriptive alt"
+      ]
+    },
+    {
+      "id": "home-testimonios",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "BLOCKED: no real testimonials yet. The brief says 'No inventar testimonios' and asks for 3-5 real Google reviews (arquitectura §7). Don't build this until the client sends them.",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Testimonios + arquitectura-informacion.md §7",
+      "acceptance": [
+        "h2 'Pacientes que ya sintieron la diferencia'",
+        "Only testimonials the client supplied, attributed as supplied; zero invented reviews",
+        "No Review or AggregateRating JSON-LD (brief §6 doesn't list it)"
+      ]
+    },
+    {
+      "id": "home-ubicacion",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Ubicación",
+      "acceptance": [
+        "h2 'Consultorio en Chicó, norte de Bogotá'",
+        "Address rendered from COMPANY_INFO.business.address as 'Cra 15 # 104-30, Consultorio 302, Bogotá'",
+        "WhatsApp number from COMPANY_INFO.phone, linking to COMPANY_INFO.whatsapp"
+      ]
+    },
+    {
+      "id": "home-faq",
+      "status": "pending",
+      "builders": [
+        "front-end-astro",
+        "seo-guide-lines"
+      ],
+      "nota": "D5 (answers always open vs accordion) decides the display.",
+      "source": "textos-sitio.md §1 Inicio › Preguntas frecuentes + arquitectura-informacion.md §5 (FAQ visible) and §6 (FAQPage)",
+      "acceptance": [
+        "Renders the 4 faqs with category 'inicio' from src/config/faqs.ts, questions and answers verbatim",
+        "Every answer is visible on the page by default, not collapsed ('FAQ visible en la página, nunca oculta', arquitectura §5)",
+        "The '¿Dónde queda el consultorio?' answer reads 'En la Cra 15 # 104-30, Consultorio 302, zona de Chicó, al norte de Bogotá.'",
+        "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> built from the same faqs, with text identical to the visible text"
+      ]
+    },
+    {
+      "id": "home-cta-final",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "arquitectura §3 says every page ends with a CTA to Contacto, but textos-sitio §1 (which wins on page content, arquitectura §5) gives a WhatsApp button for Inicio.",
+      "source": "textos-sitio.md §1 Inicio › CTA final",
+      "acceptance": [
+        "Heading 'Agenda tu valoración y empieza tu tratamiento con calma.'",
+        "Button 'Escribir por WhatsApp' links to COMPANY_INFO.whatsapp"
+      ]
+    },
+    {
+      "id": "page-home",
+      "status": "pending",
+      "builders": [
+        "seo-guide-lines"
+      ],
+      "nota": "Before closing: D1 (title vs generatePageSEO suffix), D2 (medicalSpecialty in the Dentist node), D5 (FAQ display) — client-gaps.md § Decisiones pendientes.",
+      "source": "textos-sitio.md §1 Inicio (Meta title, Meta description) + arquitectura-informacion.md §3 Enlazado interno, §4, §6",
+      "acceptance": [
+        "<title> is 'Odontóloga en Bogotá — Especialista en Rehabilitación Oral'",
+        "meta description is 'Odontología de Calma Activa en Bogotá (Chicó). Rehabilitación oral, blanqueamiento y diseño de sonrisa con tecnología sin dolor. Agenda tu cita hoy.'",
+        "Exactly one <h1> on the page",
+        "Sections in order: Hero, Calma Activa, Servicios, Sobre la Dra. Viviana, Testimonios (only once real ones exist), Ubicación, Preguntas frecuentes, CTA final",
+        "JSON-LD on / comes from MainLayout only: a Dentist node (NAP identical to the visible text, sameAs Instagram + TikTok), WebSite, and a Person for viviana-rodriguez",
+        "/ links to /blanqueamiento-dental/ and /rehabilitacion-oral/ from the nav and the service cards",
+        "The scaffold title 'Home - My Website' is gone"
+      ]
+    },
+    {
+      "id": "blanqueamiento-hero",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §2 Blanqueamiento Dental (H1, subtítulo, intro) + arquitectura-informacion.md §3 Breadcrumbs, §4, §5",
+      "acceptance": [
+        "Visible breadcrumb 'Inicio > Blanqueamiento Dental', with Inicio linking to /",
+        "Exactly one <h1>: 'Blanqueamiento Dental en Bogotá' (never 'aclaramiento' in the H1)",
+        "Subtitle 'Una sonrisa más blanca, sin ansiedad ni sorpresas.'",
+        "Intro present verbatim: 'El blanqueamiento (o aclaramiento) dental es uno de los tratamientos estéticos más solicitados en nuestro consultorio. Aclara el tono natural del esmalte de forma segura, con seguimiento personalizado y sin dolor.'",
+        "The intro (the direct answer) falls within the first 100 words of the page's main content"
+      ]
+    },
+    {
+      "id": "blanqueamiento-beneficios",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §2 Blanqueamiento Dental › Beneficios",
+      "acceptance": [
+        "h2 'Beneficios'",
+        "The 4 benefits rendered verbatim from services[blanqueamiento-dental].benefits in src/config/services.ts"
+      ]
+    },
+    {
+      "id": "blanqueamiento-como-se-hace",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §2 Blanqueamiento Dental › Cómo se hace",
+      "acceptance": [
+        "h2 'Cómo se hace'",
+        "Ordered list (<ol>) of 3 steps, each title + text verbatim: Valoración inicial, Ambiente de calma, Aplicación y seguimiento"
+      ]
+    },
+    {
+      "id": "blanqueamiento-enlace-cruzado",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §2 Blanqueamiento Dental › Enlace cruzado + arquitectura-informacion.md §3 Enlazado interno",
+      "acceptance": [
+        "Text 'Si además buscas corregir forma o alineación, conoce nuestro servicio de Rehabilitación Oral.' present",
+        "'Rehabilitación Oral' is a descriptive-anchor link to /rehabilitacion-oral/"
+      ]
+    },
+    {
+      "id": "blanqueamiento-faq",
+      "status": "pending",
+      "builders": [
+        "front-end-astro",
+        "seo-guide-lines"
+      ],
+      "nota": "D5 (answers always open vs accordion) decides the display.",
+      "source": "textos-sitio.md §2 Blanqueamiento Dental › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
+      "acceptance": [
+        "Renders the 4 faqs with category 'blanqueamiento-dental' from src/config/faqs.ts, verbatim",
+        "Every answer is visible on the page by default, not collapsed",
+        "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> from the same faqs, with text identical to the visible text"
+      ]
+    },
+    {
+      "id": "blanqueamiento-cta-final",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "textos-sitio gives only the heading; the target comes from arquitectura §3 ('Todas las páginas terminan con CTA a Contacto').",
+      "source": "textos-sitio.md §2 Blanqueamiento Dental › CTA final + arquitectura-informacion.md §3 Enlazado interno",
+      "acceptance": [
+        "Final CTA 'Agenda tu valoración' is the last section of the page",
+        "The CTA links to /contacto/"
+      ]
+    },
+    {
+      "id": "page-blanqueamiento",
+      "status": "pending",
+      "builders": [
+        "seo-guide-lines"
+      ],
+      "nota": "Before closing: D2 (Service generator, full-lane spec), D3 (source of the last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. The title fits generatePageSEO({ title: 'Blanqueamiento Dental en Bogotá' }).",
+      "source": "textos-sitio.md §2 Blanqueamiento Dental (Meta title, Meta description) + arquitectura-informacion.md §4, §5, §6",
+      "acceptance": [
+        "Route src/pages/blanqueamiento-dental.astro serves /blanqueamiento-dental/",
+        "<title> is 'Blanqueamiento Dental en Bogotá | Dra. Viviana Rodríguez'",
+        "meta description is 'Blanqueamiento dental profesional en Bogotá (Chicó), en un consultorio pensado para tu calma. Resultados visibles, sin dolor y con seguimiento personalizado.'",
+        "Exactly one <h1> on the page",
+        "Sections in order: hero, Beneficios, Cómo se hace, enlace cruzado, Preguntas frecuentes, CTA final",
+        "Both 'anestesia digital' and the calm environment ('ambiente de calma') are mentioned on the page",
+        "BreadcrumbList JSON-LD (Inicio → Blanqueamiento Dental) passed through MainLayout's schemas, matching the visible breadcrumb",
+        "Service JSON-LD with provider = generateBusinessRef() and areaServed Bogotá",
+        "A visible last-updated date on the page, matching dateModified if the schema carries one",
+        "No business, WebSite or Person node on this page"
+      ]
+    },
+    {
+      "id": "rehabilitacion-hero",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §3 Rehabilitación Oral (H1, subtítulo, intro) + arquitectura-informacion.md §3 Breadcrumbs, §5",
+      "acceptance": [
+        "Visible breadcrumb 'Inicio > Rehabilitación Oral', with Inicio linking to /",
+        "Exactly one <h1>: 'Rehabilitación Oral en Bogotá'",
+        "Subtitle 'La especialidad de la Dra. Viviana Rodríguez.'",
+        "Intro present verbatim: 'La rehabilitación oral recupera la función, la estética y la salud de tu boca cuando hay desgaste, pérdida de dientes o problemas articulares, combinando tratamientos según cada caso.'",
+        "The intro (the direct answer) falls within the first 100 words of the page's main content"
+      ]
+    },
+    {
+      "id": "rehabilitacion-cuando",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Cuándo la necesitas",
+      "acceptance": [
+        "h2 'Cuándo la necesitas'",
+        "4 items verbatim: 'Desgaste dental visible', 'Pérdida de una o varias piezas', 'Bruxismo o dolor articular', 'Buscas recuperar función y estética a la vez'"
+      ]
+    },
+    {
+      "id": "rehabilitacion-tratamientos",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Tratamientos incluidos",
+      "acceptance": [
+        "h2 'Tratamientos incluidos'",
+        "5 treatments in brief order: Coronas en Zirconio, Incrustaciones Dentales, Prótesis Removibles, Placas de Bruxismo, Implantes",
+        "No invented description text for the treatments"
+      ]
+    },
+    {
+      "id": "rehabilitacion-como-se-hace",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Cómo se hace",
+      "acceptance": [
+        "h2 'Cómo se hace'",
+        "Ordered list (<ol>) of 3 steps, each title + text verbatim: Diagnóstico con escáner intraoral, Plan de tratamiento claro, Tratamiento en ambiente de calma"
+      ]
+    },
+    {
+      "id": "rehabilitacion-enlace-cruzado",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Enlace cruzado + arquitectura-informacion.md §3 Enlazado interno",
+      "acceptance": [
+        "Text '¿Buscas solo aclarar el tono de tu esmalte? Conoce nuestro servicio de Blanqueamiento Dental.' present",
+        "'Blanqueamiento Dental' is a descriptive-anchor link to /blanqueamiento-dental/"
+      ]
+    },
+    {
+      "id": "rehabilitacion-faq",
+      "status": "pending",
+      "builders": [
+        "front-end-astro",
+        "seo-guide-lines"
+      ],
+      "nota": "D5 (answers always open vs accordion) decides the display.",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
+      "acceptance": [
+        "Renders the 3 faqs with category 'rehabilitacion-oral' from src/config/faqs.ts, verbatim",
+        "Every answer is visible on the page by default, not collapsed",
+        "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> from the same faqs, with text identical to the visible text"
+      ]
+    },
+    {
+      "id": "rehabilitacion-cta-final",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "textos-sitio gives only the heading; the target comes from arquitectura §3 ('Todas las páginas terminan con CTA a Contacto').",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › CTA final + arquitectura-informacion.md §3 Enlazado interno",
+      "acceptance": [
+        "Final CTA 'Agenda tu valoración' is the last section of the page",
+        "The CTA links to /contacto/"
+      ]
+    },
+    {
+      "id": "page-rehabilitacion",
+      "status": "pending",
+      "builders": [
+        "seo-guide-lines"
+      ],
+      "nota": "Before closing: D1 (title — the brief's title already carries its own suffix), D2 (Service generator), D3 (last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Also needs client item #4: an approved sentence mentioning anestesia digital (textos-sitio §3 never mentions it, brief §5 requires it).",
+      "source": "textos-sitio.md §3 Rehabilitación Oral (Meta title, Meta description) + arquitectura-informacion.md §4, §5, §6",
+      "acceptance": [
+        "Route src/pages/rehabilitacion-oral.astro serves /rehabilitacion-oral/",
+        "<title> is 'Rehabilitación Oral en Bogotá | Especialista — Dra. Viviana'",
+        "meta description is 'Especialista en Rehabilitación Oral en Bogotá. Recupera función y estética dental con tecnología de punta, cero dolor y un enfoque cálido. Agenda tu cita.'",
+        "Exactly one <h1> on the page",
+        "Sections in order: hero, Cuándo la necesitas, Tratamientos incluidos, Cómo se hace, enlace cruzado, Preguntas frecuentes, CTA final",
+        "Both 'anestesia digital' and the calm environment ('ambiente de calma') are mentioned on the page",
+        "BreadcrumbList JSON-LD (Inicio → Rehabilitación Oral) passed through MainLayout's schemas, matching the visible breadcrumb",
+        "Service JSON-LD with provider = generateBusinessRef() and areaServed Bogotá",
+        "A visible last-updated date on the page, matching dateModified if the schema carries one",
+        "No business, WebSite or Person node on this page"
+      ]
+    },
+    {
+      "id": "contacto-hero",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "",
+      "source": "textos-sitio.md §4 Contacto (H1, intro)",
+      "acceptance": [
+        "Exactly one <h1>: 'Agenda tu Cita'",
+        "Intro 'Consultorio en Bogotá (Chicó). Resolvemos tus dudas antes de tu primera visita.' present"
+      ]
+    },
+    {
+      "id": "contacto-datos",
+      "status": "pending",
+      "builders": [
+        "front-end-astro"
+      ],
+      "nota": "Opening hours and the map (a Google Maps / Business Profile link or coordinates) are pending (client-gaps.md), although the page's meta description promises both.",
+      "source": "textos-sitio.md §4 Contacto › Datos de contacto",
+      "acceptance": [
+        "WhatsApp from COMPANY_INFO.phone linking to COMPANY_INFO.whatsapp",
+        "Email from COMPANY_INFO.email as a mailto: link (no hand-written address outside companyInfo.ts)",
+        "Address from COMPANY_INFO.business.address as 'Cra 15 # 104-30, Consultorio 302, Bogotá'",
+        "Payment methods: 'débito, crédito, datáfono y código QR (no EPS ni seguros)'",
+        "Instagram and TikTok links from COMPANY_INFO.socialMedia, shown as @dra.vivianarodriguez_",
+        "No opening hours rendered while they are pending; no map until the client supplies its link or coordinates"
+      ]
+    },
+    {
+      "id": "contacto-faq",
+      "status": "pending",
+      "builders": [
+        "front-end-astro",
+        "seo-guide-lines"
+      ],
+      "nota": "D5 (answers always open vs accordion) decides the display.",
+      "source": "textos-sitio.md §4 Contacto › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
+      "acceptance": [
+        "Renders the 2 faqs with category 'contacto' from src/config/faqs.ts, verbatim",
+        "Every answer is visible on the page by default, not collapsed",
+        "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> from the same faqs, with text identical to the visible text"
+      ]
+    },
+    {
+      "id": "page-contacto",
+      "status": "pending",
+      "builders": [
+        "seo-guide-lines"
+      ],
+      "nota": "Before closing: D1 (title — the brief's title already carries its own suffix), D5 (FAQ display), D6 (the meta description promises a map and opening hours, both pending) — client-gaps.md § Decisiones pendientes.",
+      "source": "textos-sitio.md §4 Contacto (Meta title, Meta description) + arquitectura-informacion.md §4",
+      "acceptance": [
+        "Route src/pages/contacto.astro serves /contacto/",
+        "<title> is 'Contacto y Citas | Dra. Viviana Rodríguez — Odontóloga Bogotá'",
+        "meta description is 'Agenda tu cita con la Dra. Viviana Rodríguez en Bogotá. WhatsApp, dirección, mapa y horarios de atención. Resolvemos tus dudas antes de tu primera visita.'",
+        "Exactly one <h1> on the page",
+        "Sections in order: hero, Datos de contacto, Preguntas frecuentes",
+        "No business, WebSite or Person node on this page"
+      ]
+    }
+  ]
 }

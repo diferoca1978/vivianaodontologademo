@@ -1040,6 +1040,7 @@ const DEPRECATED_TYPES = ["ProfessionalService", "SearchAction", "HowTo"];
 const LOCAL_BUSINESS_TYPES = [
   "LocalBusiness",
   "LegalService",
+  "Dentist",
   "Attorney",
   "ProfessionalService",
 ];

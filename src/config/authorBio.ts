@@ -12,4 +12,19 @@ export interface Author {
   url?: string; // the author's page on this site, as a path
 }
 
-export const AUTHORS: Author[] = [];
+// Source: textos-sitio.md §1 "Sobre la Dra. Viviana" (bio and credentials, verbatim)
+// and arquitectura-informacion.md §1 (role). Photo pending (client-gaps.md).
+export const AUTHORS: Author[] = [
+  {
+    slug: 'viviana-rodriguez',
+    name: 'Viviana Rodríguez',
+    role: 'Odontóloga, especialista en Rehabilitación Oral',
+    bio: 'Ejerzo la odontología desde 2014 y me especialicé en Rehabilitación Oral en 2019 porque me permite generar transformaciones que van mucho más allá de la estética: ver a un paciente recuperar su sonrisa, su autoestima y su tranquilidad es lo que le da sentido a mi trabajo.',
+    credentials: [
+      'Especialista en Rehabilitación Oral desde 2019',
+      'Reconocimiento al mejor trabajo de grado de su posgrado',
+      'Anestesia digital y escáner intraoral',
+      'Consultorio propio en Chicó desde 2023',
+    ],
+  },
+];

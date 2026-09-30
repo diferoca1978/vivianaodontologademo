@@ -16,16 +16,22 @@ export default defineConfig({
   // Every page URL ends in '/'; siteUrl() in src/utils/url.ts builds them the same way.
   trailingSlash: 'always',
 
+  // Heading slot (--font-jakarta) = Cormorant, body slot (--font-nunito) = Raleway.
+  // The cssVariable names are the scaffold's slot names — kept stable on a font swap.
   fonts: [
     {
-      name: "Plus Jakarta Sans",
+      name: "Cormorant",
       cssVariable: "--font-jakarta",
       provider: fontProviders.fontsource(),
+      weights: [400, 500, 600],
+      fallbacks: ["serif"],
     },
     {
-      name: "Nunito",
+      name: "Raleway",
       cssVariable: "--font-nunito",
       provider: fontProviders.fontsource(),
+      weights: [400, 500, 600],
+      styles: ["normal"],
     },
   ],
 
