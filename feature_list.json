@@ -42,17 +42,18 @@
     },
     {
       "id": "global-whatsapp-float",
-      "status": "pending",
+      "status": "done",
       "builders": [
         "front-end-astro"
       ],
-      "nota": "src/components/ui/WhatsApp.astro is the scaffold's version: its tooltip '¿Necesitas asesoría profesional?' and its amber/stone colors are not from this brief.",
+      "nota": "src/components/ui/WhatsApp.astro uses the owner-approved Uiverse design: WhatsApp-green button with a hover tooltip '¿Necesitas ayuda?'. These are deliberate deviations from the brief (owner decision), reflected in the acceptance below. The scaffold tooltip '¿Necesitas asesoría profesional?' and its amber/stone colors are gone.",
       "source": "arquitectura-informacion.md §3 Navegación (Botón flotante de WhatsApp en todas las páginas)",
       "acceptance": [
         "A floating WhatsApp button renders on every page, linking to COMPANY_INFO.whatsapp with target=_blank and rel='noopener noreferrer'",
-        "The button has an accessible name (sr-only text)",
-        "No visible text that isn't in the brief (the scaffold tooltip is removed)",
-        "Colors only via global.css tokens (no amber/stone Tailwind palette)"
+        "The button has an accessible name (aria-label 'Chat de WhatsApp'); decorative icon is aria-hidden",
+        "The only visible text is the hover tooltip '¿Necesitas ayuda?'; the scaffold tooltip '¿Necesitas asesoría profesional?' is gone and there is no notification badge",
+        "Button uses WhatsApp green (green-500/green-600) with white icon; the ring and tooltip use global.css tokens (ivory, turquoise); no amber/stone Tailwind palette",
+        "The icon is imported from @/assets/icons/whatsApp.svg, no inline <svg>"
       ]
     },
     {
