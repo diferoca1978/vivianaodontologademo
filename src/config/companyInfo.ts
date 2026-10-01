@@ -56,7 +56,7 @@ export interface CompanyInfo {
 export const COMPANY_INFO: CompanyInfo = {
   name: 'Dra. Viviana Rodríguez',
   description:
-    'Odontología de Calma Activa: cuidamos tu sonrisa y tu tranquilidad. Consultorio particular en Chicó, Bogotá, con tecnología sin dolor y atención personalizada.',
+    'Odontología de Calma Activa: cuidamos tu sonrisa y tu tranquilidad. Consultorio particular en Bogotá, con tecnología sin dolor y atención personalizada.',
   phone: '+57 302 544 5760',
   email: 'vivianarodriguezod@gmail.com',
   whatsapp: 'https://wa.me/573025445760',

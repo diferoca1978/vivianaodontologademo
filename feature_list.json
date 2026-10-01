@@ -24,19 +24,19 @@
     },
     {
       "id": "global-footer",
-      "status": "pending",
+      "status": "done",
       "builders": [
         "front-end-astro"
       ],
-      "nota": "Opening hours are PENDING (don't publish until confirmed). The 'aviso legal / tratamiento de datos' link has no page or text in the brief (client-gaps.md), so the footer is blocked on that item.",
-      "source": "arquitectura-informacion.md §3 Navegación (Footer) + §1 Datos del negocio",
+      "nota": "Opening hours are PENDING (don't publish until confirmed). The 'Política de privacidad' link ships as a placeholder (href='#' + TODO); its page is the page-privacidad feature, so the footer is no longer blocked on it.",
+      "source": "arquitectura-informacion.md §3 Estructura del sitio › Navegación › Footer + §1 Datos del negocio",
       "acceptance": [
         "Address rendered from COMPANY_INFO.business.address, reading exactly 'Cra 15 # 104-30, Consultorio 302' + Bogotá (single NAP form, brief §1)",
         "Phone/WhatsApp from COMPANY_INFO.phone linking to COMPANY_INFO.whatsapp; email from COMPANY_INFO.email as a mailto: link",
         "Instagram and TikTok links from COMPANY_INFO.socialMedia",
         "A link to /contacto/",
         "No opening hours rendered while they are pending",
-        "A link to the aviso legal / tratamiento de datos page (once that client-gaps.md item is resolved)",
+        "A 'Política de privacidad' link is rendered in the footer bottom bar (its real target is wired in the page-privacidad feature)",
         "The scaffold 'Footer' stub is gone (harness/lint-customization.sh reports no Footer stub)"
       ]
     },
@@ -478,6 +478,27 @@
         "meta description is 'Agenda tu cita con la Dra. Viviana Rodríguez en Bogotá. WhatsApp, dirección, mapa y horarios de atención. Resolvemos tus dudas antes de tu primera visita.'",
         "Exactly one <h1> on the page",
         "Sections in order: hero, Datos de contacto, Preguntas frecuentes",
+        "No business, WebSite or Person node on this page"
+      ]
+    },
+    {
+      "id": "page-privacidad",
+      "status": "pending",
+      "builders": [
+        "front-end-astro",
+        "seo-guide-lines"
+      ],
+      "nota": "BLOCKED on client data: docs/source/politica-privacidad-estructura.md is a structure with [placeholders] (legal name, C.C./NIT, tarjeta profesional) and must be completed and approved by the client/legal before publishing. Never invent those values. Name, address, email and phone can come from COMPANY_INFO. The source describes a Google Calendar Appointment Schedule channel, but the brief's booking CTAs only use WhatsApp: confirm with the client whether that channel exists, otherwise remove §3.1. The route slug is not in the brief: /politica-de-privacidad/ is proposed, confirm. Wires the placeholder href='#' (TODO) in src/components/global/Footer.astro.",
+      "source": "docs/source/politica-privacidad-estructura.md (all sections, once completed with client data)",
+      "acceptance": [
+        "Route src/pages/politica-de-privacidad.astro serves /politica-de-privacidad/ (slug confirmed)",
+        "Exactly one <h1>: 'Política de Tratamiento de Datos Personales y Privacidad'",
+        "The 9 sections of the source appear in order, with its text verbatim once the client has completed it",
+        "Zero '[...]' placeholders remain in the rendered page (legal name, C.C./NIT, tarjeta profesional, address, email, phone all filled in)",
+        "Responsable data matches COMPANY_INFO where it overlaps (name, address 'Cra 15 # 104-30, Consultorio 302, Bogotá', email, phone), single NAP form",
+        "External links (Google, WhatsApp privacy policies) open with target=_blank and rel='noopener noreferrer'",
+        "The footer anchor 'Política de privacidad' in src/components/global/Footer.astro links to the page's route and the TODO comment is removed",
+        "<title> and meta description set via generatePageSEO, and the page is in the sitemap",
         "No business, WebSite or Person node on this page"
       ]
     }
