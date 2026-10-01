@@ -13,14 +13,14 @@
   h1,
   h2,
   h3 {
-    font-family: var(--font-jakarta);
+    font-family: var(--font-cormorant);
   }
 
   p,
   button,
   a,
   li {
-    font-family: var(--font-nunito);
+    font-family: var(--font-raleway);
   }
 
   /* Prevent browser autofill from overriding custom styles */
@@ -78,6 +78,6 @@
   /* Contrast on ivory (WCAG): charcoal passes; gray-neutral ≈3.1:1 (large text only);
      turquoise ≈2.8:1 (fails even for large text). On a turquoise fill use charcoal text (≈5.7:1), not white (≈3.0:1). */
 
-  --font-jakarta: "Cormorant", serif; /* heading slot */
-  --font-nunito: "Raleway", system-ui, sans-serif; /* body slot */
+  --font-cormorant: "Cormorant", serif; /* heading slot */
+  --font-raleway: "Raleway", system-ui, sans-serif; /* body slot */
 }

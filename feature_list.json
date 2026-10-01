@@ -58,11 +58,11 @@
     },
     {
       "id": "home-hero",
-      "status": "pending",
+      "status": "done",
       "builders": [
         "front-end-astro"
       ],
-      "nota": "Visual reference: references/Hero-home-reference.png. Real photos are pending (client-gaps.md). Replaces the scaffold stub 'Nueva web app'.",
+      "nota": "Visual reference: references/Hero-home-reference.png. Real photos are /src/assets/images/Hero-home-reference.webp. Replaces the scaffold stub 'Nueva web app'.",
       "source": "textos-sitio.md §1 Inicio › Hero",
       "acceptance": [
         "Exactly one <h1> on /, reading 'Odontóloga en Bogotá, especialista en Rehabilitación Oral'",
