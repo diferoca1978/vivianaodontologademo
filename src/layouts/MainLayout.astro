@@ -8,6 +8,7 @@ import "@/styles/global.css";
 import SeoHead from "@/components/SeoHead.astro";
 import Navbar from "@/components/global/NavBar.astro";
 import Footer from "@/components/global/Footer.astro";
+import WhatsApp from "@/components/ui/WhatsApp.astro";
 
 interface Props {
   seoProps: SEOProps;
@@ -58,6 +59,7 @@ const allSchemas = seoProps.noindex
       <slot />
     </main>
     <Footer />
+    <WhatsApp />
   </body>
 </html>
 
