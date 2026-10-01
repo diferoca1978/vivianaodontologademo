@@ -1,0 +1,97 @@
+---
+import WaveCard from "@/assets/icons/wave-card.svg";
+import Aroma from "@/assets/icons/aroma.svg";
+import Music from "@/assets/icons/music.svg";
+import Headphones from "@/assets/icons/headphones.svg";
+import Syringe from "@/assets/icons/syringe.svg";
+import Tooth from "@/assets/icons/tooth.svg";
+import ToothLogo from "@/assets/icons/tooth-logo.svg";
+
+// Copy: docs/brief/textos-sitio.md §1 Inicio › Bloque: Odontología de Calma Activa (verbatim).
+// Layout (references/calma-activa-reference.png): rounded cards with a wavy turquoise header,
+// a circular icon badge straddling its lower edge, then title and text centred.
+// 1 column on mobile, 2 on tablet, and on lg a 6-col grid where the five cards span 2 each so
+// the second row (2 cards) sits centred under the first (3).
+// Motion lives in src/utils/scripts/animations/home/calma-activa.ts (data-calma-* hooks).
+
+interface Item {
+  title: string;
+  text: string;
+  icon: typeof Aroma;
+}
+
+const items: Item[] = [
+  {
+    title: "Aromaterapia",
+    text: "Ambientamos cada consulta para reducir la ansiedad desde que llegas.",
+    icon: Aroma,
+  },
+  {
+    title: "Música relajante",
+    text: "Un entorno sonoro pensado para bajar el ritmo antes del tratamiento.",
+    icon: Music,
+  },
+  {
+    title: "Cancelación de ruido",
+    text: "Audífonos que aíslan el sonido clínico durante el procedimiento.",
+    icon: Headphones,
+  },
+  {
+    title: "Anestesia digital",
+    text: "Aplicación controlada y precisa para reducir el dolor y la ansiedad.",
+    icon: Syringe,
+  },
+  {
+    title: "Escáner intraoral",
+    text: "Diseño de sonrisa digital, sin las impresiones incómodas de siempre.",
+    icon: Tooth,
+  },
+];
+---
+
+<section
+  id="calma-activa"
+  aria-labelledby="calma-activa-title"
+  class="relative isolate overflow-hidden"
+>
+  <div class="mx-auto max-w-6xl px-4 py-20 sm:py-24 lg:py-16 xl:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <ToothLogo data-calma-logo aria-hidden="true" class="mx-auto mb-4 size-16 sm:size-20" />
+      <h2
+        id="calma-activa-title"
+        data-calma-head
+        class="text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl"
+      >
+        Odontología de Calma Activa
+      </h2>
+      <p data-calma-head class="mt-6 text-base leading-relaxed text-charcoal/80 sm:text-lg">
+        Rediseñamos la consulta odontológica tradicional para convertirla en una experiencia de bienestar, sin sacrificar excelencia clínica.
+      </p>
+    </div>
+
+    <ol class="mt-14 grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:mt-16 lg:grid-cols-6 lg:gap-y-14" role="list">
+      {
+        items.map(({ title, text, icon: Icon }, i) => (
+          <li
+            data-calma-item
+            class:list={[
+              "flex flex-col rounded-3xl bg-ivory pb-8 shadow-lg shadow-turquoise-dark/30 lg:col-span-2",
+              i === 3 && "lg:col-start-2",
+              i === 4 && "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:mx-0 lg:w-auto",
+            ]}
+          >
+            <div class="relative z-10 -mt-8 flex size-16 items-center justify-center self-center rounded-full border-2 border-turquoise bg-ivory text-turquoise-dark">
+              <Icon class="size-8" aria-hidden="true" />
+            </div>
+            <h3 class="mt-5 px-6 text-center text-2xl font-medium tracking-wide ">{title}</h3>
+            <p class="mx-auto mt-3 max-w-xs px-6 text-center text-base leading-relaxed text-charcoal/80">{text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/home/calma-activa";
+</script>
