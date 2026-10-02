@@ -101,19 +101,26 @@
     },
     {
       "id": "home-servicios",
-      "status": "pending",
+      "status": "done",
       "builders": [
         "front-end-astro"
       ],
-      "nota": "PARTLY BLOCKED: the 1-2 line descriptions of the 8 short cards are pending from the client (arquitectura §5, §7 — client-gaps.md). The 2 featured cards come from services; the 8 names and anchors from serviceCards (src/config/services.ts).",
+      "nota": "Design references: references/our-serviceshome-reference.png (main services: left tab list, right detail with image, title, text and two buttons) and references/otherservices-home-reference.png (other services: row of tall rounded cards, icon badge top-left, title bottom). The 8 short cards show the title only (no description); image areas render a brand-token placeholder when an entry has no photo. The 2 featured services come from services, and the 8 names and anchors from serviceCards (src/config/services.ts).",
       "source": "textos-sitio.md §1 Inicio › Bloque: Servicios + arquitectura-informacion.md §3 (tarjetas con ancla propia)",
       "acceptance": [
-        "Section has id='servicios' and h2 'Tratamientos pensados para tu salud y tu confianza'",
-        "Card 'Blanqueamiento Dental' with 'Una sonrisa más blanca, sin ansiedad ni sorpresas. Uno de nuestros tratamientos más solicitados.' and a 'Ver el servicio →' link to /blanqueamiento-dental/",
-        "Card 'Rehabilitación Oral' with 'La especialidad de la Dra. Viviana: recuperar función y estética a la vez, con un enfoque cálido.' and a 'Ver el servicio →' link to /rehabilitacion-oral/",
-        "Featured cards rendered from services in src/config/services.ts, not hardcoded",
-        "'También ofrecemos' renders the 8 serviceCards in brief order, each with its anchor id (e.g. id='implantes')",
-        "Each of the 8 cards shows its client-approved 1-2 line description; no invented description text"
+        "Section is src/components/perpage/home/Servicios.astro, rendered on / after CalmaActiva, with id='servicios' and aria-labelledby pointing at the h2",
+        "h2 'Tratamientos pensados para tu salud y tu confianza' with the two-weight treatment and a turquoise full stop. The reference's eyebrow and intro paragraph are not built",
+        "Desktop (lg+) is two columns: the left has the h2 and a list of the 2 services titles as tabs, active one in dark text with a bottom rule, inactive one light grey",
+        "The tab list is an ARIA tablist: role=tab/tabpanel, aria-selected, aria-controls, roving tabindex and arrow-key/Home/End navigation. A service is selected on mouse hover, click or keyboard. The first tab is selected by default. Without JS the first panel is visible",
+        "The right column shows the active service's detail: image area, h3 title, the approved text, and two buttons. Both panels render from services, not hardcoded. Blanqueamiento uses 'Una sonrisa más blanca, sin ansiedad ni sorpresas. Uno de nuestros tratamientos más solicitados.'; Rehabilitación uses 'La especialidad de la Dra. Viviana: recuperar función y estética a la vez, con un enfoque cálido.'",
+        "Primary button 'Ver el servicio' (with the small arrow-up-right icon) links to /blanqueamiento-dental/ or /rehabilitacion-oral/. Outline button 'Agendar por WhatsApp' links to COMPANY_INFO.whatsapp. No other CTA is invented",
+        "The image area renders <Image> from service.image (imported in src/config/services.ts). When an entry has no image it renders a brand-token placeholder (turquoise gradient with a tooth-outline watermark). No stock or invented photo",
+        "On mobile the tabs become a horizontal list above a single panel, and the layout is single-column",
+        "'También ofrecemos' renders the 8 serviceCards in brief order as tall rounded cards. Each has its anchor id (e.g. id='implantes') on the first copy only, a circular icon badge top-left from @/assets/icons/, and the title only (no description) at the bottom over a dark brand-token overlay. The card shows <Image> from serviceCard.image, or a placeholder background when absent",
+        "The cards run in an infinite GSAP marquee (src/components/ui/utils/Marquee.astro), paused on hover and focus. The clones are aria-hidden, inert and have no ids. With reduced motion or without JS nothing moves and the row is a keyboard-focusable, labelled, horizontally scrollable region",
+        "The reference's eyebrow, left intro paragraph and 'Book Appointment' wording are not copied. Only brief copy appears",
+        "Icons are imported from @/assets/icons/, aria-hidden, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only",
+        "GSAP lives in src/utils/scripts/animations/: home/servicios.ts (reveal), home/servicios-tabs.ts (service switch) and utils/marquee.ts (marquee loop), each with a gsap.matchMedia() reduced-motion branch that lands everything visible (autoAlpha: 1) and never loops or hides content for those users. The headings and the marquee row fade in from the bottom via ScrollTrigger.batch, once. The service switch fades the current panel out and staggers the next one in"
       ]
     },
     {

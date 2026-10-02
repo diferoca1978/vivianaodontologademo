@@ -1,0 +1,186 @@
+---
+import { Image } from "astro:assets";
+import { services, serviceCards } from "@/config/services";
+import { COMPANY_INFO } from "@/config/companyInfo";
+import Marquee from "@/components/ui/utils/Marquee.astro";
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import WhatsappIcon from "@/assets/icons/whatsApp.svg";
+import ToothOutline from "@/assets/icons/tooth-outline.svg";
+
+// Copy: docs/brief/textos-sitio.md §1 Inicio › Bloque: Servicios; anchors: arquitectura-informacion.md §3.
+// Titles, texts and slugs all come from src/config/services.ts — nothing is written here.
+// Layout: references/our-serviceshome-reference.png (tabs + detail) and
+// references/otherservices-home-reference.png (row of tall cards).
+// Tab switching (GSAP): src/utils/scripts/animations/home/servicios-tabs.ts.
+// Reveal: .../animations/home/servicios.ts. Marquee: src/components/ui/utils/Marquee.astro.
+
+// Photos and badge icons: `image` / `icon` on each entry in src/config/services.ts
+// (placeholder / tooth-outline when absent).
+const featured = services;
+const others = serviceCards.map((card) => ({
+  ...card,
+  Icon: card.icon ?? ToothOutline,
+}));
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal";
+---
+
+<section
+  id="servicios"
+  aria-labelledby="servicios-title"
+  class="relative isolate overflow-hidden bg-ivory"
+>
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:py-24 xl:px-8">
+    <div class="grid gap-10 lg:grid-cols-5 lg:gap-14">
+      <div class="min-w-0 lg:col-span-2">
+        <h2
+          id="servicios-title"
+          data-servicios-head
+          class="text-4xl leading-tight tracking-tight text-balance sm:text-5xl"
+        >
+          <span class="font-semibold">Tratamientos pensados</span>{" "}
+          <span class="font-normal">
+            para tu salud y tu confianza<span class="text-turquoise">.</span>
+          </span>
+        </h2>
+
+        <div
+          role="tablist"
+          aria-label="Servicios principales"
+          aria-orientation="vertical"
+          class="mt-8 flex gap-6 overflow-x-auto lg:mt-12 lg:flex-col lg:gap-0 lg:overflow-visible"
+        >
+          {featured.map(({ slug, title }, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${slug}`}
+              aria-controls={`panel-${slug}`}
+              aria-selected={i === 0 ? "true" : "false"}
+              tabindex={i === 0 ? 0 : -1}
+              class:list={[
+                "cursor-pointer border-b border-gray-light pb-3 text-left text-2xl whitespace-nowrap text-gray-neutral transition-colors duration-300 hover:text-charcoal aria-selected:border-charcoal aria-selected:text-charcoal motion-reduce:transition-none lg:py-4 lg:text-3xl",
+                focusRing,
+              ]}
+            >
+              {title}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div data-servicios-card class="min-w-0 lg:col-span-3">
+        {featured.map(({ slug, title, description, image }, i) => (
+          <div
+            role="tabpanel"
+            id={`panel-${slug}`}
+            aria-labelledby={`tab-${slug}`}
+            hidden={i > 0}
+          >
+            <div class="relative aspect-3/2 overflow-hidden rounded-3xl bg-linear-to-br from-turquoise-light via-turquoise-light/60 to-turquoise-light/30 shadow-xl shadow-turquoise-dark/10">
+              {image ? (
+                <Image src={image} alt={title} class="size-full object-cover" />
+              ) : (
+                <div
+                  aria-hidden="true"
+                  class="flex size-full items-center justify-center"
+                >
+                  <ToothOutline class="size-24 text-turquoise/40 sm:size-32" />
+                </div>
+              )}
+            </div>
+
+            <h3 class="mt-8 text-3xl font-semibold sm:text-4xl">{title}</h3>
+            <p class="mt-3 max-w-xl text-base leading-relaxed text-charcoal/80 sm:text-lg">
+              {description}
+            </p>
+
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <a
+                href={`/${slug}/`}
+                class:list={[
+                  "group inline-flex items-center justify-center gap-3 rounded-full bg-turquoise px-7 py-4 font-medium whitespace-nowrap text-ivory shadow-lg shadow-turquoise/20 transition-colors duration-300 hover:bg-turquoise-dark motion-reduce:transition-none",
+                  focusRing,
+                ]}
+              >
+                Ver el servicio
+                <ArrowUpRight
+                  class="size-4 transition-transform duration-300 group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+                  aria-hidden="true"
+                />
+              </a>
+              <a
+                href={COMPANY_INFO.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                class:list={[
+                  "inline-flex items-center justify-center gap-3 rounded-full border border-turquoise-dark px-7 py-4 font-medium whitespace-nowrap text-turquoise-dark transition-colors duration-300 hover:bg-turquoise-light/50 motion-reduce:transition-none",
+                  focusRing,
+                ]}
+              >
+                <WhatsappIcon class="size-5" aria-hidden="true" />
+                Agendar por WhatsApp
+                <span class="sr-only">(se abre en una pestaña nueva)</span>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-20 sm:mt-28">
+      <h3
+        data-servicios-head
+        class="flex items-center gap-5 text-center text-2xl font-semibold tracking-wide before:h-px before:flex-1 before:bg-turquoise/40 after:h-px after:flex-1 after:bg-turquoise/40 sm:text-3xl"
+      >
+        También ofrecemos
+      </h3>
+
+      <Marquee
+        label="Otros servicios"
+        speed={30}
+        data-servicios-card
+        class="-mx-4 mt-10 px-4 pb-4 xl:mx-0 xl:px-0"
+      >
+        {others.map(({ slug, title, image, Icon }) => (
+          <li
+            id={slug}
+            class="relative h-96 w-48 shrink-0 scroll-mt-28 overflow-hidden rounded-3xl bg-linear-to-b from-turquoise to-turquoise-dark target:ring-4 target:ring-turquoise-light"
+          >
+            {image && (
+              <Image
+                src={image}
+                alt={title}
+                class="absolute inset-0 size-full object-cover"
+              />
+            )}
+            {!image && (
+              <ToothOutline
+                class="absolute top-1/3 left-1/2 size-28 -translate-x-1/2 text-ivory/15"
+                aria-hidden="true"
+              />
+            )}
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 bg-linear-to-t from-charcoal/85 via-charcoal/30 to-charcoal/10"
+            ></div>
+
+            <span class="absolute top-4 left-4 flex size-11 items-center justify-center rounded-full bg-charcoal/70 text-ivory ring-1 ring-ivory/30">
+              <Icon class="size-6" aria-hidden="true" />
+            </span>
+
+            <div class="absolute inset-x-0 bottom-0 p-4 text-ivory">
+              <h4 class="text-2xl leading-tight font-semibold">{title}</h4>
+            </div>
+          </li>
+        ))}
+      </Marquee>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/home/servicios-tabs";
+  import "@/utils/scripts/animations/home/servicios";
+</script>

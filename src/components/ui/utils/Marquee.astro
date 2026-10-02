@@ -1,0 +1,49 @@
+---
+// Generic infinite marquee. Slot: <li> items (they are rendered inside a <ul>).
+// Without JS, or with reduced motion, nothing moves: the row is a plain scrollable,
+// keyboard-focusable region. The loop is built by src/utils/scripts/animations/utils/marquee.ts,
+// which clones the list (aria-hidden, inert, ids stripped) and hides the overflow.
+interface Props {
+  label: string;
+  speed?: number; // px per second
+  direction?: "left" | "right";
+  pauseOnHover?: boolean;
+  class?: string;
+  [attr: `data-${string}`]: unknown;
+}
+
+const {
+  label,
+  speed = 40,
+  direction = "left",
+  pauseOnHover = true,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div
+  data-marquee
+  data-speed={speed}
+  data-direction={direction}
+  data-pause={pauseOnHover}
+  role="region"
+  aria-label={label}
+  tabindex="0"
+  {...rest}
+  class:list={[
+    "overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal data-marquee-active:overflow-hidden data-marquee-active:mask-x-from-97% data-marquee-active:mask-x-to-100%",
+    className,
+  ]}
+>
+  <div data-marquee-track class="flex w-max">
+    <ul data-marquee-set role="list" class="flex shrink-0 gap-3 pr-3">
+      <slot />
+    </ul>
+  </div>
+</div>
+
+<script>
+  import { initMarquee } from "@/utils/scripts/animations/utils/marquee";
+  initMarquee();
+</script>
