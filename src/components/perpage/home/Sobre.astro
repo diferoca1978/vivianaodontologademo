@@ -1,0 +1,140 @@
+---
+import { Image } from "astro:assets";
+import { AUTHORS } from "@/config/authorBio";
+import { COMPANY_INFO } from "@/config/companyInfo";
+import photoClinic from "@/assets/images/aboutme-home2.webp";
+import photoPortrait from "@/assets/images/aboutme-home.webp";
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import CircleCheck from "@/assets/icons/circle-check.svg";
+import ToothLogo from "@/assets/icons/tooth-logo.svg";
+
+// Copy: docs/brief/textos-sitio.md §1 Inicio › Bloque: Sobre la Dra. Viviana. The heading is
+// written here verbatim; the bio and the credentials come from AUTHORS in src/config/authorBio.ts.
+// Layout (references/aboutme-home-reference.png): photo collage on the left, text on the right;
+// below lg it stacks, collage first. The collage is a 4:5 box and every piece in it is placed in
+// percentages, so the overlap keeps its proportions as it scales down:
+//   - large photo (clinic): top-left, 65% wide; a turquoise block peeks out from its lower-left
+//   - small photo (portrait): bottom-right, 50% wide, overlapping the large one
+// The tooth logo sits above the h2 as in CalmaActiva, outside the text block that fades in, so
+// it only gets the draw animation. The h2 is outside that block too: it gets its own word-by-word
+// reveal (SplitText), and data-sobre-title-stop keeps the turquoise full stop inside the
+// "Bogotá" word so the two never split apart.
+// Scroll-reveal hooks (data-sobre-*), animated from src/utils/scripts/animations/home/sobre.ts.
+
+const author = AUTHORS[0];
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal";
+---
+
+<section
+  id="sobre"
+  aria-labelledby="sobre-title"
+  class="relative isolate overflow-hidden bg-ivory"
+>
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:py-24 xl:px-8">
+    <div class="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+      <div class="relative mx-auto aspect-4/5 w-full max-w-md sm:max-w-lg lg:max-w-none">
+        <div
+          aria-hidden="true"
+          class="absolute bottom-5/16 left-0 h-1/3 w-1/4 rounded-2xl bg-turquoise sm:rounded-3xl"
+        ></div>
+
+        <div
+          data-sobre-photo-large
+          class="absolute top-0 left-1/20 aspect-4/5 w-13/20 overflow-hidden rounded-2xl bg-turquoise-light shadow-xl shadow-turquoise-dark/15 sm:rounded-3xl"
+        >
+          <Image
+            src={photoClinic}
+            alt={`${COMPANY_INFO.name}, con tapabocas y guantes, prepara el instrumental en la bandeja de la unidad dental`}
+            widths={[300, 450, 600, 768]}
+            sizes="(min-width: 1280px) 370px, (min-width: 1024px) 30vw, (min-width: 640px) 333px, 65vw"
+            loading="lazy"
+            class="size-full object-cover object-top"
+          />
+        </div>
+
+        <div
+          data-sobre-photo-small
+          class="absolute right-0 bottom-0 aspect-3/4 w-1/2 overflow-hidden rounded-2xl bg-turquoise-light shadow-2xl shadow-turquoise-dark/20 ring-4 ring-ivory sm:rounded-3xl sm:ring-8"
+        >
+          <Image
+            src={photoPortrait}
+            alt={`Retrato de ${COMPANY_INFO.name} sonriendo, sentada en un sillón`}
+            widths={[240, 360, 480, 600]}
+            sizes="(min-width: 1280px) 285px, (min-width: 1024px) 23vw, (min-width: 640px) 256px, 50vw"
+            loading="lazy"
+            class="size-full object-cover"
+          />
+        </div>
+      </div>
+
+      <div class="min-w-0">
+        <ToothLogo
+          data-sobre-logo
+          aria-hidden="true"
+          class="mb-4 size-16 sm:size-20"
+        />
+
+        <h2
+          id="sobre-title"
+          data-sobre-title
+          class="text-4xl leading-tight tracking-tight text-balance sm:text-5xl"
+        >
+          <span class="font-semibold">Más de una década</span>{" "}
+          <span class="font-normal">
+            cuidando sonrisas en Bogotá
+            <span data-sobre-title-stop class="text-turquoise">
+              .
+            </span>
+          </span>
+        </h2>
+
+        <div data-sobre-text class="mt-6">
+          <p class="max-w-xl text-base leading-relaxed text-charcoal/80 sm:text-lg">
+            {author.bio}
+          </p>
+
+          <ul role="list" class="mt-8 space-y-4">
+            {author.credentials.map((credential) => (
+              <li class="flex items-start gap-3">
+                <CircleCheck
+                  aria-hidden="true"
+                  class="size-6 shrink-0 text-turquoise"
+                />
+                <span class="text-base leading-snug font-medium sm:text-lg">
+                  {credential}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="mt-10">
+            <a
+              href={COMPANY_INFO.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={[
+                "group inline-flex items-center gap-4 rounded-full bg-turquoise py-1.5 pr-1.5 pl-7 font-medium whitespace-nowrap text-ivory shadow-lg shadow-turquoise/20 transition-colors duration-300 hover:bg-turquoise-dark motion-reduce:transition-none",
+                focusRing,
+              ]}
+            >
+              Agendar por WhatsApp{" "}
+              <span class="sr-only">(se abre en una pestaña nueva)</span>
+              <span
+                aria-hidden="true"
+                class="flex size-11 items-center justify-center rounded-full bg-ivory text-turquoise-dark"
+              >
+                <ArrowUpRight class="size-4 transition-transform duration-300 group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0" />
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/home/sobre";
+</script>

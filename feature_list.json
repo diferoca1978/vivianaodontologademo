@@ -125,17 +125,28 @@
     },
     {
       "id": "home-sobre",
-      "status": "pending",
+      "status": "done",
       "builders": [
         "front-end-astro"
       ],
-      "nota": "Rendered from AUTHORS in src/config/authorBio.ts. The doctor's photo and the optional quote about Rehabilitación Oral are pending (client-gaps.md).",
+      "nota": "Design reference: references/aboutme-home-reference.png (left: two-photo collage with a turquoise offset block; the reference's circular badge is not built, dropped at review on 2026-10-02, and the tooth logo goes above the h2 as in CalmaActiva instead; right: two-weight h2, body copy, checklist, CTA). Photos (client-supplied, both 1024×1536 portraits): src/assets/images/aboutme-home2.webp (the doctor at work at the dental unit) is the large back photo, like the reference's clinical scene; src/assets/images/aboutme-home.webp (the doctor smiling in an armchair) is the smaller front photo, like the reference's portrait. Copy is rendered from AUTHORS in src/config/authorBio.ts. The optional quote about Rehabilitación Oral (client-gaps.md #10) is not built until the client sends it.",
       "source": "textos-sitio.md §1 Inicio › Bloque: Sobre la Dra. Viviana",
       "acceptance": [
-        "h2 'Más de una década cuidando sonrisas en Bogotá'",
-        "The 'Ejerzo la odontología desde 2014…' paragraph rendered verbatim from the Author bio",
-        "The 4 credentials rendered verbatim from Author.credentials",
-        "No stock or invented photo; any image uses <Image> with a descriptive alt"
+        "Section is src/components/perpage/home/Sobre.astro, rendered on / right after Servicios, with id='sobre' and aria-labelledby pointing at the h2",
+        "h2 'Más de una década cuidando sonrisas en Bogotá' with the two-weight treatment and a turquoise full stop, as in Servicios ('Más de una década' semibold, the rest normal)",
+        "The 'Ejerzo la odontología desde 2014…' paragraph is rendered verbatim from AUTHORS[0].bio, not hardcoded",
+        "The 4 credentials are rendered verbatim from AUTHORS[0].credentials as a <ul> checklist. Each item has a circular turquoise check icon (aria-hidden) imported from @/assets/icons/",
+        "Desktop (lg+) has two columns, the photo collage on the left and the text on the right (reference: references/aboutme-home-reference.png). On mobile it is one column, with the collage above the text, its overlap kept and scaled down, and no horizontal scroll at 375px",
+        "Two-photo collage, as in the reference. The large photo, aboutme-home2.webp, sits at the top-left. The smaller photo, aboutme-home.webp, sits at the bottom-right and overlaps it. Both are rendered with <Image> from astro:assets in rounded frames (object-cover). Each has a distinct descriptive alt naming Dra. Viviana Rodríguez with no invented facts, plus responsive widths/sizes and lazy loading (they are below the fold). No other photo, and no stock or invented image",
+        "A turquoise brand-token rounded block sits offset behind the large photo's lower-left corner, as in the reference",
+        "The reference's circular badge is not built: no badge disc or ring, and nothing in the collage besides the two photos and the turquoise block",
+        "The tooth logo from @/assets/icons/tooth-logo.svg sits above the h2 as in CalmaActiva: same classes (mb-4 size-16 sm:size-20), aria-hidden, left-aligned with the heading, and outside the text block that fades in",
+        "One CTA, 'Agendar por WhatsApp', as a pill button with the arrow-up-right icon in a circle (the reference's 'Schedule Appointment' style). It links to COMPANY_INFO.whatsapp, opens in a new tab and says so for screen readers",
+        "Elements in the reference with no copy in the brief are not built: the script eyebrow, the '25+ Year Of Experiences' stat, the second paragraph and the 'Call Us Now' phone block. Only brief copy appears",
+        "Icons are imported from @/assets/icons/, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only (no hardcoded colors)",
+        "Animation lives in src/utils/scripts/animations/home/sobre.ts (data-sobre-* hooks) with a gsap.matchMedia() reduced-motion branch that sets everything visible (autoAlpha: 1). The two photos and the text column fade in from the bottom via ScrollTrigger, once, with the small photo slightly after the large one",
+        "The h2 is split by words with GSAP SplitText (type 'words'), and each word fades in from below with a stagger, once, when the text column enters the viewport. The bio, credentials and CTA fade in from below right after. The h2 is outside the block that fades as a whole, so the two animations don't overlap. The two-weight spans and the turquoise full stop survive the split, and screen readers still read the full heading. With reduced motion the h2 is not split and is fully visible",
+        "The tooth logo gets the same draw animation as in CalmaActiva: DrawSVGPlugin strokes its paths in, then the fills fade in and the stroke goes back to its authored width. It plays once when the logo enters the viewport, and with reduced motion the logo is left untouched and fully visible. The draw logic moves to a shared helper in src/utils/scripts/animations/utils/ (e.g. draw-tooth-logo.ts), called by both calma-activa.ts and sobre.ts, so it is not duplicated. CalmaActiva's logo animation behaves exactly as before"
       ]
     },
     {
