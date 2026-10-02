@@ -14,10 +14,10 @@ la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
 | Página (feature) | Decisiones | De la clienta (tabla de abajo) |
 | ---------------- | ---------- | ------------------------------ |
 | Todas — decidir **antes de construir la primera sección** | D4 | #6 og-image, #8 aviso legal (footer) |
-| Inicio (`page-home`) | D1, D2, D5 | #1 horario (schema), #2 textos de las 8 tarjetas, #5 fotos · #3 testimonios no bloquea el cierre (la sección espera) |
+| Inicio (`page-home`) | D1, D2, D5 | #2 textos de las 8 tarjetas, #5 fotos |
 | Blanqueamiento (`page-blanqueamiento`) | D2, D3, D5 | #5 fotos |
 | Rehabilitación (`page-rehabilitacion`) | D1, D2, D3, D5 | #4 frase de anestesia digital, #5 fotos |
-| Contacto (`page-contacto`) | D1, D5, D6 | #1 horario, #7 mapa |
+| Contacto (`page-contacto`) | D1, D5 | — (confirmar el horario #1, pero no bloquea) |
 
 ### D1 — Títulos de página vs. `generatePageSEO()`
 
@@ -44,19 +44,28 @@ la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
 ### D2 — Schema que falta en `src/config/seo.ts`
 
 - [ ] Decidido: ___
-- **Problema:** el brief (§6) pide dos cosas que el generador no sabe hacer:
+- **Problema:** el generador no sabe hacer estas cosas, que piden el brief (§6)
+  y la ficha de Google:
   - `Service` en las dos páginas de servicio, con el Dentist como proveedor y
     Bogotá como área. No existe un generador `Service`.
-  - En el nodo Dentist: la especialidad (`medicalSpecialty`) y el horario
-    (`openingHoursSpecification`, cuando llegue). Schema.org no tiene
-    «Rehabilitación Oral» ni «Prostodoncia»; el valor más cercano es
-    `Dentistry`. Los medios de pago (`paymentAccepted`, brief §1) son
-    opcionales.
-- **Qué decides:** si apruebas que redacte la spec (`/spec`) que cubra todo
-  esto, D3 incluida. Tú la revisas y la pasas a `Approved`; ningún agente puede
-  hacerlo.
-- **Bloquea:** `page-blanqueamiento`, `page-rehabilitacion`, y la especialidad
-  del nodo Dentist en `page-home`.
+  - En el nodo Dentist:
+    - La especialidad (`medicalSpecialty`). Schema.org no tiene «Rehabilitación
+      Oral» ni «Prostodoncia»; el valor más cercano es `Dentistry`.
+    - El horario (`openingHoursSpecification`). Los datos ya están en
+      `COMPANY_INFO.openingHours` desde el 2026-10-02.
+    - El nombre de la ficha: `name` = `COMPANY_INFO.listingName` («Consultorio
+      Viviana Rodríguez») y `alternateName` = `COMPANY_INFO.name` («Dra.
+      Viviana Rodríguez»). Ya está decidido (ver «Decided on 2026-10-02»). El
+      dato ya está en `companyInfo.ts`.
+    - Los medios de pago (`paymentAccepted`, brief §1), que son opcionales.
+- **Recomendación:** partirla en dos specs.
+  - La del nodo Dentist primero, porque es pequeña y sus datos ya están.
+  - Después la de `Service` junto con D3.
+- **Qué decides:** si apruebas que se redacte la spec. `/spec` lo corres tú,
+  porque un agente no puede invocarlo. Tú la revisas y la pasas a `Approved`;
+  ningún agente puede hacerlo.
+- **Bloquea:** `page-blanqueamiento`, `page-rehabilitacion`, y en `page-home`
+  la especialidad, el horario y el nombre de la ficha del nodo Dentist.
 
 ### D3 — Fecha de «última actualización» visible en las páginas de servicio
 
@@ -106,7 +115,9 @@ la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
 
 ### D6 — Contacto: la meta description promete «mapa y horarios»
 
-- [ ] Decidido: ___
+- [x] Resuelto (2026-10-02): ya no aplica. El mapa (#7) y el horario (#1,
+  tomado de la ficha de Google) ya existen, así que la description se queda
+  como está en el brief.
 - **Problema:** el horario (#1) y el mapa (#7) siguen pendientes de la clienta.
 - **Opciones, si no llegan antes del lanzamiento:**
   - (a) Esperar a tenerlos para publicar Contacto.
@@ -118,19 +129,53 @@ la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
 
 | # | Missing | Blocks | Brief reference |
 | - | ------- | ------ | --------------- |
-| 1 | **Opening hours.** The brief says not to publish them until confirmed. | `global-footer`, `contacto-datos`, `page-contacto` (its meta description promises "horarios"), Dentist `openingHoursSpecification` | arquitectura §1, §6, §7 · textos §4 |
+| 1 | **Opening hours — tentative since 2026-10-02.** Taken from the Google Business Profile and stored in `COMPANY_INFO.openingHours`: Tue & Thu 2–7 pm · Wed & Sat 8 am–1 pm · Fri 8 am–2 pm · Sun & Mon closed. The user chose to publish them now and correct them if needed. **Still to confirm with the client.** | nothing anymore. `global-footer` was reopened to show them. The Dentist `openingHoursSpecification` waits on D2. | arquitectura §1, §6, §7 · textos §4 |
 | 2 | **1-2 line description for each of the 8 short service cards** (Odontología General, Odontología Estética, Implantes, Coronas en Zirconio, Incrustaciones Dentales, Placas de Bruxismo, Prótesis Removibles, Diseño de Sonrisa) | `home-servicios` | arquitectura §5, §7 |
-| 3 | **3-5 real patient testimonials** (Google reviews), with how each should be attributed | `home-testimonios` | arquitectura §7 · textos §1 |
+| 3 | **Resolved 2026-10-02.** The user chose 5 Google reviews and the signature rule; both are in `docs/source/resenas-google.md`. Confirm the choice with the client. | nothing (`home-testimonios` is unblocked) | arquitectura §7 · textos §1 |
 | 4 | **A sentence mentioning anestesia digital on the Rehabilitación Oral page.** Brief §5 requires it on every service page, but textos §3 never mentions it. | `page-rehabilitacion` | arquitectura §5 · brand.md "Miedos a resolver" |
 | 5 | **Real photos** (the practice, results) | service pages (`home-hero` is unblocked: it uses `Hero-home-reference-opt1.webp`; `home-sobre` is unblocked: the doctor's photos are `aboutme-home.webp` and `aboutme-home2.webp`; the client will supply further images when needed) | brand.md "Principios visuales" · arquitectura §7 |
 | 6 | **Social share image (og-image, 1200×630).** `COMPANY_INFO.image` points to `/images/og-image.png`, which doesn't exist yet, so the strict gate fails. It can be made from #5. | every page's Open Graph / Twitter card | — |
-| 7 | **Map: a Google Maps / Google Business Profile link and/or the practice's coordinates** (lat/long) | `contacto-datos`, `page-contacto` (its meta description promises "mapa"), Dentist `geo` | arquitectura §6 · textos §4 |
+| 7 | **Resolved 2026-10-02.** The Google Business Profile `https://www.google.com/maps?cid=13310363482939215067` is in `COMPANY_INFO.socialMedia.googleBusiness`, so it also goes to `sameAs`. The coordinates 4.6889867, -74.0466053 are in `COMPANY_INFO.business.geo`, so they go to the Dentist `geo`. | nothing | arquitectura §6 · textos §4 |
 | 8 | **Aviso legal / política de tratamiento de datos**: its text, and whether it's its own page. The footer must link to it, and no page for it is in the sitemap. (Colombia: Ley 1581 de 2012.) | `global-footer` | arquitectura §3 |
 | 9 | **Vector logo (SVG).** The palette was taken from the PNG logo, so confirm it against the vector if one exists. The schema logo uses `public/images/logo.png` (a copy of `logobgwhite.png`) for now. | quality only | brand.md "Paleta", "Activos" · arquitectura §7 |
 | 10 | *(optional)* Quote about why she's passionate about Rehabilitación Oral | `home-sobre` | arquitectura §7 |
 | 11 | *(optional)* Postal code | Dentist `address` | — |
 | 12 | *(optional)* Pre-filled WhatsApp message. `COMPANY_INFO.whatsapp` currently opens a chat with no text. | — | — |
 | 13 | *(optional)* Should "llave" and the financing plans appear in the copy? arquitectura §1 lists them, but the payment copy in textos §1 and §4 doesn't. | — | arquitectura §1 |
+
+## Ficha de Google (Google Business Profile) — revisada el 2026-10-02
+
+Dice «Consultorio Viviana Rodriguez», con la categoría Prostodoncista y 5,0 ⭐
+en 9 reseñas. El enlace está en `COMPANY_INFO.socialMedia.googleBusiness`.
+
+- **Teléfono:** verificado. La ficha muestra 302 5445760, el mismo de
+  `COMPANY_INFO.phone`.
+- **Nombre y dirección:** difieren del sitio («Consultorio Viviana Rodriguez»,
+  «Ak 15 #104-30 consultorio 302»). Se decidió no alinear la dirección, y el
+  nombre se cubre con el schema (ver «Decided on 2026-10-02»).
+- **Acciones que la clienta hace en la ficha, fuera del sitio:**
+  - [ ] Agregar «Dentista» como categoría secundaria. Ayuda más con búsquedas
+    como «odontólogo Chicó» o «blanqueamiento Bogotá» que alinear el nombre o
+    la dirección.
+  - [ ] Agregar el sitio web cuando esté publicado. Hoy la ficha no tiene
+    ninguno.
+
+## Decided on 2026-10-02 (Google Business Profile)
+
+- **Testimonials:** the 5 reviews and the signature rule in
+  `docs/source/resenas-google.md`, chosen by the user. There is no `Review` or
+  `AggregateRating` JSON-LD, because Google ignores self-serving reviews.
+- **Opening hours:** the site publishes the profile's hours now and corrects
+  them if the client changes them.
+- **Address:** it stays "Cra 15 # 104-30, Consultorio 302" on the site, even
+  though the profile writes "Ak 15 #104-30 consultorio 302".
+- **Business name in the schema:**
+  - The Dentist node takes `name` "Consultorio Viviana Rodríguez"
+    (`COMPANY_INFO.listingName`) and `alternateName` "Dra. Viviana Rodríguez".
+  - The doctor stays a `Person` through `founders`.
+  - The visible brand and the meta-title suffix stay "Dra. Viviana Rodríguez",
+    so `COMPANY_INFO.name` doesn't change.
+  - It needs the D2 spec, because it changes the generator.
 
 ## Decided at ingest (not in the brief) — 2026-09-30
 
