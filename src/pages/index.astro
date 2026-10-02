@@ -3,6 +3,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import Hero from "@/components/perpage/home/Hero.astro";
 import CalmaActiva from "@/components/perpage/home/CalmaActiva.astro";
 import Servicios from "@/components/perpage/home/Servicios.astro";
+import Sobre from "@/components/perpage/home/Sobre.astro";
 import { generatePageSEO } from "@/config/seo";
 
 const homeSeo = generatePageSEO({
@@ -15,4 +16,5 @@ const homeSeo = generatePageSEO({
   <Hero />
   <CalmaActiva />
   <Servicios />
+  <Sobre />
 </MainLayout>
