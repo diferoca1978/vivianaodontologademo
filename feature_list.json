@@ -175,17 +175,24 @@
       ]
     },
     {
-      "id": "home-ubicacion",
-      "status": "pending",
+      "id": "home-cta-final",
+      "status": "done",
       "builders": [
         "front-end-astro"
       ],
-      "nota": "",
-      "source": "textos-sitio.md §1 Inicio › Bloque: Ubicación",
+      "nota": "Replaces the home-ubicacion feature at the client's request on 2026-10-02. Visual reference: references/cta-home-reference.png. The CTA uses existing client-supplied dental photography as the surrounding collage; no location block is rendered in this slot.",
+      "source": "textos-sitio.md §1 Inicio › CTA final + user request 2026-10-02 (references/cta-home-reference.png)",
       "acceptance": [
-        "h2 'Consultorio en Chicó, norte de Bogotá'",
-        "Address rendered from COMPANY_INFO.business.address as 'Cra 15 # 104-30, Consultorio 302, Bogotá'",
-        "WhatsApp number from COMPANY_INFO.phone, linking to COMPANY_INFO.whatsapp"
+        "Section is src/components/perpage/home/CtaFinal.astro and replaces home-ubicacion in the home section order",
+        "Heading 'Agenda tu valoración y empieza tu tratamiento con calma.'",
+        "Supporting copy is present and communicates personalized dental care in the calm, warm brand voice without inventing a new service or claim",
+        "Primary button 'Escribir por WhatsApp' links to COMPANY_INFO.whatsapp and opens in a new tab with an accessible announcement",
+        "The secondary central element is the tooth-logo.svg from @/assets/icons/tooth-logo.svg, decorative and animated with the same draw treatment used in CalmaActiva",
+        "The section uses a rounded turquoise-light card with subtle abstract brand-token shapes, matching references/cta-reference-home.png without avatars",
+        "The section has no visible address/location block, map, service-image collage, or home-ubicacion copy",
+        "Layout remains usable at 375px with no horizontal scroll; the tooth logo is the only decorative visual",
+        "Colors use only global.css brand tokens; no inline styles or arbitrary Tailwind values",
+        "Any animation lives in src/utils/scripts/animations/home/cta-final.ts and respects prefers-reduced-motion"
       ]
     },
     {
@@ -202,19 +209,6 @@
         "Every answer is visible on the page by default, not collapsed ('FAQ visible en la página, nunca oculta', arquitectura §5)",
         "The '¿Dónde queda el consultorio?' answer reads 'En la Cra 15 # 104-30, Consultorio 302, zona de Chicó, al norte de Bogotá.'",
         "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> built from the same faqs, with text identical to the visible text"
-      ]
-    },
-    {
-      "id": "home-cta-final",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "arquitectura §3 says every page ends with a CTA to Contacto, but textos-sitio §1 (which wins on page content, arquitectura §5) gives a WhatsApp button for Inicio.",
-      "source": "textos-sitio.md §1 Inicio › CTA final",
-      "acceptance": [
-        "Heading 'Agenda tu valoración y empieza tu tratamiento con calma.'",
-        "Button 'Escribir por WhatsApp' links to COMPANY_INFO.whatsapp"
       ]
     },
     {
