@@ -197,16 +197,16 @@
     },
     {
       "id": "home-faq",
-      "status": "pending",
+      "status": "in_progress",
       "builders": [
         "front-end-astro",
         "seo-guide-lines"
       ],
-      "nota": "D5 (answers always open vs accordion) decides the display.",
+      "nota": "Decisión del cliente: las respuestas se muestran colapsadas inicialmente y se abren al activar cada pregunta.",
       "source": "textos-sitio.md §1 Inicio › Preguntas frecuentes + arquitectura-informacion.md §5 (FAQ visible) and §6 (FAQPage)",
       "acceptance": [
         "Renders the 4 faqs with category 'inicio' from src/config/faqs.ts, questions and answers verbatim",
-        "Every answer is visible on the page by default, not collapsed ('FAQ visible en la página, nunca oculta', arquitectura §5)",
+        "Every answer is collapsed by default and opens when its question is activated by click or keyboard",
         "The '¿Dónde queda el consultorio?' answer reads 'En la Cra 15 # 104-30, Consultorio 302, zona de Chicó, al norte de Bogotá.'",
         "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> built from the same faqs, with text identical to the visible text"
       ]

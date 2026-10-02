@@ -1,0 +1,58 @@
+---
+import JsonLd from "@/components/JsonLd.astro";
+import { faqs } from "@/config/faqs";
+import { generateFAQSchema } from "@/config/seo";
+
+const homeFaqs = faqs.filter((faq) => faq.category === "inicio");
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise-dark";
+---
+
+<section id="preguntas-frecuentes" aria-labelledby="faq-title" class="relative isolate">
+  <JsonLd schema={generateFAQSchema(homeFaqs)} />
+
+  <div class="mx-auto max-w-4xl px-4 py-20 sm:py-24 xl:px-8">
+    <div class="max-w-2xl">
+      <p class="mb-4 text-sm font-semibold tracking-widest text-turquoise-dark uppercase">
+        Resolvemos tus dudas
+      </p>
+      <h2 id="faq-title" class="text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl">
+        Preguntas frecuentes
+      </h2>
+    </div>
+
+    <div class="mt-12 divide-y divide-gray-light border-y border-gray-light">
+      {
+        homeFaqs.map((faq) => (
+          <details class="group py-2">
+            <summary
+              class:list={[
+                "flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-4 text-left text-lg font-semibold text-charcoal",
+                "transition-colors duration-300 hover:text-turquoise-dark motion-reduce:transition-none",
+                focusRing,
+              ]}
+            >
+              <span>{faq.question}</span>
+              <span
+                aria-hidden="true"
+                class="shrink-0 text-2xl leading-none font-normal text-turquoise-dark transition-transform duration-300 group-open:rotate-45 motion-reduce:transition-none motion-reduce:group-open:rotate-0"
+              >
+                +
+              </span>
+            </summary>
+            <div data-faq-answer class="overflow-hidden">
+              <p class="max-w-3xl pb-5 pr-10 text-base leading-relaxed text-charcoal/75">
+                {faq.answer}
+              </p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/home/faq";
+</script>
