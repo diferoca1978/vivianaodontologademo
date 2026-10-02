@@ -76,6 +76,9 @@
   --color-ivory: oklch(0.9771 0.0074 80.72); /* Marfil: page background (instead of pure white) */
   --color-charcoal: oklch(0.2264 0 0); /* Carbón: body text and headings (instead of pure black) */
 
+  /* Testimonial cards use the reference's asymmetric, soft-cornered silhouette. */
+  --radius-testimonial: 5rem;
+
   /* Contrast on ivory (WCAG): charcoal passes; gray-neutral ≈3.1:1 (large text only);
      turquoise ≈2.8:1 (fails even for large text). On a turquoise fill use charcoal text (≈5.7:1), not white (≈3.0:1). */
 
