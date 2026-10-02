@@ -24,7 +24,7 @@ export const AUTHORS: Author[] = [
       'Especialista en Rehabilitación Oral desde 2019',
       'Reconocimiento al mejor trabajo de grado de su posgrado',
       'Anestesia digital y escáner intraoral',
-      'Consultorio propio en Chicó desde 2023',
+      'Consultorio particular en Chicó, Bogotá',
     ],
   },
 ];

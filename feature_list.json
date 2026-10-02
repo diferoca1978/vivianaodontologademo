@@ -28,14 +28,14 @@
       "builders": [
         "front-end-astro"
       ],
-      "nota": "Opening hours are PENDING (don't publish until confirmed). The 'Política de privacidad' link ships as a placeholder (href='#' + TODO); its page is the page-privacidad feature, so the footer is no longer blocked on it.",
-      "source": "arquitectura-informacion.md §3 Estructura del sitio › Navegación › Footer + §1 Datos del negocio",
+      "nota": "Reopened on 2026-10-02 to add the opening hours: the user chose to publish the ones on the Google Business Profile (COMPANY_INFO.openingHours) and confirm them with the client later. Everything else was already built. The 'Política de privacidad' link ships as a placeholder (href='#' + TODO); its page is the page-privacidad feature, so the footer is no longer blocked on it.",
+      "source": "arquitectura-informacion.md §3 Estructura del sitio › Navegación › Footer + §1 Datos del negocio + client-gaps.md #1 (hours from the Google Business Profile, 2026-10-02)",
       "acceptance": [
         "Address rendered from COMPANY_INFO.business.address, reading exactly 'Cra 15 # 104-30, Consultorio 302' + Bogotá (single NAP form, brief §1)",
         "Phone/WhatsApp from COMPANY_INFO.phone linking to COMPANY_INFO.whatsapp; email from COMPANY_INFO.email as a mailto: link",
         "Instagram and TikTok links from COMPANY_INFO.socialMedia",
         "A link to /contacto/",
-        "No opening hours rendered while they are pending",
+        "Opening hours rendered from COMPANY_INFO.openingHours, in Spanish, with no hand-written hours outside companyInfo.ts",
         "A 'Política de privacidad' link is rendered in the footer bottom bar (its real target is wired in the page-privacidad feature)",
         "The scaffold 'Footer' stub is gone (harness/lint-customization.sh reports no Footer stub)"
       ]
@@ -155,12 +155,23 @@
       "builders": [
         "front-end-astro"
       ],
-      "nota": "BLOCKED: no real testimonials yet. The brief says 'No inventar testimonios' and asks for 3-5 real Google reviews (arquitectura §7). Don't build this until the client sends them.",
-      "source": "textos-sitio.md §1 Inicio › Bloque: Testimonios + arquitectura-informacion.md §7",
+      "nota": "Unblocked on 2026-10-02. The user chose 5 real Google reviews and the signature rule; both are in docs/source/resenas-google.md and still need the client's confirmation. Card design reference: references/testimonial-card-reference.png (big quote marks overlapping the card's top-left and bottom-right edges, 5 stars, the review, a short divider, then the name with a subtitle). The user dropped the reference's avatar: the signature is the name only, with 'Reseña de Google' as the subtitle where the reference has 'Customer – Dubai'. The reference's orange background, dot grids and circle arc are not built: the section stays ivory like the rest of the home, and the cards take CalmaActiva's surface. Section layout as in CalmaActiva, per the user: a centred header and the five cards in a 3 + 2 grid.",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Testimonios + arquitectura-informacion.md §7 + docs/source/resenas-google.md",
       "acceptance": [
-        "h2 'Pacientes que ya sintieron la diferencia'",
-        "Only testimonials the client supplied, attributed as supplied; zero invented reviews",
-        "No Review or AggregateRating JSON-LD (brief §6 doesn't list it)"
+        "Section is src/components/perpage/home/Testimonios.astro, rendered on / right after Sobre, with id='testimonios' and aria-labelledby pointing at the h2",
+        "Centred h2 'Pacientes que ya sintieron la diferencia' with the same classes as CalmaActiva's h2. No intro paragraph and no tooth logo: the brief gives this block only its title",
+        "Exactly the 5 reviews in docs/source/resenas-google.md, in that order, with their text verbatim (spelling and emojis included); zero invented reviews",
+        "Each card is a <figure>: the review in a <blockquote>, then a <figcaption> with the 'Firma en el sitio' value from docs/source/resenas-google.md as the name (semibold) and 'Reseña de Google' below it as a smaller muted subtitle. No avatar, photo or initials",
+        "Card design follows references/testimonial-card-reference.png: a rounded card with a larger top-left corner radius; a large decorative opening quote mark overlapping the card's top-left edge and a closing one overlapping its bottom-right edge, both turquoise and aria-hidden; a row of 5 stars above the text; a short horizontal divider between the text and the signature",
+        "The 5 stars are icons imported from @/assets/icons/ (aria-hidden) in turquoise, a brand token instead of the reference's yellow, with a visually hidden '5 de 5 estrellas' for screen readers (all 5 chosen reviews are 5-star on Google)",
+        "Cards take CalmaActiva's surface: bg-ivory with shadow-lg shadow-turquoise-dark/30. The reference's orange background, dot grids and circle arc are not built",
+        "Layout as in CalmaActiva: the cards are a <ul role='list'> with 1 column on mobile, 2 on tablet with the fifth card centred at half width, and a 6-col grid on lg where each card spans 2 and the last two sit centred on the second row",
+        "Cards in the same row share the same height, and the divider and signature sit at the bottom of each card whatever the length of its text",
+        "The quote marks that overlap the card edges cause no horizontal scroll at 375px and don't cover the neighbouring cards or the text",
+        "Below the cards, centred, a 'Ver todas las reseñas en Google' link to COMPANY_INFO.socialMedia.googleBusiness, with target='_blank' and rel='noopener noreferrer', that says it opens in a new tab for screen readers",
+        "No Review or AggregateRating JSON-LD (brief §6 doesn't list it, and Google ignores reviews a business marks up about itself)",
+        "Icons imported from @/assets/icons/, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only (no hardcoded colors)",
+        "Animation lives in src/utils/scripts/animations/home/testimonios.ts (data-testimonios-* hooks) with a gsap.matchMedia() reduced-motion branch that sets everything visible (autoAlpha: 1). The cards fade in from the bottom via ScrollTrigger.batch as they enter the viewport, once, as in CalmaActiva"
       ]
     },
     {
@@ -465,15 +476,16 @@
       "builders": [
         "front-end-astro"
       ],
-      "nota": "Opening hours and the map (a Google Maps / Business Profile link or coordinates) are pending (client-gaps.md), although the page's meta description promises both.",
-      "source": "textos-sitio.md §4 Contacto › Datos de contacto",
+      "nota": "The map and the opening hours have been available since 2026-10-02 (client-gaps.md #1, #7). Before building, choose the map's form: a static 'Ver en Google Maps' link (recommended: light, no third-party cookies) or an embedded Google Maps iframe (heavier, and its cookies must be mentioned in the privacy policy).",
+      "source": "textos-sitio.md §4 Contacto › Datos de contacto + client-gaps.md #1, #7 (Google Business Profile, 2026-10-02)",
       "acceptance": [
         "WhatsApp from COMPANY_INFO.phone linking to COMPANY_INFO.whatsapp",
         "Email from COMPANY_INFO.email as a mailto: link (no hand-written address outside companyInfo.ts)",
         "Address from COMPANY_INFO.business.address as 'Cra 15 # 104-30, Consultorio 302, Bogotá'",
         "Payment methods: 'débito, crédito, datáfono y código QR (no EPS ni seguros)'",
         "Instagram and TikTok links from COMPANY_INFO.socialMedia, shown as @dra.vivianarodriguez_",
-        "No opening hours rendered while they are pending; no map until the client supplies its link or coordinates"
+        "Opening hours rendered from COMPANY_INFO.openingHours, in Spanish, with no hand-written hours outside companyInfo.ts",
+        "A map element that opens COMPANY_INFO.socialMedia.googleBusiness, with no hand-written map URL or coordinates outside companyInfo.ts"
       ]
     },
     {
@@ -497,7 +509,7 @@
       "builders": [
         "seo-guide-lines"
       ],
-      "nota": "Before closing: D1 (title — the brief's title already carries its own suffix), D5 (FAQ display), D6 (the meta description promises a map and opening hours, both pending) — client-gaps.md § Decisiones pendientes.",
+      "nota": "Before closing: D1 (title — the brief's title already carries its own suffix), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written.",
       "source": "textos-sitio.md §4 Contacto (Meta title, Meta description) + arquitectura-informacion.md §4",
       "acceptance": [
         "Route src/pages/contacto.astro serves /contacto/",

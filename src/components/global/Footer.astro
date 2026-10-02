@@ -2,17 +2,21 @@
 import { Image } from "astro:assets";
 import { COMPANY_INFO } from "@/config/companyInfo";
 import { MainNavigation } from "@/utils/navigation";
+import { formatOpeningHours } from "@/utils/openingHours";
 import logo from "@/assets/images/logonobg.png";
 import Phone from "@/assets/icons/phone.svg";
 import Mail from "@/assets/icons/mail.svg";
 import MapPin from "@/assets/icons/map-pin.svg";
+import Clock from "@/assets/icons/clock.svg";
 import Instagram from "@/assets/icons/instagram.svg";
 import Tiktok from "@/assets/icons/tiktok.svg";
 import ArrowUp from "@/assets/icons/arrow-up.svg";
 
 // Layout from references/footer-reference.png; content only from the brief (COMPANY_INFO).
-// Opening hours and the aviso legal link are pending (client-gaps.md), so neither renders.
+// Opening hours come from the Google Business Profile, still to be confirmed with the client
+// (client-gaps.md #1). The privacy policy link is a placeholder until page-privacidad exists.
 const { address } = COMPANY_INFO.business.kind === "local" ? COMPANY_INFO.business : { address: undefined };
+const openingHours = formatOpeningHours(COMPANY_INFO.openingHours ?? []);
 
 const socials = [
   { name: "Instagram", href: COMPANY_INFO.socialMedia.instagram, Icon: Instagram },
@@ -128,6 +132,30 @@ const year = new Date().getFullYear();
                   <address class="not-italic text-ivory">
                     {address.street}, {address.city}
                   </address>
+                </div>
+              </li>
+            )
+          }
+          {
+            openingHours.length > 0 && (
+              <li class="flex items-start gap-4">
+                <span class={iconRingClass} aria-hidden="true">
+                  <Clock class="h-5 w-5" />
+                </span>
+                <div class="flex flex-col">
+                  <span id="footer-horario" class="text-sm text-gray-light">Horario</span>
+                  <table aria-labelledby="footer-horario" class="text-left">
+                    <tbody>
+                      {openingHours.map(({ days, hours }) => (
+                        <tr>
+                          <th scope="row" class="py-0.5 pr-4 font-normal text-ivory">
+                            {days}
+                          </th>
+                          <td class="whitespace-nowrap py-0.5 text-gray-light">{hours}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </li>
             )
