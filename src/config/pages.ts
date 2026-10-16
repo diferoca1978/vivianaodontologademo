@@ -5,15 +5,14 @@ import type { PageSeo } from '@shine/seo-core';
 // published. astro.config.mjs imports this file, so it may only import types.
 //
 // keyword: arquitectura-informacion.md §5. title, description and h1: textos-sitio.md, verbatim.
-// pageHead() adds " | Dra. Viviana Rodríguez" unless the title already holds the name, so the
-// home and Rehabilitación titles still wait on client-gaps.md D1.
+// pageHead() adds " | Dra. Viviana Rodríguez" unless the title already holds the name.
 // The privacy page joins once its slug and text are confirmed (feature page-privacidad).
 
 export const PAGES = {
   home: {
     path: '/',
     keyword: 'odontóloga especialista en Bogotá / odontología sin dolor Bogotá',
-    title: 'Odontóloga en Bogotá — Especialista en Rehabilitación Oral',
+    title: 'Odontóloga en Bogotá — Especialista en Rehabilitación Oral | Dra. Viviana Rodríguez',
     description:
       'Odontología de Calma Activa en Bogotá (Chicó). Rehabilitación oral, blanqueamiento y diseño de sonrisa con tecnología sin dolor. Agenda tu cita hoy.',
     h1: 'Odontóloga en Bogotá, especialista en Rehabilitación Oral',
