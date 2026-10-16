@@ -193,7 +193,7 @@
         "The scaffold title 'Home - My Website' is gone",
         "pnpm build passes with the SEO gate green and pnpm check reports 0 errors"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "blanqueamiento-hero",
