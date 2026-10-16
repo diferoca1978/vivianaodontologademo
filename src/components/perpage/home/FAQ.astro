@@ -1,7 +1,16 @@
 ---
+import { COMPANY } from "@/config/company";
 import { faqs } from "@/config/faqs";
 
 const homeFaqs = faqs.filter((faq) => faq.category === "inicio");
+
+// An answer that contains the address links it to the Google Business Profile, as the hero
+// and the footer do. Returns the text before and after the address, or null.
+const street = COMPANY.business.kind === "local" ? COMPANY.business.address?.street : undefined;
+const splitAtAddress = (answer: string): [string, string] | null => {
+  const at = street ? answer.indexOf(street) : -1;
+  return street && at >= 0 ? [answer.slice(0, at), answer.slice(at + street.length)] : null;
+};
 
 const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise-dark";
@@ -20,30 +29,52 @@ const focusRing =
 
     <div class="mt-12 divide-y divide-gray-light border-y border-gray-light">
       {
-        homeFaqs.map((faq) => (
-          <details class="group py-2">
-            <summary
-              class:list={[
-                "flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-4 text-left text-lg font-semibold text-charcoal",
-                "transition-colors duration-300 hover:text-turquoise-dark motion-reduce:transition-none",
-                focusRing,
-              ]}
-            >
-              <span>{faq.question}</span>
-              <span
-                aria-hidden="true"
-                class="shrink-0 text-2xl leading-none font-normal text-turquoise-dark transition-transform duration-300 group-open:rotate-45 motion-reduce:transition-none motion-reduce:group-open:rotate-0"
+        homeFaqs.map((faq) => {
+          const parts = splitAtAddress(faq.answer);
+          return (
+            <details class="group py-2">
+              <summary
+                class:list={[
+                  "flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-4 text-left text-lg font-semibold text-charcoal",
+                  "transition-colors duration-300 hover:text-turquoise-dark motion-reduce:transition-none",
+                  focusRing,
+                ]}
               >
-                +
-              </span>
-            </summary>
-            <div data-faq-answer class="overflow-hidden">
-              <p class="max-w-3xl pb-5 pr-10 text-base leading-relaxed text-charcoal/75">
-                {faq.answer}
-              </p>
-            </div>
-          </details>
-        ))
+                <span>{faq.question}</span>
+                <span
+                  aria-hidden="true"
+                  class="shrink-0 text-2xl leading-none font-normal text-turquoise-dark transition-transform duration-300 group-open:rotate-45 motion-reduce:transition-none motion-reduce:group-open:rotate-0"
+                >
+                  +
+                </span>
+              </summary>
+              <div data-faq-answer class="overflow-hidden">
+                <p class="max-w-3xl pb-5 pr-10 text-base leading-relaxed text-charcoal/75">
+                  {parts ? (
+                    <>
+                      {parts[0]}
+                      <a
+                        href={COMPANY.socialMedia.googleBusiness}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class:list={[
+                          "font-medium text-turquoise-dark underline decoration-turquoise/50 decoration-2 underline-offset-4 transition-colors duration-300 hover:decoration-turquoise motion-reduce:transition-none",
+                          focusRing,
+                        ]}
+                      >
+                        {street}
+                        <span class="sr-only">(ver en Google Maps, se abre en una pestaña nueva)</span>
+                      </a>
+                      {parts[1]}
+                    </>
+                  ) : (
+                    faq.answer
+                  )}
+                </p>
+              </div>
+            </details>
+          );
+        })
       }
     </div>
   </div>
