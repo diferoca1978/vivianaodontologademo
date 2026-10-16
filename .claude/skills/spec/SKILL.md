@@ -95,8 +95,8 @@ In both cases the content follows `specs/TEMPLATE.md`'s order:
    back to Phase 2.
 3. **Scope** (`**In:**` / `**Out:**`, both explicit).
 4. **Files affected** (concrete paths, cross-referenced against
-   `AGENTS.md`'s "If you change X → update Y" table — name the row this
-   spec matches, or say it matches none).
+   `AGENTS.md`'s "Where each thing lives" table and "Spec-first: two
+   lanes" — say whether `AGENTS.md` itself must change).
 5. **Decisions made and discarded** (with brief justification for each).
 6. **Acceptance criteria** (boolean checklist, not aspirational).
 7. **Implementation plan** (numbered steps, each leaving the system

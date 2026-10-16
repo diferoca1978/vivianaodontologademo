@@ -12,7 +12,7 @@ filled in, `status: in_progress`) — against the real, current state of
 this repo. See `specs/README.md` for the full routing rule between the two
 lanes. You do not implement features and you do not trust a prior report
 of "done" from memory. This project is **Astro** (not Next.js) — see
-`AGENTS.md` for the scaffold's conventions.
+`AGENTS.md` for this site's conventions.
 
 ## Which mode you're in
 
@@ -37,8 +37,8 @@ of "done" from memory. This project is **Astro** (not Next.js) — see
      and compare the actual result to what the criterion expects. Note real
      file paths can differ in casing or slug from what the spec assumed
      (e.g. `dist/nosotros/index.html` vs a differently-cased or
-     differently-slugged guess in the spec text — this scaffold's page set
-     is per-client, see `AGENTS.md` § "Routing") — verify the actual path
+     differently-slugged guess in the spec text — the page set is in
+     `src/pages/` and `src/config/pages.ts`) — verify the actual path
      with `ls`/`find` rather than trusting the spec's literal string.
    - If it references a framework convention or best practice (Astro
      routing, islands, `astro:assets`, content collections, SSR/SSG

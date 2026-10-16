@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { COMPANY_INFO } from "@/config/companyInfo";
+import { COMPANY } from "@/config/company";
 import { MainNavigation } from "@/utils/navigation";
 import { formatOpeningHours } from "@/utils/openingHours";
 import logo from "@/assets/images/logonobg.png";
@@ -12,29 +12,29 @@ import Instagram from "@/assets/icons/instagram.svg";
 import Tiktok from "@/assets/icons/tiktok.svg";
 import ArrowUp from "@/assets/icons/arrow-up.svg";
 
-// Layout from references/footer-reference.png; content only from the brief (COMPANY_INFO).
+// Layout from references/footer-reference.png; content only from the brief (COMPANY).
 // Opening hours come from the Google Business Profile, still to be confirmed with the client
 // (client-gaps.md #1). The privacy policy link is a placeholder until page-privacidad exists.
-const { address } = COMPANY_INFO.business.kind === "local" ? COMPANY_INFO.business : { address: undefined };
-const openingHours = formatOpeningHours(COMPANY_INFO.openingHours ?? []);
+const { address } = COMPANY.business.kind === "local" ? COMPANY.business : { address: undefined };
+const openingHours = formatOpeningHours(COMPANY.openingHours ?? []);
 
 const socials = [
-  { name: "Instagram", href: COMPANY_INFO.socialMedia.instagram, Icon: Instagram },
-  { name: "TikTok", href: COMPANY_INFO.socialMedia.tiktok, Icon: Tiktok },
+  { name: "Instagram", href: COMPANY.socialMedia.instagram, Icon: Instagram },
+  { name: "TikTok", href: COMPANY.socialMedia.tiktok, Icon: Tiktok },
 ];
 
 const contactItems = [
   {
     label: "WhatsApp",
-    text: COMPANY_INFO.phone,
-    href: COMPANY_INFO.whatsapp,
+    text: COMPANY.phone,
+    href: COMPANY.whatsapp,
     external: true,
     Icon: Phone,
   },
   {
     label: "Correo",
-    text: COMPANY_INFO.email,
-    href: `mailto:${COMPANY_INFO.email}`,
+    text: COMPANY.email,
+    href: `mailto:${COMPANY.email}`,
     external: false,
     Icon: Mail,
   },
@@ -64,7 +64,7 @@ const year = new Date().getFullYear();
           <Image src={logo} alt="Dra. Viviana Rodríguez — Odontóloga" class="h-14 w-auto" />
         </a>
         <p class="max-w-sm text-sm leading-relaxed text-gray-light">
-          {COMPANY_INFO.description}
+          {COMPANY.description}
         </p>
         <ul class="flex items-center gap-3">
           {
@@ -177,7 +177,7 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="flex flex-col gap-4 py-8 pt-10 text-sm text-gray-light md:flex-row md:items-center md:justify-between">
-      <p>© {year} {COMPANY_INFO.name}. Todos los derechos reservados.</p>
+      <p>© {year} {COMPANY.name}. Todos los derechos reservados.</p>
       {/* TODO: href="#" is a placeholder. It must point to the privacy policy page (política de privacidad), which hasn't been created yet. */}
       <a href="#" class="hover:text-turquoise-light">Política de Privacidad y Tratamiento de Datos </a>
     </div>

@@ -16,7 +16,8 @@ You implement code changes in this repo (Astro + Tailwind 4, animation strategy 
 - Animations (GSAP or vanilla — check `package.json` for `gsap` before assuming either one, see AGENTS.md § "Animation strategy") live exclusively in `src/utils/scripts/animations/`, never inside components. GSAP timelines are wrapped in `gsap.matchMedia()` with a `prefers-reduced-motion: reduce` branch that leaves elements in their final, visible state (`autoAlpha: 1`); vanilla animations guard the same way via `window.matchMedia` or the `motion-reduce:` Tailwind variant.
 - Motion CSS/Tailwind must degrade with the `motion-reduce:` variant.
 - Exactly one `<h1>` per page.
-- Client/config data lives wherever this project's `AGENTS.md` → Knobs map says it does (in this scaffold: `src/config/*` — `companyInfo.ts`, `services.ts`, `faqs.ts`, `authorBio.ts` — and `src/utils/navigation.ts`) — never hardcode client data in a component; always read it from the paths the Knobs map names, not from memory of another project.
+- Client/config data lives where `AGENTS.md` § "Where each thing lives" says it does (`src/config/*` — `company.ts`, `authors.ts`, `pages.ts`, `services.ts`, `faqs.ts` — and `src/utils/navigation.ts`) — never hardcode client data in a component; always read it from those paths, not from memory of another project.
+- A page's title, description and h1 come from `PAGES` in `src/config/pages.ts`; its head and JSON-LD from the `seo` generators (`@shine/seo-core`, see `AGENTS.md` § "SEO rules"). Never write the domain by hand.
 - If you're missing a client data point, check `client-gaps.md` before inventing it.
 
 ### All work goes through one of two lanes before code
@@ -24,17 +25,16 @@ You implement code changes in this repo (Astro + Tailwind 4, animation strategy 
 Before writing any code, determine which lane applies — see `AGENTS.md` §
 "Spec-first" and `specs/README.md` for the full routing rule:
 
-- **Scaffold-level changes** — matches `AGENTS.md` § "Evolving the
-  scaffold" (add server Actions + an email service, swap the animation
-  strategy, add/rename a config file, change folder conventions, or
-  anything else editing the **Invariant** side of the Invariant vs
-  Variable table) — need a `specs/NN-slug.md` covering it with `Status:
-  Approved` on file. No matching Approved spec → stop and tell the
+- **Infrastructure changes** — the full-lane list in `AGENTS.md` §
+  "Spec-first: two lanes" (a dependency or the adapter, server Actions +
+  an email service, add/rename a config file, change folder conventions)
+  — need a `specs/NN-slug.md` covering it with `Status: Approved` on
+  file. No matching Approved spec → stop and tell the
   orchestrator/user a spec is needed first (point at the `/spec` skill or
   `specs/README.md`); do not proceed on a Draft spec or a verbal
   description alone.
 - **Writes to `src/config/`** (client data — `services.ts`, `faqs.ts`,
-  `authorBio.ts`, `companyInfo.ts`, etc.) — need either a matching
+  `authors.ts`, `company.ts`, `pages.ts`, etc.) — need either a matching
   `feature_list.json` entry with `source` **and** `acceptance` both
   filled in (light lane — the data comes from an approved document), or
   an Approved spec (full lane — no document backs it, e.g. inventing a
@@ -78,10 +78,10 @@ you build.
 Other techniques:
 
 - **Layout/styling (Tailwind)** — `tailwind-css-patterns` for utility patterns, responsive, grid/flexbox, spacing.
-- **3D/WebGL (Three.js)** — **only if it's actually in the project**: confirm that `three` exists in `package.json`/`node_modules` AND that a Three.js skill is available (check the skill list or use `ToolSearch`) before using it. If either is missing, **do not invent Three.js code or install the package yourself** — report it to the orchestrator/user as a gap (adding Three.js is an "Evolving the scaffold" change that must first be reflected in `AGENTS.md` § Tech stack).
-- If you detect that the requested animation is Three.js/TSL shaders/WebGPU and complex (custom shaders, performance-critical), don't solve it blindly: report to the orchestrator that it's high-difficulty work and suggest it handle the task itself (escalating to tier `deep`) rather than delegating it to you. See `AGENTS.md` § "Orchestration model".
+- **3D/WebGL (Three.js)** — **only if it's actually in the project**: confirm that `three` exists in `package.json`/`node_modules` AND that a Three.js skill is available (check the skill list or use `ToolSearch`) before using it. If either is missing, **do not invent Three.js code or install the package yourself** — report it to the orchestrator/user as a gap (adding Three.js is a full-lane change, `AGENTS.md` § "Spec-first: two lanes", that must also update `AGENTS.md` § Tech stack).
+- If you detect that the requested animation is Three.js/TSL shaders/WebGPU and complex (custom shaders, performance-critical), don't solve it blindly: report to the orchestrator that it's high-difficulty work and suggest it handle the task itself rather than delegating it to you.
 
-When you finish a non-trivial change, run `pnpm verify` if practical (what it runs: `AGENTS.md` § Commands).
+When you finish a non-trivial change, run `pnpm build` (it runs the SEO gate) and `pnpm check` (see `AGENTS.md` § Commands). If the gate fails, fix the cause; never add a `shineSeo({ ignore })` entry yourself.
 
 ### When invoked from `/spec-impl`
 

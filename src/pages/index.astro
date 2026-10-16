@@ -7,15 +7,13 @@ import Sobre from "@/components/perpage/home/Sobre.astro";
 import Testimonios from "@/components/perpage/home/Testimonios.astro";
 import FAQ from "@/components/perpage/home/FAQ.astro";
 import CtaFinal from "@/components/perpage/home/CtaFinal.astro";
-import { generatePageSEO } from "@/config/seo";
+import { PAGES } from "@/config/pages";
+import { seo } from "@/config/seo";
 
-const homeSeo = generatePageSEO({
-  title: "Home - My Website",
-  description: "Welcome to my website. Explore our content and services.",
-});
+const page = PAGES.home;
 ---
 
-<MainLayout seoProps={homeSeo}>
+<MainLayout head={seo.pageHead(page)} schemas={seo.homeNodes()}>
   <Hero />
   <CalmaActiva />
   <Servicios />

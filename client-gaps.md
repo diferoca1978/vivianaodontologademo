@@ -6,8 +6,12 @@ item is asked for (or decided) before the feature that needs it is built. The
 
 ## Decisiones pendientes (tuyas) — antes de cerrar las páginas
 
-Cada decisión tiene un ID; las `nota` de `feature_list.json` lo citan. Cuando
-la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
+Cada decisión tiene un ID; las descripciones de `feature_list.json` lo citan.
+Cuando la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
+
+Desde el 2026-10-16 el SEO del sitio viene de `@shine/seo-core` (`seo.pageHead()`,
+`seo.homeNodes()`, `seo.businessRef()`…), y el build falla ante cualquier error SEO
+(el gate). Las decisiones de abajo ya están reescritas con esa API.
 
 ### Qué necesita cada página para cerrarse
 
@@ -17,53 +21,65 @@ la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
 | Inicio (`page-home`) | D1, D2, D5 | #2 textos de las 8 tarjetas, #5 fotos |
 | Blanqueamiento (`page-blanqueamiento`) | D2, D3, D5 | #5 fotos |
 | Rehabilitación (`page-rehabilitacion`) | D1, D2, D3, D5 | #4 frase de anestesia digital, #5 fotos |
-| Contacto (`page-contacto`) | D1, D5 | — (confirmar el horario #1, pero no bloquea) |
+| Contacto (`page-contacto`) | D5 | — (confirmar el horario #1, pero no bloquea) |
 
-### D1 — Títulos de página vs. `generatePageSEO()`
+**Orden de construcción:** Contacto conviene primero. Los CTA finales de
+Blanqueamiento y Rehabilitación enlazan a `/contacto/`, y las dos páginas de
+servicio se enlazan entre sí. El gate falla ante un enlace a una página que no
+existe (`url-resolves`), así que esos enlaces se pintan con `isBuilt()`
+(`src/utils/navigation.ts`) mientras su destino esté en `PENDING_PAGES`.
+
+### D1 — Títulos de página vs. `seo.pageHead()`
 
 - [ ] Decidido: ___
-- **Problema:** el generador siempre agrega `" | Dra. Viviana Rodríguez"`.
-  Solo el título de Blanqueamiento encaja en ese patrón:
+- **Problema:** `seo.pageHead()` agrega `" | Dra. Viviana Rodríguez"` salvo
+  que el título ya contenga ese nombre. Con los títulos de textos-sitio.md:
 
-  | Página | Título en textos-sitio.md | Lo que saldría hoy |
-  | ------ | ------------------------- | ------------------ |
-  | Inicio | Odontóloga en Bogotá — Especialista en Rehabilitación Oral (58) | … Oral \| Dra. Viviana Rodríguez (83, demasiado largo) |
+  | Página | Título en textos-sitio.md | Lo que sale |
+  | ------ | ------------------------- | ----------- |
+  | Inicio | Odontóloga en Bogotá — Especialista en Rehabilitación Oral (58) | … Oral \| Dra. Viviana Rodríguez (83: aviso `title-length`, no falla el build) |
   | Blanqueamiento | Blanqueamiento Dental en Bogotá \| Dra. Viviana Rodríguez (56) | igual ✓ |
   | Rehabilitación | Rehabilitación Oral en Bogotá \| Especialista — Dra. Viviana (59) | … Dra. Viviana \| Dra. Viviana Rodríguez (84, nombre doble) |
-  | Contacto | Contacto y Citas \| Dra. Viviana Rodríguez — Odontóloga Bogotá (61) | … Bogotá \| Dra. Viviana Rodríguez (86, nombre doble) |
+  | Contacto | Contacto y Citas \| Dra. Viviana Rodríguez — Odontóloga Bogotá (61) | igual ✓ (61: aviso leve) |
 
 - **Opciones:**
-  - (a) Ajustar esos 3 títulos al patrón `<título> | Dra. Viviana Rodríguez`.
-    Es un cambio de contenido, así que necesita el OK de la clienta.
-  - (b) Permitir que una página pase su título completo. Es un cambio del
-    scaffold (generador en `src/config/seo.ts` y la sección «Core API» de
-    `.claude/skills/seo-guide-lines/SKILL.md`), así que necesita una spec de
-    carril completo aprobada.
-- **Bloquea:** `page-home`, `page-rehabilitacion`, `page-contacto`.
+  - (a) Ajustar los títulos de Inicio y Rehabilitación para que contengan
+    «Dra. Viviana Rodríguez» o quepan con el sufijo. Es un cambio de
+    contenido, así que necesita el OK de la clienta.
+  - (b) Que una página pueda pasar su título completo sin sufijo. Es un cambio
+    de la API del paquete: una spec en `shine-seo-core` y una versión nueva.
+- **Bloquea:** `page-home` (solo el aviso) y `page-rehabilitacion`.
 
-### D2 — Schema que falta en `src/config/seo.ts`
+### D2 — Schema que el paquete no genera
 
 - [ ] Decidido: ___
-- **Problema:** el generador no sabe hacer estas cosas, que piden el brief (§6)
-  y la ficha de Google:
+- **Problema:** `@shine/seo-core` (v0.1.2) no sabe hacer estas cosas, que piden
+  el brief (§6) y la ficha de Google. Su tipo `Company` tampoco tiene
+  `listingName` ni `openingHours`: esos campos viven en el tipo propio de
+  `company.ts` y hoy no llegan al JSON-LD.
   - `Service` en las dos páginas de servicio, con el Dentist como proveedor y
     Bogotá como área. No existe un generador `Service`.
   - En el nodo Dentist:
     - La especialidad (`medicalSpecialty`). Schema.org no tiene «Rehabilitación
       Oral» ni «Prostodoncia»; el valor más cercano es `Dentistry`.
     - El horario (`openingHoursSpecification`). Los datos ya están en
-      `COMPANY_INFO.openingHours` desde el 2026-10-02.
-    - El nombre de la ficha: `name` = `COMPANY_INFO.listingName` («Consultorio
-      Viviana Rodríguez») y `alternateName` = `COMPANY_INFO.name` («Dra.
+      `COMPANY.openingHours` desde el 2026-10-02.
+    - El nombre de la ficha: `name` = `COMPANY.listingName` («Consultorio
+      Viviana Rodríguez») y `alternateName` = `COMPANY.name` («Dra.
       Viviana Rodríguez»). Ya está decidido (ver «Decided on 2026-10-02»). El
-      dato ya está en `companyInfo.ts`.
+      dato ya está en `company.ts`.
     - Los medios de pago (`paymentAccepted`, brief §1), que son opcionales.
-- **Recomendación:** partirla en dos specs.
-  - La del nodo Dentist primero, porque es pequeña y sus datos ya están.
-  - Después la de `Service` junto con D3.
-- **Qué decides:** si apruebas que se redacte la spec. `/spec` lo corres tú,
-  porque un agente no puede invocarlo. Tú la revisas y la pasas a `Approved`;
-  ningún agente puede hacerlo.
+- **Opciones:**
+  - (a) Agregarlo al paquete: una spec en `shine-seo-core` y una versión
+    nueva. El horario y `Service` sirven a cualquier cliente local.
+  - (b) Extenderlo en el proyecto: campos sobre `seo.businessNode()` y un
+    nodo `Service` escrito a mano. Se aparta de la regla «JSON-LD construido
+    con los generadores» de `AGENTS.md`.
+- **Recomendación:** (a), partida en dos specs. Primero la del nodo Dentist,
+  que es pequeña y ya tiene sus datos; después la de `Service` junto con D3.
+- **Qué decides:** dónde va y si apruebas que se redacte la spec. `/spec` lo
+  corres tú, porque un agente no puede invocarlo. Tú la revisas y la pasas a
+  `Approved`; ningún agente puede hacerlo.
 - **Bloquea:** `page-blanqueamiento`, `page-rehabilitacion`, y en `page-home`
   la especialidad, el horario y el nombre de la ficha del nodo Dentist.
 
@@ -101,7 +117,9 @@ la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
 
 ### D5 — FAQ: ¿respuestas siempre abiertas o acordeón?
 
-- [ ] Decidido: ___
+- [ ] Decidido: ___ (Inicio ya está decidido: acordeón colapsado al cargar,
+  por decisión del cliente, en `home-faq`. Falta confirmar si las otras tres
+  páginas siguen igual.)
 - **Problema:** el brief (§5) dice «FAQ visible en la página, nunca oculta».
   En el acceptance lo tomé literal: todas las respuestas abiertas.
 - **Opciones:**
@@ -125,31 +143,49 @@ la tomes, marca la casilla y escribe la respuesta en la línea «Decidido».
     el OK de la clienta) y volver a la original cuando lleguen.
 - **Bloquea:** `page-contacto`.
 
+### D7 — FAQPage en el JSON-LD
+
+- [x] Decidido (2026-10-16): no se emite `FAQPage`. Las preguntas siguen
+  visibles en cada página, sin marcado. Se aparta del brief §6, que lo pedía.
+- **Por qué:** Google dejó de mostrar el resultado enriquecido de FAQ en 2026,
+  y `@shine/seo-core` no tiene generador para él. La FAQ visible es lo que leen
+  Google y los LLM.
+- **Afecta:** `home-faq` (se quitó su `FAQPage`), `blanqueamiento-faq`,
+  `rehabilitacion-faq`, `contacto-faq`.
+
+## Antes del lanzamiento (Shine)
+
+- [ ] **Comprar el dominio.** `vivianaodontologa.com` está en `site` y en
+  `clients.json`, pero el 2026-10-16 no estaba registrado (NXDOMAIN en el
+  registro .com). Se compra en la cuenta de Cloudflare de Shine, con el DNS
+  apuntando a Netlify. Después, en `clients.json` va `"cloudflare": "own"`, y
+  hace falta la regla WAF de `seo-watch` (`CHECKPOINTS.md` §5).
+
 ## Pending from the client
 
 | # | Missing | Blocks | Brief reference |
 | - | ------- | ------ | --------------- |
-| 1 | **Opening hours — tentative since 2026-10-02.** Taken from the Google Business Profile and stored in `COMPANY_INFO.openingHours`: Tue & Thu 2–7 pm · Wed & Sat 8 am–1 pm · Fri 8 am–2 pm · Sun & Mon closed. The user chose to publish them now and correct them if needed. **Still to confirm with the client.** | nothing anymore. `global-footer` was reopened to show them. The Dentist `openingHoursSpecification` waits on D2. | arquitectura §1, §6, §7 · textos §4 |
+| 1 | **Opening hours — tentative since 2026-10-02.** Taken from the Google Business Profile and stored in `COMPANY.openingHours`: Tue & Thu 2–7 pm · Wed & Sat 8 am–1 pm · Fri 8 am–2 pm · Sun & Mon closed. The user chose to publish them now and correct them if needed. **Still to confirm with the client.** | nothing anymore. `global-footer` was reopened to show them. The Dentist `openingHoursSpecification` waits on D2. | arquitectura §1, §6, §7 · textos §4 |
 | 2 | **1-2 line description for each of the 8 short service cards** (Odontología General, Odontología Estética, Implantes, Coronas en Zirconio, Incrustaciones Dentales, Placas de Bruxismo, Prótesis Removibles, Diseño de Sonrisa) | `home-servicios` | arquitectura §5, §7 |
 | 3 | **Resolved 2026-10-02.** The user chose 5 Google reviews and the signature rule; both are in `docs/source/resenas-google.md`. Confirm the choice with the client. | nothing (`home-testimonios` is unblocked) | arquitectura §7 · textos §1 |
 | 4 | **A sentence mentioning anestesia digital on the Rehabilitación Oral page.** Brief §5 requires it on every service page, but textos §3 never mentions it. | `page-rehabilitacion` | arquitectura §5 · brand.md "Miedos a resolver" |
 | 5 | **Real photos** (the practice, results) | service pages (`home-hero` is unblocked: it uses `Hero-home-reference-opt1.webp`; `home-sobre` is unblocked: the doctor's photos are `aboutme-home.webp` and `aboutme-home2.webp`; the client will supply further images when needed) | brand.md "Principios visuales" · arquitectura §7 |
-| 6 | **Social share image (og-image, 1200×630).** `COMPANY_INFO.image` points to `/images/og-image.png`, which doesn't exist yet, so the strict gate fails. It can be made from #5. | every page's Open Graph / Twitter card | — |
-| 7 | **Resolved 2026-10-02.** The Google Business Profile `https://www.google.com/maps?cid=13310363482939215067` is in `COMPANY_INFO.socialMedia.googleBusiness`, so it also goes to `sameAs`. The coordinates 4.6889867, -74.0466053 are in `COMPANY_INFO.business.geo`, so they go to the Dentist `geo`. | nothing | arquitectura §6 · textos §4 |
+| 6 | **Social share image (og-image, 1200×630).** `COMPANY.image` points to `/images/og-image.png`, which doesn't exist yet, so the SEO gate warns (`asset-missing`) on every page. It can be made from #5. | every page's Open Graph / Twitter card | — |
+| 7 | **Resolved 2026-10-02.** The Google Business Profile `https://www.google.com/maps?cid=13310363482939215067` is in `COMPANY.socialMedia.googleBusiness`, so it also goes to `sameAs`. The coordinates 4.6889867, -74.0466053 are in `COMPANY.business.geo`, so they go to the Dentist `geo`. | nothing | arquitectura §6 · textos §4 |
 | 8 | **Aviso legal / política de tratamiento de datos**: its text, and whether it's its own page. The footer must link to it, and no page for it is in the sitemap. (Colombia: Ley 1581 de 2012.) | `global-footer` | arquitectura §3 |
 | 9 | **Vector logo (SVG).** The palette was taken from the PNG logo, so confirm it against the vector if one exists. The schema logo uses `public/images/logo.png` (a copy of `logobgwhite.png`) for now. | quality only | brand.md "Paleta", "Activos" · arquitectura §7 |
 | 10 | *(optional)* Quote about why she's passionate about Rehabilitación Oral | `home-sobre` | arquitectura §7 |
 | 11 | *(optional)* Postal code | Dentist `address` | — |
-| 12 | *(optional)* Pre-filled WhatsApp message. `COMPANY_INFO.whatsapp` currently opens a chat with no text. | — | — |
+| 12 | *(optional)* Pre-filled WhatsApp message. `COMPANY.whatsapp` currently opens a chat with no text. | — | — |
 | 13 | *(optional)* Should "llave" and the financing plans appear in the copy? arquitectura §1 lists them, but the payment copy in textos §1 and §4 doesn't. | — | arquitectura §1 |
 
 ## Ficha de Google (Google Business Profile) — revisada el 2026-10-02
 
 Dice «Consultorio Viviana Rodriguez», con la categoría Prostodoncista y 5,0 ⭐
-en 9 reseñas. El enlace está en `COMPANY_INFO.socialMedia.googleBusiness`.
+en 9 reseñas. El enlace está en `COMPANY.socialMedia.googleBusiness`.
 
 - **Teléfono:** verificado. La ficha muestra 302 5445760, el mismo de
-  `COMPANY_INFO.phone`.
+  `COMPANY.phone`.
 - **Nombre y dirección:** difieren del sitio («Consultorio Viviana Rodriguez»,
   «Ak 15 #104-30 consultorio 302»). Se decidió no alinear la dirección, y el
   nombre se cubre con el schema (ver «Decided on 2026-10-02»).
@@ -171,11 +207,11 @@ en 9 reseñas. El enlace está en `COMPANY_INFO.socialMedia.googleBusiness`.
   though the profile writes "Ak 15 #104-30 consultorio 302".
 - **Business name in the schema:**
   - The Dentist node takes `name` "Consultorio Viviana Rodríguez"
-    (`COMPANY_INFO.listingName`) and `alternateName` "Dra. Viviana Rodríguez".
+    (`COMPANY.listingName`) and `alternateName` "Dra. Viviana Rodríguez".
   - The doctor stays a `Person` through `founders`.
   - The visible brand and the meta-title suffix stay "Dra. Viviana Rodríguez",
-    so `COMPANY_INFO.name` doesn't change.
-  - It needs the D2 spec, because it changes the generator.
+    so `COMPANY.name` doesn't change.
+  - It waits on D2: the package does not emit `listingName` or `alternateName`.
 
 ## Decided at ingest (not in the brief) — 2026-09-30
 
@@ -187,7 +223,7 @@ en 9 reseñas. El enlace está en `COMPANY_INFO.socialMedia.googleBusiness`.
 - **Single NAP address form:** "Cra 15 # 104-30, Consultorio 302", chosen by the
   user. The home FAQ answer "¿Dónde queda el consultorio?" changed from
   "Carrera 15" to "Cra 15".
-- **Business name** (`COMPANY_INFO.name`): "Dra. Viviana Rodríguez", matching
+- **Business name** (`COMPANY.name`): "Dra. Viviana Rodríguez", matching
   the meta-title suffix the brief uses.
 - **Color token names:** `turquoise`, `turquoise-light`, `gray-neutral`,
   `gray-light`, `ivory`, `charcoal`, with the values from brand.md.

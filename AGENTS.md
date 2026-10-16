@@ -1,580 +1,202 @@
 # AGENTS.md
 
-Guidance for any coding agent — including Claude Code and the `front-end-astro`
-and `seo-guide-lines` skills — when working in this repository. This is the
-single, agent-agnostic source of truth (`CLAUDE.md` is just a pointer here).
-
-> **This repo is a boilerplate (scaffold).** It is cloned once per client (via
-> the provisioning script) and then _dressed_ to that client's brand and
-> content. Before changing anything, read **Invariant vs Variable** below: it
-> tells you what is the fixed skeleton (never edit per client) and what are the
-> per-client knobs (edited every time).
->
-> **Do not assume infrastructure that is not in this repo.** This scaffold has
-> **no** headless CMS, **no** server actions, **no** email service, and **no**
-> blog. Verify by reading the files — never describe features from memory of
-> another client project.
+Instructions for any coding agent working in this repository. `CLAUDE.md` only points
+here.
 
 ## What this is
 
-A reusable Astro static-site scaffold for small-business / landing sites, plus a
-lightweight **harness**: a file-based workflow that turns a client brief into a
-finished site, section by section, verifiably.
+The website of **Dra. Viviana Rodríguez** (dentist, Rehabilitación Oral, Bogotá): an Astro
+site whose SEO core comes from the `@shine/seo-core` package (absolute URLs, head tags,
+JSON-LD, robots.txt and a build gate). Host: **Netlify**. Domain:
+**vivianaodontologa.com**, already in `astro.config.mjs` but not registered yet (see
+`client-gaps.md`).
+
+The package's README (`node_modules/@shine/seo-core/README.md`) documents its API and
+every rule the gate checks, for the exact version this site installs.
 
 ## Commands
 
-```bash
-pnpm dev        # dev server at localhost:4321
-pnpm build      # production build to ./dist/
-pnpm preview    # preview the build
-pnpm check      # astro check (type/diagnostics on .astro)
-pnpm verify     # ./init.sh — astro check + build + SEO check + customization lint (the gate)
-node harness/check-seo.mjs --url https://<domain> --report   # SEO check of a live site, report only
-pnpm prettier --write .   # formatting (no eslint configured)
+```sh
+pnpm dev                                              # dev server at localhost:4321
+pnpm build                                            # build + the SEO gate: fails on any SEO error
+pnpm check                                            # astro check (types and .astro diagnostics)
+pnpm preview                                          # preview the build
+pnpm exec check-seo --url https://vivianaodontologa.com   # the gate's rules against the live site
+pnpm prettier --write .                               # formatting (no eslint)
 ```
 
-There is no test runner. For a static site, **`pnpm verify` is the test suite**:
-if it builds and type-checks, most breakage is already excluded. **`pnpm
-verify` is on-demand, not run automatically** — only run it when the user
-explicitly asks (e.g. "run verify", "check it builds"). Do not run it by
-default after every feature or as a silent step before marking something done.
-**One standing exception:** a branch that upgrades a dependency across a major
-version (e.g. `astro`, `typescript`, the adapter) must run `pnpm verify` and
-get it passing **before merging** — see the major-version row in "If you
-change X → update Y" below.
+There is no test runner: `pnpm build` (with the gate) and `pnpm check` are the test suite.
 
-## Tech stack (as actually installed — see package.json)
+## Tech stack (see `package.json`)
 
-- **Astro 7** — static site generator, file-based routing.
-- **TypeScript 6** — pinned to `^6` on purpose: `astro check` (step 1 of
-  `pnpm verify`) does not support TypeScript 7.0, and `astro build` does not
-  type-check, so without the pin the gate stops catching type errors. Do not
-  raise it until `astro check` supports TypeScript 7 or Astro ships a stable
-  replacement for it — `astro check` is slated for deprecation in a future
-  Astro release, so revisit the pin then.
-- When adding Actions or content collections, import `z` from `astro/zod` —
-  never from `astro:content`, whose re-export is deprecated.
-- **Tailwind CSS 4** — via `@tailwindcss/vite`. **No `tailwind.config.js`** —
-  the theme is defined inline with `@theme` in `src/styles/global.css`.
-- **Lenis** (smooth scroll, `src/utils/scripts/lennis.js`) +
-  **GSAP 3 as the default animation strategy** — per-section scripts in
-  `src/utils/scripts/animations/`. GSAP is a **per-client knob**, not a hard
-  invariant: some clients run **vanilla** (Tailwind transitions + plain TS,
-  no animation library) instead. See **Knobs map** → "Animation strategy" and
-  § "Animation strategy — GSAP (default) or vanilla" below before assuming
-  either one.
-- **astro-seo** + **@astrojs/sitemap** — SEO meta + auto sitemap.
-- **@astrojs/netlify** — deploy adapter (Netlify).
+- **Astro 7**, static output, with the `@astrojs/netlify` adapter.
+- **TypeScript 6**, pinned on purpose: `astro check` refuses TypeScript 7.
+  `pnpm-workspace.yaml` (`update.ignoreDeps`) keeps `pnpm up --latest` from raising it.
+  Never let `astro check` install `@astrojs/check` on its own.
+- **Tailwind CSS 4** through `@tailwindcss/vite`. No `tailwind.config.js`: the theme is
+  `@theme` in `src/styles/global.css`.
+- **`@shine/seo-core`** (pinned to a git tag) and **`@astrojs/sitemap`**.
+- **GSAP 3** and **Lenis** (`src/utils/scripts/lennis.js`) for animation and smooth scroll.
+- When adding Actions or content collections, import `z` from `astro/zod`.
 
-## Architecture (real — verify against the tree, don't assume)
+## Where each thing lives
 
-### Routing — `src/pages/`, Spanish slugs
+| What | Where |
+|---|---|
+| Domain and trailing-slash policy | `astro.config.mjs` (`site`, `trailingSlash: 'always'`) |
+| Business data (name, contact, address, logo, profiles, hours, WhatsApp) | `src/config/company.ts` |
+| People (the doctor, her credentials) | `src/config/authors.ts` |
+| SEO of every page (title, description, h1, keyword, `noindex`) | `src/config/pages.ts` |
+| The SEO generators, set up once | `src/config/seo.ts` |
+| Absolute URLs | `src/utils/url.ts` (`siteUrl()`, `mediaUrl()`) |
+| Services and FAQ copy | `src/config/services.ts`, `src/config/faqs.ts` |
+| Navigation, and the pages not built yet | `src/utils/navigation.ts` |
+| Brand colors and fonts | `src/styles/global.css` (`@theme`) and the fonts in `astro.config.mjs` |
+| Animations | `src/utils/scripts/animations/` |
+| The brief (content source of truth) | `docs/brief/`, plus `docs/source/` (reviews, privacy policy draft) |
+| What is pending, done and delivered | `feature_list.json` |
+| The launch checklist | `CHECKPOINTS.md` |
+| What the brief did not answer, and open decisions | `client-gaps.md` |
 
-`/` → `index.astro`, plus `404.astro`.
-`robots.txt` and `llms.txt` are generated by `src/pages/robots.txt.ts` and
-`src/pages/llms.txt.ts`; the sitemap is automatic.
-(The actual page set is **per client** — see the brief.)
+Components: `src/components/global/` (navbar, footer), `src/components/perpage/<page>/`
+(sections of one page) and `src/components/ui/` (primitives, grouped as
+`ui/<category>/`). PascalCase file names. Route files in `src/pages/` are lowercase
+kebab-case Spanish slugs.
 
-Route files in `src/pages/` are lowercase, kebab-case Spanish slugs.
-`siteUrl()` refuses an uppercase page path, and `check-seo` fails an uppercase
-page URL (`url-lowercase`).
+**Fonts** are spread over three files (Astro Fonts API): `astro.config.mjs` `fonts[]`
+(`name` + `provider`), the `--font-*` family in `global.css` `@theme`, and the
+`<Font cssVariable>` in `src/layouts/MainLayout.astro`. The `cssVariable` name links the
+three; keep it stable. Swapping a font in a slot touches the first two; adding or removing
+a slot touches all three.
 
-### Components — `src/components/`
+## SEO rules (these fail silently if ignored)
 
-- `global/` — layout-level (NavBar, Footer).
-- `perpage/<page>/` — page-specific sections (e.g. `home/Hero.astro`).
-- `ui/` — reusable primitives. Today it holds only `WhatsApp.astro`; group new
-  primitives under `ui/<category>/`.
-- `SeoHead.astro` — injects astro-seo meta + JSON-LD schemas.
-- `JsonLd.astro` — serializes and escapes one JSON-LD block. A section
-  component uses it for its own schema.
+- **Every absolute URL comes from `siteUrl()` or `mediaUrl()`.** Never write the domain
+  by hand. Internal links may be relative, but in the canonical form, trailing slash
+  included.
+- **A page's SEO lives in `pages.ts`.** The page renders `PAGES.x.h1` and passes `PAGES.x`
+  to `seo.pageHead()`. `noindex: true` there is the only way to keep a page out of the
+  index and the sitemap.
+- **Keywords come from the brief.** If an indexable page has none, ask; never invent one.
+- **JSON-LD only through `<MainLayout schemas={…}>`** (which hands them to the package's
+  `<SeoHead>`), built with the `seo` generators: the full business node only on the home
+  (`seo.homeNodes()`), `seo.businessRef()` elsewhere, breadcrumbs only when they are
+  visible. Mark up only what the page shows and what is true. No `FAQPage`, `HowTo`,
+  `SearchAction`, or self-serving reviews: the FAQs stay visible on the page, without
+  markup (decided on 2026-10-16, `client-gaps.md`).
+- **A link to a page that is not built yet fails the gate** (`url-resolves`). Its path
+  stays in `PENDING_PAGES` (`src/utils/navigation.ts`) until the page exists; the feature
+  that builds the page removes it.
+- **The gate is never disabled.** Its only valve is `shineSeo({ ignore })` in
+  `astro.config.mjs`, one entry per finding, each with its reason, and only with the
+  maintainer's ok.
+- **Data the brief does not give stays as `[CLIENTE]`** (in code and copy) and goes to
+  `client-gaps.md`. `site` is already the real domain, so any `[CLIENTE]` that reaches
+  the HTML fails the build.
 
-> Note: there is **no `landing/` folder**. If a skill suggests one, use
-> `perpage/<page>/` instead. PascalCase component files.
+## If the build fails on the gate
 
-### Config — `src/config/` (the single source of truth for content)
+The report names the rule, the page and the URL. The rules are explained in the
+package README ("The rules") and defined in `node_modules/@shine/seo-core/check-seo/rules.mjs`.
+Fix the cause in the page, `pages.ts` or the config. Do not work around a rule.
 
-- `companyInfo.ts` — `COMPANY_INFO` (company data and the `business` axis,
-  `remote` or `local`) and `LOCALE`. Data only.
-- `seo.ts` — generators only: `generatePageSEO()`, `generateNotFoundSEO()` and
-  the JSON-LD generators. Absolute URLs come from `siteUrl()` in
-  `src/utils/url.ts`, which reads `site` — never hardcode the domain. A media
-  field (an image or a video) may hold an `https://` URL on a CDN, through
-  `mediaUrl()`.
-- `services.ts` — service / specialty catalog (typed `Service[]`).
-- `faqs.ts` — FAQ content (structured for AEO).
-- `authorBio.ts` — people (authors and founders), for E-E-A-T. One `Author`
-  model; each author's `slug` gives the Person `@id`.
+## Done and delivered
 
-### Layout & styling
+- **Done:** `pnpm build` passes with the gate green, `pnpm check` is clean and the
+  feature's `acceptance` is met. Set its `status` to `done` in `feature_list.json`.
+- **Delivered:** the change is on `main`, deployed, and
+  `pnpm exec check-seo --url https://vivianaodontologa.com` is clean on the real domain.
+  Only then set `status` to `delivered`. This applies to the launch and to every later
+  change to the live site.
+- Each feature carries `id`, `description`, `source` (the brief section its content comes
+  from), `acceptance` (a checklist) and `status` (`pending`, `in_progress`, `done` or
+  `delivered`). `in_progress` is set by `/spec-impl`, one feature at a time.
+- Short branches, merged soon.
+- Agents do not commit or push in this repo: the maintainer does.
 
-- `src/layouts/MainLayout.astro` — wires `SeoHead`, NavBar, Footer, Lenis;
-  takes `seoProps` + optional `schemas[]`. `<html lang>` comes from `LOCALE`.
-  It emits the home schemas (the business, the `WebSite` and the founders) on
-  `/` only, and no JSON-LD at all when `seoProps.noindex` is true.
-- `src/styles/global.css` — brand tokens in **OKLCH** inside `@theme {}`
-  (`--color-*`) and fonts (`--font-jakarta`, `--font-nunito`). Reference them
-  with Tailwind utilities (`bg-soft-bg`, `text-purple-accent`, `font-jakarta`).
+## Building conventions
 
-### Path alias
+- `<meta name="viewport" content="width=device-width, initial-scale=1">` in the layout.
+- Colors and fonts only from the `@theme` tokens in `src/styles/global.css`, through
+  Tailwind utilities. No colors written by hand in components, no inline `style=""`, no
+  arbitrary values (`h-[220px]`). Tailwind 4 gradients: `bg-linear-to-*`.
+- Props typed with an `interface`. Every internal import through the `@/` alias
+  (`@/*` → `./src/*`).
+- Images with `<Image>` or `<Picture>` from `astro:assets`, always with `alt` (`alt=""`
+  only for a decorative image). SVG icons imported from `@/assets/icons/`, never inline
+  `<svg>`.
+- Never hardcode client data in a component: read it from `src/config/*`.
+- No `scrollbar-hide` on `<html>`.
+- `public/` holds the favicon, the logo (at least 112 px) and the `og-image`.
+- The Netlify adapter stays while the site may need server code (the booking spec);
+  every page is prerendered.
 
-`@/*` → `./src/*`. Use it for every internal import.
+## Animation strategy: GSAP
 
----
+This site uses **GSAP** (chosen at ingest, `client-gaps.md`). Before writing an animation,
+use the `gsap-*` skill that matches the technique (`gsap-core`, `gsap-timeline`,
+`gsap-scrolltrigger`, `gsap-plugins`, `gsap-utils`, `gsap-performance`). No
+framework-specific GSAP API (`useGSAP`): this site has no UI framework.
 
-## Invariant vs Variable
+- **Where:** all animation code lives in `src/utils/scripts/animations/`, never inside a
+  component. One folder per route (`home/`, `blanqueamiento-dental/`,
+  `rehabilitacion-oral/`, `contacto/`), `global/` for what every page shares (navbar,
+  footer, floating button) and `utils/` for helpers. One file per section, named after
+  it (`home/hero.ts`), imported by that section's component.
+- **Reduced motion is mandatory:** every timeline is wrapped in `gsap.matchMedia()` with a
+  `(prefers-reduced-motion: reduce)` branch that leaves elements in their final, visible
+  state (`autoAlpha: 1`). CSS motion degrades with the `motion-reduce:` variant. Content
+  is never left hidden or mid-animation.
+- **Division of labor:** `front-end-astro` builds the markup without animation; the
+  animation goes afterwards in its utils file.
 
-The whole point of the scaffold is this boundary.
+## Spec-first: two lanes
 
-|            | **Invariant** (skeleton — do not edit per client)                                                                                                   | **Variable** (per-client knobs)                                                                                |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| **What**   | Folder structure, component contracts, SEO machinery (`SeoHead`, astro-seo, JSON-LD generators), `robots.txt.ts`, build/verify tooling, conventions | Brand tokens, page content, which pages/sections exist, company data, language                                 |
-| **Where**  | `layouts/`, `SeoHead.astro`, `JsonLd.astro`, generator logic in `config/seo.ts`, `src/utils/url.ts`, `src/utils/llms.ts`, `src/utils/scripts/`, `init.sh`, this file's conventions | `global.css @theme`, `config/*` data, `navigation.ts`, `LOCALE` in `config/companyInfo.ts`, `src/pages/*` |
-| **Filled** | Once, in the scaffold                                                                                                                               | Every client, from the brief                                                                                   |
+Every change goes through one of two lanes before code. `specs/README.md` has the full
+routing rule.
 
-### Knobs map — one home per per-client thing (never duplicate)
+- **Light lane:** the answer is already written in an approved document (the brief,
+  `docs/source/`, a decision in `client-gaps.md`). Add or update the `feature_list.json`
+  entry with `source` and `acceptance`, then run `/spec-impl feature <id>`.
+- **Full lane:** no document answers it (an infrastructure change, a design decision,
+  anything client-facing that would be invented, a change to the package's API). Run
+  `/spec` to draft `specs/NN-slug.md` with `Status: Draft`. A human reviews it and sets
+  `Status: Approved`; no agent does. Only then does implementation start.
+- Changes that need the full lane: adding or removing a dependency or the adapter, a
+  dependency's major version, server Actions or an email service, a new or renamed file
+  in `src/config/`, a change to folder conventions, and anything the package should do
+  (that is a spec in `shine-seo-core`, not here).
 
-| Knob                                           | Its home(s)                                                                                                                                                                                    | Source                                     |
-| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
-| Colors (visual tokens)                         | `src/styles/global.css` → `@theme` (only)                                                                                                                                                      | Brand guide / logo (NOT the content brief) |
-| Fonts                                          | **3 files** (Astro Fonts API): `astro.config.mjs` `fonts[]` (`name` + `provider`) · `src/styles/global.css` `@theme` (`--font-*` family) · `src/layouts/MainLayout.astro` `<Font cssVariable>` | Brand guide                                |
-| Site URL | `astro.config.mjs` → `site` (only — `src/utils/url.ts` reads it via `import.meta.env.SITE`; never hardcode the domain) | Provisioning script · `CHECKPOINTS.md` §1 |
-| Company data (name, phone, email, WhatsApp, social profiles, business kind and address) | `src/config/companyInfo.ts` → `COMPANY_INFO` | Brief + `client-gaps.md` |
-| Services / specialties                         | `src/config/services.ts`                                                                                                                                                                       | Brief                                      |
-| FAQs                                           | `src/config/faqs.ts`                                                                                                                                                                           | Brief                                      |
-| Author / credentials                           | `src/config/authorBio.ts`                                                                                                                                                                      | Brief                                      |
-| Animation strategy (GSAP vs. vanilla)          | `package.json` (`gsap` present or not) · `.claude/skills/gsap-*` (present or removed) · `AGENTS.md` § "Animation strategy" · `CHECKPOINTS.md`                                                  | Brief (`brand.md`) or asked at intake — see "Animation strategy" below · `client-gaps.md` if not specified |
-| Navigation                                     | `src/utils/navigation.ts`                                                                                                                                                                      | Brief (§ nav spec)                         |
-| `lang` / locale                                | `src/config/companyInfo.ts` → `LOCALE` (`<html lang>`, `og:locale` and `inLanguage` derive from it)                                                                                           | Default `es-CO`                            |
-| Pages                                          | `src/pages/*.astro`                                                                                                                                                                            | Brief (§ sitemap)                          |
-| Model per role (subagent tier→model)           | `harness/runtimes/*.json` (`tiers` map, per runtime) · `agents/*.md` (`tier:` field, never a raw model string)                                                                                | Scaffold-level, not per-client — see `harness/README.md` |
-| Modules                                        | `harness/modules/<name>/` (source, in this repo) · installed into a client via `~/scripts/add-module.sh` → files land in their normal `src/` location, tracked in the client's `MODULES.md` | `harness/modules/README.md`; run manually only when a client's brief needs the module |
+Both lanes end the same way: `spec-verifier` runs every criterion for real against the
+build (in the light lane, it also confirms the text cited in `source` landed), then a
+human commits.
 
-> **Colors** live **only** in `global.css` because Tailwind 4 reads them there
-> to generate utilities. Never mirror colors into a `.ts` file — that creates
-> drift.
->
-> **Fonts** are a 3-file knob (the Astro Fonts API spreads the definition):
->
-> - **Swap** a font in an existing slot (heading/body) → edit `astro.config.mjs`
->   (`name` + `provider`) **and** the `--font-*` family in `global.css`.
->   `MainLayout` does **not** change (the `cssVariable` is unchanged).
-> - **Add/remove** a font slot → also add/remove its `<Font cssVariable>` in
->   `MainLayout` and its `@theme` token in `global.css`.
-> - The `cssVariable` name is the link across all three files — keep it stable.
+### Skill routing
 
----
-
-## The harness — how to build a client site
-
-1. **Brief in** → the client brief goes in `docs/brief/`: `arquitectura-informacion.md`
-   (architecture + copy) and `brand.md` (colors, fonts, logo, photos). **Both
-   files are mandatory** — always read both when ingesting, never omit either
-   one. If one is missing, stop and ask for it before proceeding (see
-   `docs/brief/README.md`).
-2. **Ingest** → read **both** brief files and populate `config/*` +
-   `navigation.ts` + `global.css` `@theme` (brand tokens), generate
-   `feature_list.json` (one feature per section/page). For each feature,
-   write `source` — the exact brief section it comes from (e.g.
-   `arquitectura-informacion.md §2.1`) — and derive `acceptance` from that
-   section plus any applicable `CHECKPOINTS.md` items. **Nothing the brief
-   doesn't answer gets invented here** — anything missing goes to
-   `client-gaps.md` and gets asked about, not filled with a plausible
-   guess (see "`feature_list.json`" above for the hard rule this enforces).
-   Also write `client-gaps.md` listing what the brief does NOT cover
-   (phone, email, brand palette, fonts, logo, photos…). **Also resolve the
-   animation strategy now**: if `brand.md` doesn't state one, **ask**
-   "GSAP (scroll/timeline-heavy animation) or vanilla (lightweight
-   Tailwind transitions)?" before building the first animated section —
-   never assume GSAP by default just because the scaffold ships with it.
-   Record the answer in `client-gaps.md` if it wasn't in the brief. See
-   "Animation strategy" below.
-3. **Build, one feature at a time** → only **one** feature may be `in_progress`,
-   and only once its `source` and `acceptance` are both filled in — see
-   "`feature_list.json`" above. Route each feature to its builder skill
-   (below), construct it against `config/*` + the brief, never hardcode
-   data.
-4. **Verify, then mark done** → run `spec-verifier` in feature mode against
-   the entry's `acceptance` checklist (see "Spec-first" below), then set
-    the feature to `status: "done"` in `feature_list.json` and commit (the
-   git log is the build log — see _Where state & memory live_).
-
-Implementation of both lanes is orchestrated by `/spec-impl`, which delegates
-each code-writing step to the `coder` subagent one step per call and keeps the
-branch, diff review, pauses, and ambiguity handling in the main session.
-
-`pnpm verify` (see **Commands**) is **not** run as a
-default step in this loop — only run it when the user explicitly asks for it.
-
-If a feature needs data that is still in `client-gaps.md`, **ask for it before
-building** — do not silently invent it. A marked placeholder is acceptable only
-if explicitly chosen; the customization lint will flag it.
-
-### Where state & memory live (no `progress/` files)
-
-The harness keeps **no** in-repo progress journal. Three stores divide the job —
-do **not** recreate a `progress/` folder:
-
-- **`feature_list.json`** — the in-repo build _state_: every feature and its
-  `status` (`pending` / `in_progress` / `done`, only one `in_progress`). The
-  authoritative queue; travels with the clone.
-- **git history** — the durable, in-repo _completion log_. One feature ≈ one
-  commit, so `git log` answers "what was built, when" with no hand-kept file.
-- **Engram** (agent memory) — the cross-session _narrative_: decisions, why an
-  approach was chosen, gotchas. Project-scoped, lives in the agent's memory (not
-  the repo); surfaced with `mem_search` / `mem_context`.
-
-> All work goes through spec-driven design (SDD) first — see "Spec-first:
-> all work goes through one of two lanes" below. Neither lane adds a
-> fourth store: the full lane's pre-change sign-off artifact is a spec in
-> `specs/` that a human must flip to `Approved` before implementation
-> starts; the light lane's is `source` + `acceptance` on the
-> `feature_list.json` entry itself — two extra fields on the store that
-> was already here, not a new store. Neither tracks build status,
-> completion, or narrative differently from what the three stores above
-> already do. See `specs/README.md`.
-
-### Skill routing — the two builders work at different altitudes
-
-- **`front-end-astro`** = the **section/component** builder (visual). Fires once
-  per section. Owns HTML structure, Tailwind, aesthetics, using `global.css`
-  tokens. Its constraints are part of the acceptance criteria (see below).
-- **`seo-guide-lines`** = the **page-level** SEO + data layer. Fires at page
-  assembly and during ingest. Owns `<title>`/meta, JSON-LD schemas,
-  `COMPANY_INFO`, `faqs`, E-E-A-T, and the **one-`<h1>`-per-page** rule.
-
-**Order per page:** build every section with `front-end-astro`, then close the
-page with `seo-guide-lines`. A page feature that needs both lists both in
-`builders`.
-
-### `feature_list.json`
-
-This is the **light lane** of spec-driven design — see "Spec-first: all
-work goes through one of two lanes" below and `specs/README.md`.
-
-```jsonc
-// each feature: { id, status, builders, nota, source, acceptance }
-// status: "pending" | "in_progress" | "done"   (only ONE in_progress at a time)
-// builders: subset of ["front-end-astro", "seo-guide-lines"]
-// source: REQUIRED — the brief section (or other approved document) this
-//   feature's content comes from, e.g. "arquitectura-informacion.md §2.1".
-// acceptance: REQUIRED — boolean checklist derived from source + any
-//   applicable CHECKPOINTS.md items, e.g. ["h1 matches copy in §2.1"].
-```
-
-**Hard rule:** a feature cannot move to `in_progress` without both `source`
-and `acceptance` filled in. No document behind a feature means it isn't
-light-lane work — write a full spec with `/spec` instead.
-
-### Acceptance — see `CHECKPOINTS.md`
-
-A section/page is "done" only when it passes the `front-end-astro` constraints
-and the `seo-guide-lines` checklist in `CHECKPOINTS.md`. `pnpm verify` is an
-on-demand gate the user can request at any point (e.g. before production) —
-see `CHECKPOINTS.md` for the pre-production checklist.
-
-## Orchestration model
-
-> The specialists are generated for the runtimes that support them — today
-> **Claude Code** and **opencode** (see `harness/bind-runtime.sh` and
-> `harness/README.md`). The `Skill`-tool invocation part of **Animation
-> strategy** below is Claude-Code-specific too; the strategy decision itself
-> is agent-agnostic. Other coding agents (with no generated agent directory)
-> can ignore the subagent-routing parts and do the work directly.
-
-**The main session is the _orchestrator_.** Its job is to understand the
-request, classify it, decide **delegate vs. handle inline**, route delegated
-work to the right specialist subagent, and synthesize the results — not to do
-all the heavy lifting itself. The specialists are authored once in `agents/`
-and generated per runtime (`.claude/agents/` for Claude Code, `.opencode/agent/`
-for opencode) by `harness/bind-runtime.sh` — both generated outputs are
-committed, so they travel with every clone.
-
-### Orchestrator model — recommended, not forced
-
-- **Default: tier `standard`.** Routing, delegate-vs-inline decisions, and
-  light inline work are not `deep`-tier-hard, and the specialists already run
-  on cheaper tiers (see table) — a `deep`-tier orchestrator would be the
-  single most expensive part of every session for a small-business landing
-  site.
-- **Escalate to tier `deep` manually** — using whatever model-switching
-  command your runtime provides — only for genuinely hard work that stays in
-  the main session: ambiguous architecture, complex planning, or advanced
-  Three.js/shader work `coder` flags back up. See `harness/runtimes/*.json`
-  for what tier `deep` resolves to on your runtime.
-- This is a **recommendation**, not a hard pin. The scaffold ships **no**
-  `.claude/settings.json` forcing a model, so each clone/user keeps their own
-  preference. Don't add one just to enforce this.
+- **`front-end-astro`** builds each section or component (structure, Tailwind, the
+  `global.css` tokens). Once per section.
+- **`seo-guide-lines`** closes each page: its `pages.ts` entry, its JSON-LD, the one-`<h1>`
+  rule, internal links and AI-search readiness.
+- Order per page: every section with `front-end-astro`, then the page with
+  `seo-guide-lines`.
 
 ### Delegate vs. handle inline
 
-Delegation is **not free**: every subagent starts cold and re-derives context
-(re-reads `AGENTS.md`, re-explores the repo), so a delegated task usually burns
-_more_ total tokens than doing it inline — you trade tokens for context
-isolation. Route accordingly:
+`/spec-impl` delegates each code step to the `coder` subagent (`.claude/agents/coder.md`)
+and keeps the branch, the diff review and the pauses in the main session. A subagent
+starts cold, so delegate only substantial, self-contained work; small edits, lookups and
+any visual work that depends on an attached image stay inline. No subagent commits or
+pushes.
 
-- **Delegate** when the work is substantial and self-contained enough that the
-  cold-start cost amortizes: building a whole section/feature, a multi-file
-  refactor/review, a real research dive, a git commit flow.
-- **Handle inline** (in the orchestrator session) for small, context-bound work
-  where a round-trip would cost more than it saves: general questions,
-  single-file reads, quick lookups, a one-line tweak, and **any visual work
-  that needs an attached image** (subagents can't receive image attachments).
+## Contact forms
 
-### Routing table — one specialist per request type
-
-| Request type                                                                          | Delegate to  | Tier     |
-| ------------------------------------------------------------------------------------- | ------------ | -------- |
-| git: stage, commit, push, open a PR                                                   | `git-ops`    | fast     |
-| save or recall memory/context/past decisions (Engram)                                 | `memory-ops` | fast     |
-| bug fix, CSS/Tailwind tweak, isolated component, new feature, visual work (no image)  | `coder`      | standard |
-| multi-file refactor, PR/code review, architecture decisions                           | `reviewer`   | standard |
-| web research, external documentation (Context7), browsing with agent-browser          | `research`   | standard |
-
-### Non-negotiables
-
-- Never let a subagent commit or push without the user explicitly asking for it
-  **in the current turn** — a past approval does not carry over.
-- Never let `git-ops` push or open a PR unless the user requested that specific
-  action this turn (see `git-ops.md`).
-- Image-based visual work stays in the orchestrator session; do not try to
-  delegate it to `coder` (it can't see the image).
-- Never implement work that needs SDD (see "Spec-first: all work goes
-  through one of two lanes") without that lane's authorization on file —
-  a `specs/NN-slug.md` whose `Status` is `Approved` for the full lane, or
-  a `feature_list.json` entry with `source` **and** `acceptance` both
-  filled in for the light lane. A Draft, an approval on a different spec,
-  or a feature missing either field does not authorize it. This gate
-  binds the orchestrating session as much as any subagent: a user asking
-  you to implement it this turn does not substitute for that
-  authorization. If it's still missing, stop and ask a human to provide
-  it first.
-
-## Conventions for writing components (must-follow)
-
-- Props typed with an `interface`; import everything via `@/`.
-- Use `global.css` tokens via Tailwind utilities — **never hardcode colors**.
-- Images: `<Image>`/`<Picture>` from `astro:assets`, never raw `<img>`; `alt`
-  required.
-- SVG icons: import from `@/assets/icons/`, never inline `<svg>` markup.
-- No inline `style=""`, no arbitrary values (`h-[220px]`).
-- Tailwind 4 gradients: `bg-linear-to-*` (never the v3 `bg-gradient-to-*`).
-- Animations (GSAP **or** vanilla — see "Animation strategy" below) live in
-  `src/utils/scripts/animations/` — do **not** add animation logic inside
-  components. Every animation **must** respect `prefers-reduced-motion`: GSAP
-  timelines via `gsap.matchMedia()` (the `reduce` branch sets elements to
-  their final, visible state, `autoAlpha: 1`); vanilla animations via
-  `window.matchMedia('(prefers-reduced-motion: reduce)')` or the
-  `motion-reduce:` Tailwind variant — either way, content must never be left
-  hidden or mid-animation for these users. See the `front-end-astro` skill for
-  the canonical pattern.
-- CSS/Tailwind motion must degrade with the `motion-reduce:` variant.
-- Exactly one `<h1>` per page (it is the page's primary entity/keyword).
-- JSON-LD lives next to what it describes. A section that shows what a schema
-  describes (for example a FAQ) emits that schema itself, with `JsonLd.astro`,
-  next to the content. Page-level schemas, such as a `BreadcrumbList`, go
-  through `MainLayout`'s `schemas`. The business node and the `WebSite` come
-  only from `MainLayout`, on `/`.
-
----
-
-## Evolving the scaffold
-
-The scaffold is meant to grow (add Resend/Actions, swap the animation library,
-add page types…). One rule keeps the harness honest:
-
-> **This file and the skills are read as truth.** When you change
-> infrastructure, update the contract **in the same change** — never leave docs
-> stale "for later". `pnpm verify` checks the _code_; it does **not** check
-> whether this file or the skills are still accurate. That is on you.
-
-### If you change X → update Y
-
-Every row below also requires an **Approved** spec in `specs/` before you
-start (see "Spec-first" subsection below) — the "Update…" column is what
-must land in the *same* change once implementation starts.
-
-| If you…                                             | Update…                                                                                                                                                                                                                                                     |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Add a dependency / remove one                       | `package.json` · **Tech stack** above                                                                                                                                                                                                                       |
-| Upgrade a dependency across a major version (e.g. `astro`, `typescript`, the adapter) | `package.json` · `pnpm-lock.yaml` · the version named in **Tech stack** · run `pnpm verify` on the branch and get it passing **before merging** — the one standing exception to on-demand `verify` |
-| Add server Actions + an email service (e.g. Resend) | `astro.config.mjs` `env.schema` · `src/actions/` · `prerender = false` on the page · **Tech stack** · **Architecture** · remove the "no server actions / no email" warning at the top · add the API key + recipient to the **Knobs map** + `client-gaps.md` · follow § Contact forms (manual, per client) |
-| Choose vanilla instead of GSAP for a client (or vice versa) | `pnpm remove gsap` (or add it) · delete/restore `.claude/skills/gsap-*` · **Knobs map** row · `client-gaps.md` (record the decision) · `CHECKPOINTS.md` motion checklist — see "Animation strategy" below for the full checklist              |
-| Add/rename a config file in `src/config/`           | **Config** section · **Knobs map**                                                                                                                                                                                                                          |
-| Add, remove or rename a generator in `src/config/seo.ts`, a helper in `src/utils/url.ts` or `JsonLd.astro`, or change its signature | `.claude/skills/seo-guide-lines/SKILL.md` § "Core API" · every reference in `seo-guide-line.md` |
-| Add, remove or rename a builder in `src/utils/llms.ts`, or change what `src/pages/llms.txt.ts` includes | this file's Routing section, if the route's own shape changes · `harness/check-seo.mjs`'s `llms-links-resolve` rule, if the same-site link shape changes |
-| Add or change a module under `harness/modules/<name>/` | `harness/modules/README.md`, if the directory or `patch.json` convention itself changes |
-| Add, remove or rename a core extension-point marker (`// add-module:<point-id>`) | `harness/modules/README.md`'s registry table · every module's `patch.json` that targets it |
-| Add a new font slot                                 | the 3 font files (see Knobs map)                                                                                                                                                                                                                            |
-| Change folder conventions                           | **Components** section · the structure note in `front-end-astro` SKILL.md                                                                                                                                                                                   |
-| Add or change a subagent role, its tier, or add a runtime | `agents/<role>.md` · `harness/runtimes/*.json` · re-run `bind-runtime.sh` for **every** runtime · commit the regenerated output · **Orchestration model** routing table |
-| Change a workflow skill or agent (`.claude/skills/spec*`, `agents/*`, `.claude/agents/*`, `.opencode/agent/*`) | **Development workflow** / **Orchestration model** above · `specs/README.md` § "Workflow" |
-
-> **Not a gotcha (verify before you assume it is one):** `front-end-astro`
-> already detects GSAP dynamically — its Step 1 reads `package.json` and
-> branches motion guidance on whether `gsap` is actually a dependency, it
-> does not hardcode an assumption. `coder.md` must follow the same pattern
-> (see "Animation strategy" below) — the actual failure mode seen in the wild
-> was `AGENTS.md` **prose** (Tech stack, Conventions, this table) going stale
-> after `gsap` was removed from `package.json`, not the skill misbehaving.
-
-### Scaffold-level vs per-client
-
-- **Standard for every client** (e.g. you always use Resend) → make the change in
-  the **scaffold** (this repo) so it propagates to every future clone.
-- **One client only** → make it in the **client repo**; that client's `AGENTS.md`
-  legitimately diverges from the base. Do **not** push client-specific
-  infrastructure back into the boilerplate.
-
-After any such change, confirm this file still matches reality before
-committing. `pnpm verify` remains on-demand — only run it if the user asks.
-
-### Contact forms (manual, per client)
-
-The scaffold has **no** contact module. When a client needs a contact form, it
-is built by hand in the client repo, and it must follow these rules:
-
-1. Recipient and sender addresses come only from environment variables, with
-   no default in code. If one is missing, sending fails with a visible error.
-2. Each client gets its own Resend API key. Keys are never shared between
-   clients.
-3. The form has a honeypot field. The server silently discards any submission
-   that fills it.
-4. The server validates every field for maximum length and format, the phone
-   included.
+1. Recipient and sender addresses come only from environment variables, with no default
+   in code. If one is missing, sending fails with a visible error.
+2. Each client has its own email API key (Resend). Keys are never shared.
+3. The form has a honeypot field. The server silently discards any submission that
+   fills it.
+4. The server validates every field for length and format, the phone included.
 5. Escape all visitor input before inserting it into the email HTML.
-6. Never send email to the address the visitor typed. Use it only as
-   `replyTo`.
+6. Never send email to the address the visitor typed. Use it only as `replyTo`.
 7. If sending fails, the visitor sees an error, never a success message.
-8. Add Cloudflare Turnstile only once real spam appears. A honeypot does not
-   stop direct calls to the endpoint. Turnstile costs a secret environment
-   variable, server-side verification and a mention in the privacy policy.
-
-### Modules — installed on demand with `add-module`
-
-The scaffold ships no optional modules by default — `setup-astro-harness.sh`
-(run via the `new-customer` shell function) strips `harness/modules/` from
-every clone, same as it drops `.git`. Modules live in `harness/modules/<name>/` in **this** repo, ready for a client to opt
-into once its brief actually needs one (the blog module is the first; its
-design record is `specs/09-blog-module.md`, which exists only in the scaffold
-repo — the same script deletes the scaffold's numbered specs from every clone).
-
-A client gets a module by running `~/scripts/add-module.sh <name>
-<path-to-client-project>` — it copies the module's files into the client's
-own `src/` tree and patches the core's marked extension points to wire them
-in. Installed modules are recorded in the client project's own `MODULES.md`.
-
-See `harness/modules/README.md` for the extension-point marker convention
-(`// add-module:<point-id>`), the `patch.json` shape, and the current
-registry of extension points that exist in the core.
-
-### Spec-first: all work goes through one of two lanes
-
-Every change in the table above — and any other change of the same shape:
-multi-file, infra-level, expensive to revert — plus any client-data or
-design decision with no source document behind it, goes through
-spec-driven design (SDD) before implementation starts. SDD has **two
-lanes** that share implementation and verification and differ only in the
-input artifact — see `specs/README.md` for the full routing rule:
-
-- **Full lane** — no document already answers the question (a scaffold
-  change, a design decision, inventing anything client-facing). Run
-  `/spec` to draft `specs/NN-slug.md` from `specs/TEMPLATE.md`, `Status:
-  Draft`. A human reviews it and flips `Status` to `Approved` — never in
-  the same turn that wrote the Draft, and no agent may do this itself.
-  Only then does `coder` (or whoever implements) touch the files — see
-  `.claude/agents/coder.md`. Asked to implement with no `Approved` spec on
-  file, it stops and asks for one first.
-- **Light lane** — the answer is already written in an approved document
-  (a brief, client-supplied content). Add or update an entry in
-  `feature_list.json` with `source` and `acceptance` filled in, then run
-  `/spec-impl feature <id>`. A feature cannot move to `in_progress`
-  without both fields.
-
-Both lanes end the same way: `spec-verifier` runs every criterion for real
-against the build (for the light lane, that includes confirming the exact
-text cited in `source` actually landed), then a human commits. No agent
-marks a spec `Approved` or a feature `done`.
-
-This is not new ceremony for routine per-client work with a source
-document behind it — that is exactly what the light lane is for.
-
-### Adapting the harness onto a pre-existing (non-scaffold) project
-
-The spec-gate above assumes the target already has this scaffold's
-conventions. To retrofit the harness onto an existing Astro project that
-was **not** cloned from here (a legacy client codebase), run
-`install-harness.sh <path-to-project>` — kept outside this repo, alongside
-the client-provisioning script, so it never gets copied into new client
-clones — to copy the reusable pieces (subagents, the spec-gate,
-`CLAUDE.md`, `harness/check-seo.mjs`) into it, then invoke the
-`adapt-harness` skill from inside that project — it explores the
-project's real code, writes its own `AGENTS.md` from what it finds (not
-this file's paths), and proposes migration specs through the same
-mechanism as `/spec`. One-time onboarding step, not an ongoing tool — see
-`.claude/skills/adapt-harness/SKILL.md` for the full workflow.
-
----
-
-## Animation strategy — GSAP (default) or vanilla
-
-The scaffold ships **two supported animation strategies**, not one hardcoded
-choice. Which one a given client uses is a **per-client knob**, resolved once
-at ingest (see harness step 2) and never silently assumed:
-
-| | **GSAP** (default) | **Vanilla** |
-| --- | --- | --- |
-| When | Client needs scroll-driven/timeline-heavy motion (pinning, sequenced reveals, complex easing) | Client needs light micro-interactions only (accordions, dropdowns, hover/fade) — leaner dependency footprint |
-| Dependency | `gsap` in `package.json` | none — plain TS + Tailwind transitions |
-| Skills used | `gsap-core`, `gsap-timeline`, `gsap-scrolltrigger`, `gsap-plugins`, `gsap-utils`, `gsap-performance` (installed in `.claude/skills/`) | none — hand-written, following the **Conventions** section above |
-| Reduced motion | `gsap.matchMedia()` with a `(prefers-reduced-motion: reduce)` branch (see pattern below) | `window.matchMedia('(prefers-reduced-motion: reduce)')` guard, or the Tailwind `motion-reduce:` variant |
-
-**Before writing any animation, know which strategy this client uses.** Check
-`package.json` for `gsap` (source of truth — not this file's prose, which can
-go stale). If it's ambiguous or this is the first animated feature and the
-brief never said, **ask** — don't assume GSAP just because it's the scaffold
-default. This check applies to **whoever writes the animation** — the
-orchestrator session inline, or the **`coder`** subagent when delegated; the
-operational routing lives in `.claude/agents/coder.md` § "Skill routing when
-building animations" — keep the two in sync.
-
-**If GSAP**: before writing code by hand, invoke (with the `Skill` tool) the
-`gsap-*` skill that matches the technique, picking only the ones that apply.
-(`coder` can load skills because it inherits all tools; a restrictive `tools:`
-list must still include `Skill`.)
-
-`gsap-react` and `gsap-frameworks` are **deliberately not installed** — this
-scaffold is vanilla-framework (no React/Vue/Svelte) regardless of animation
-strategy. Do not reach for `useGSAP` or any framework-specific GSAP API.
-
-**If vanilla**: do not invoke the `gsap-*` skills or write `gsap.matchMedia()`
-— write plain TS in `src/utils/scripts/animations/` using class toggles /
-Tailwind transitions, per the **Conventions** section above.
-
-**Switching a client from one strategy to the other** is a real, supported
-path, not an afterthought — follow the "Evolving the scaffold" table row
-above in full (uninstall/install `gsap`, remove/restore the skill folder,
-update the Knobs map + `client-gaps.md` + `CHECKPOINTS.md`) so this file and
-the skills stay true. Skipping any of those steps is exactly how a past
-client repo ended up with `AGENTS.md` still describing GSAP after it had
-already been removed from `package.json`.
-
-**This file overrides the GSAP skills where they differ** (GSAP branch only).
-The skills inform technique; the harness owns placement and accessibility:
-
-- **Where**: all GSAP lives in `src/utils/scripts/animations/`, never inside
-  components, never in a framework.
-  Organize it **by page**, one subfolder per route: `home/`,
-  `blanqueamiento-dental/`, `rehabilitacion-oral/`, `contacto/`; anything shared
-  across pages (navbar, footer, floating button) goes in `global/`. One file per
-  section, named after it (e.g. `home/hero.ts`), imported by that section's
-  component.
-- **Reduced motion is mandatory**: every timeline must be wrapped in
-  `gsap.matchMedia()` with a `prefers-reduced-motion: reduce` branch that lands
-  elements in their final, visible state (`autoAlpha: 1`). `gsap-core` documents
-  `matchMedia`; the harness makes it a hard requirement (also in `CHECKPOINTS.md`
-  and the `front-end-astro` skill).
-- **Division of labor**: `front-end-astro` builds the markup (no animation,
-  either strategy) → the `gsap-*` skills inform the animation that `coder`
-  (or the orchestrator) writes in the utils file → this contract dictates
-  where it goes and that it respects reduced motion.
+8. Add Cloudflare Turnstile only once real spam appears.

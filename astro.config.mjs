@@ -7,10 +7,13 @@ import netlify from '@astrojs/netlify';
 
 import sitemap from '@astrojs/sitemap';
 
+import shineSeo from '@shine/seo-core/integration';
+import { sitemapFilter } from '@shine/seo-core/config';
+import { PAGES } from './src/config/pages.ts';
+
 // https://astro.build/config
 export default defineConfig({
-  // Placeholder — the provisioning script rewrites this per client
-  // (sed s|site: 'https://vivianaodontologa.com'|...|). Required by robots.txt.ts and @astrojs/sitemap.
+  // The client's domain. Every absolute URL comes from it through siteUrl() (src/utils/url.ts).
   site: 'https://vivianaodontologa.com',
 
   // Every page URL ends in '/'; siteUrl() in src/utils/url.ts builds them the same way.
@@ -40,5 +43,6 @@ export default defineConfig({
   },
 
   adapter: netlify(),
-  integrations: [sitemap()]
+  // The SEO gate goes last: it reads the sitemap that @astrojs/sitemap writes at the end of the build.
+  integrations: [sitemap({ filter: sitemapFilter(PAGES) }), shineSeo()]
 });

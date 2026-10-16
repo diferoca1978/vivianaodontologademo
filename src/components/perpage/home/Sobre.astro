@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import { AUTHORS } from "@/config/authorBio";
-import { COMPANY_INFO } from "@/config/companyInfo";
+import { AUTHORS } from "@/config/authors";
+import { COMPANY } from "@/config/company";
 import photoClinic from "@/assets/images/aboutme-home2.webp";
 import photoPortrait from "@/assets/images/aboutme-home.webp";
 import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
@@ -9,7 +9,7 @@ import CircleCheck from "@/assets/icons/circle-check.svg";
 import ToothLogo from "@/assets/icons/tooth-logo.svg";
 
 // Copy: docs/brief/textos-sitio.md §1 Inicio › Bloque: Sobre la Dra. Viviana. The heading is
-// written here verbatim; the bio and the credentials come from AUTHORS in src/config/authorBio.ts.
+// written here verbatim; the bio and the credentials come from AUTHORS in src/config/authors.ts.
 // Layout (references/aboutme-home-reference.png): photo collage on the left, text on the right;
 // below lg it stacks, collage first. The collage is a 4:5 box and every piece in it is placed in
 // percentages, so the overlap keeps its proportions as it scales down:
@@ -46,7 +46,7 @@ const focusRing =
         >
           <Image
             src={photoClinic}
-            alt={`${COMPANY_INFO.name}, con tapabocas y guantes, prepara el instrumental en la bandeja de la unidad dental`}
+            alt={`${COMPANY.name}, con tapabocas y guantes, prepara el instrumental en la bandeja de la unidad dental`}
             widths={[300, 450, 600, 768]}
             sizes="(min-width: 1280px) 370px, (min-width: 1024px) 30vw, (min-width: 640px) 333px, 65vw"
             loading="lazy"
@@ -60,7 +60,7 @@ const focusRing =
         >
           <Image
             src={photoPortrait}
-            alt={`Retrato de ${COMPANY_INFO.name} sonriendo, sentada en un sillón`}
+            alt={`Retrato de ${COMPANY.name} sonriendo, sentada en un sillón`}
             widths={[240, 360, 480, 600]}
             sizes="(min-width: 1280px) 285px, (min-width: 1024px) 23vw, (min-width: 640px) 256px, 50vw"
             loading="lazy"
@@ -111,7 +111,7 @@ const focusRing =
 
           <div class="mt-10">
             <a
-              href={COMPANY_INFO.whatsapp}
+              href={COMPANY.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               class:list={[

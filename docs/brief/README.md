@@ -1,47 +1,24 @@
-# docs/brief/ — client brief drop zone
+# docs/brief/: the client brief
 
-Put the client brief here, then tell Claude Code: **"ingiere el brief"**.
+The content source of truth for this site. Three files, all required:
 
-## What goes here
+| File | What it holds | Where it lands |
+|---|---|---|
+| `arquitectura-informacion.md` | Business data, site structure, navigation, and the **SEO table** (one row per page: slug, keyword, intent, title, description, h1) | `src/config/company.ts`, `authors.ts`, `pages.ts`, `feature_list.json` |
+| `textos-sitio.md` | The copy of every page, section by section (`## 1. Home (/)`, `### Hero`…) | The pages and components; each feature's `source` cites a section of it |
+| `brand.md` | Value proposition, tone, palette, fonts, logo, photos, and whether the site needs animation | `src/styles/global.css` (`@theme`), the fonts, `public/` |
 
-Both files below are **mandatory** — the harness must always ingest both.
-Never skip or omit either one, even if a request only mentions one of them.
+This site's brief predates that layout: the SEO table (`arquitectura-informacion.md` §5)
+holds the keyword and the intent, and each page's meta title, meta description and h1 are
+in `textos-sitio.md`. `docs/source/` holds material the client supplied later (the Google
+reviews, the privacy policy draft).
 
-- `arquitectura-informacion.md` — site architecture (sitemap, URLs, nav/footer
-  spec) + copy per page and section. This is the **content source of truth**.
-- `brand.md` — brand input: color palette (hex/oklch), fonts, logo, photos,
-  and (optional) **animation strategy** — say explicitly if this client needs
-  GSAP (scroll/timeline-heavy animation) or is fine with vanilla (lightweight
-  Tailwind transitions, no animation library). If you don't state one, the
-  agent will ask before building the first animated section rather than
-  assume the scaffold's GSAP default — see `AGENTS.md` § "Animation
-  strategy".
+Rules:
 
-If either file is missing, **stop and ask for it** before ingesting — do not
-proceed with only one of the two, and do not silently invent brand or content
-data. Note the missing file in `client-gaps.md` if the user explicitly
-confirms it isn't available yet.
-
-## What the harness does with it
-
-1. Reads `arquitectura-informacion.md` and populates `src/config/*` (`services`,
-   `faqs`, `authorBio`, `COMPANY_INFO`) + `src/utils/navigation.ts`. Reads
-   `brand.md` and populates `src/styles/global.css` (`@theme` tokens) + the
-   Astro Fonts API config.
-2. Generates `feature_list.json` — one feature per section/page, each
-   carrying `source` (the exact brief section it comes from, e.g.
-   `arquitectura-informacion.md §2.1`) and `acceptance` (a boolean
-   checklist derived from that section plus any applicable
-   `CHECKPOINTS.md` items). This is the light lane of spec-driven design —
-   see `AGENTS.md` § "Spec-first". Nothing the brief doesn't answer gets
-   invented here; it goes to `client-gaps.md` instead (step 3 below).
-3. Writes `client-gaps.md` at the repo root — the short list of things the
-   brief does NOT cover (phone, email, brand palette, fonts, logo, photos,
-   animation strategy if `brand.md` didn't state one).
-
-The content brief (`arquitectura-informacion.md`) does **not** carry brand
-colors/fonts — those come from `brand.md` and land only in
-`src/styles/global.css` (`@theme`).
-
-> This folder ships **empty** in the scaffold. The brief is attached per client
-> after cloning.
+- **Keywords come from the client or the maintainer**, in the SEO table. An agent never
+  proposes or invents one. If an indexable page has no keyword, the agent asks.
+- **Nothing the brief does not say gets invented.** A missing phone, address, schedule,
+  photo or text stays as `[CLIENTE]` in the code and is listed in `client-gaps.md` at the
+  repo root.
+- The business name, address and phone (NAP) are written **exactly the same** everywhere:
+  in the brief, in `company.ts`, on the page and in Google Business Profile.

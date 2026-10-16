@@ -1,9 +1,9 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
-import { generateNotFoundSEO } from "@/config/seo";
+import { seo } from "@/config/seo";
 ---
 
-<MainLayout seoProps={generateNotFoundSEO({ title: "Página no encontrada" })}>
+<MainLayout head={seo.notFoundHead({ title: "Página no encontrada" })}>
   <section class="bg-ivory px-4 py-24 md:py-32">
     <div class="mx-auto flex max-w-xl flex-col items-center text-center">
       <span

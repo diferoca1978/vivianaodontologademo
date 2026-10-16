@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import { services, serviceCards } from "@/config/services";
-import { COMPANY_INFO } from "@/config/companyInfo";
+import { COMPANY } from "@/config/company";
+import { isBuilt } from "@/utils/navigation";
 import Marquee from "@/components/ui/utils/Marquee.astro";
 import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
 import WhatsappIcon from "@/assets/icons/whatsApp.svg";
@@ -97,21 +98,23 @@ const focusRing =
             </p>
 
             <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              {isBuilt(`/${slug}/`) && (
+                <a
+                  href={`/${slug}/`}
+                  class:list={[
+                    "group inline-flex items-center justify-center gap-3 rounded-full bg-turquoise px-7 py-4 font-medium whitespace-nowrap text-ivory shadow-lg shadow-turquoise/20 transition-colors duration-300 hover:bg-turquoise-dark motion-reduce:transition-none",
+                    focusRing,
+                  ]}
+                >
+                  Ver el servicio
+                  <ArrowUpRight
+                    class="size-4 transition-transform duration-300 group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+                    aria-hidden="true"
+                  />
+                </a>
+              )}
               <a
-                href={`/${slug}/`}
-                class:list={[
-                  "group inline-flex items-center justify-center gap-3 rounded-full bg-turquoise px-7 py-4 font-medium whitespace-nowrap text-ivory shadow-lg shadow-turquoise/20 transition-colors duration-300 hover:bg-turquoise-dark motion-reduce:transition-none",
-                  focusRing,
-                ]}
-              >
-                Ver el servicio
-                <ArrowUpRight
-                  class="size-4 transition-transform duration-300 group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
-                  aria-hidden="true"
-                />
-              </a>
-              <a
-                href={COMPANY_INFO.whatsapp}
+                href={COMPANY.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
                 class:list={[

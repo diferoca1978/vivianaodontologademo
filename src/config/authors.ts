@@ -1,20 +1,17 @@
-// People: authors and founders, for E-E-A-T. One model, filled per client from the brief.
-// seo.ts builds each Person JSON-LD node from it (generatePersonSchema).
+import type { Author } from '@shine/seo-core';
 
-export interface Author {
-  slug: string; // ASCII kebab-case, unique, stable: the Person @id is <site>/#person-<slug>
-  name: string;
-  role: string;
-  bio: string;
-  image?: string; // a path on this site or an https:// URL
-  credentials: string[]; // shown on the page for E-E-A-T, not emitted in the JSON-LD
-  socialMedia?: Record<string, string>; // profile URLs only → sameAs
-  url?: string; // the author's page on this site, as a path
+// People: authors and founders, for E-E-A-T. seo.personNode() builds each Person node
+// from them; the Person @id is <site>/#person-<slug>.
+
+// credentials are shown on the page for E-E-A-T and never reach the JSON-LD.
+
+interface SiteAuthor extends Author {
+  credentials: string[];
 }
 
 // Source: textos-sitio.md §1 "Sobre la Dra. Viviana" (bio and credentials, verbatim)
 // and arquitectura-informacion.md §1 (role). Photo pending (client-gaps.md).
-export const AUTHORS: Author[] = [
+export const AUTHORS: SiteAuthor[] = [
   {
     slug: 'viviana-rodriguez',
     name: 'Viviana Rodríguez',
