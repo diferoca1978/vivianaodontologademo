@@ -17,11 +17,9 @@ swaps, and why it's needed now. -->
 
 ## Files affected
 
-<!-- Cross-reference AGENTS.md's "Invariant vs Variable" table, the "Knobs
-map", and the "If you change X → update Y" table — list every file/section
-this change touches, and note which existing table row(s) it matches (if
-any). If it matches no existing row, say so explicitly — it may need one
-added to AGENTS.md as part of this change. -->
+<!-- Cross-reference AGENTS.md's "Where each thing lives" table and
+"Spec-first: two lanes" — list every file/section this change touches. If
+the change moves where something lives, AGENTS.md is one of the files. -->
 
 -
 
@@ -48,8 +46,8 @@ instead of re-pasting — don't duplicate that store. -->
 ## Acceptance criteria
 
 <!-- How this is verified once implemented. At minimum: which AGENTS.md
-sections / CHECKPOINTS.md items must be updated in the same change (per the
-"If you change X → update Y" table), and whether `pnpm verify` should pass. -->
+sections / CHECKPOINTS.md items must be updated in the same change, and that
+`pnpm build` (with the SEO gate) and `pnpm check` pass. -->
 
 - [ ]
 

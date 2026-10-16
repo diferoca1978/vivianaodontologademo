@@ -34,9 +34,8 @@ at it."
 
 List concrete paths and line ranges where you know them
 (`.claude/agents/coder.md:35`), not vague areas ("the coder config").
-Cross-reference `AGENTS.md`'s "If you change X → update Y" table — say
-which row this spec matches, or that it matches none and one should be
-added.
+Cross-reference `AGENTS.md`'s "Where each thing lives" table and
+"Spec-first: two lanes" — say whether `AGENTS.md` itself must change.
 
 ## Decisions made and discarded
 

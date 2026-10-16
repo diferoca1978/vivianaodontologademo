@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { COMPANY_INFO } from "@/config/companyInfo";
+import { COMPANY } from "@/config/company";
 import { MainNavigation } from "@/utils/navigation";
 import logo from "@/assets/images/logonobg.png";
 import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
@@ -11,8 +11,8 @@ import NotchCorner from "@/assets/icons/notch-corner.svg";
 // Desktop: links split around the centered logo (references/Navbar-reference.png).
 
 // Inicio + both service links on the left; Contacto on the right, next to the CTA.
-const leftLinks = MainNavigation.slice(0, -1);
-const rightLinks = MainNavigation.slice(-1);
+const leftLinks = MainNavigation.filter((l) => l.path !== "/contacto/");
+const rightLinks = MainNavigation.filter((l) => l.path === "/contacto/");
 const current = Astro.url.pathname;
 
 // Active page: turquoise bar under the link. Hover/focus: turquoise underline.
@@ -58,7 +58,7 @@ const linkClass =
       </ul>
 
       <a
-        href={COMPANY_INFO.whatsapp}
+        href={COMPANY.whatsapp}
         target="_blank"
         rel="noopener noreferrer"
         class="group flex items-center gap-2 rounded-full bg-turquoise py-1.5 pr-4 pl-4 sm:pr-1.5 text-sm text-ivory transition-colors hover:bg-turquoise-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal xl:text-base"

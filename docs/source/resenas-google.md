@@ -5,7 +5,7 @@ Fuente de la feature `home-testimonios` (`feature_list.json`). Cubre el pendient
 
 - **Ficha:** Consultorio Viviana Rodriguez —
   https://www.google.com/maps?cid=13310363482939215067
-  (en el código: `COMPANY_INFO.socialMedia.googleBusiness`).
+  (en el código: `COMPANY.socialMedia.googleBusiness`).
 - **Copiadas el:** 2026-10-02. En ese momento la ficha tenía 5,0 ⭐ y 9 reseñas,
   8 con texto.
 - **Selección y firma:** las eligió el usuario el 2026-10-02, siguiendo la

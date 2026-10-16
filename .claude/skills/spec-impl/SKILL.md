@@ -108,7 +108,7 @@ source:     [present | MISSING]
 acceptance: [N items | MISSING]
 
 A feature can only move to in_progress once both source and acceptance
-are filled in — see AGENTS.md § "feature_list.json".
+are filled in — see AGENTS.md § "Done and delivered".
 
 To continue you have two options:
   1. If there is an approved document that answers this (a brief section,
@@ -273,7 +273,7 @@ otherwise. Once you have confirmed authorization (Phase 2, either mode):
    - **Feature mode**, show:
      - The **source** field, verbatim.
      - The **acceptance** array, as a checklist.
-     - The **builders** array — which skill(s) to invoke (`front-end-astro`, `seo-guide-lines`) per `AGENTS.md` § "Skill routing".
+     - The **builder skills** to invoke, per `AGENTS.md` § "Skill routing": `front-end-astro` for a section, then `seo-guide-lines` when the feature closes a page.
 
 Match section headings by meaning, not by exact wording — the spec may be authored in any language.
 
@@ -293,10 +293,10 @@ Shall we start with Step 1?
 ```
 
 **Feature mode** (there is no numbered plan — the entry names the
-`source` to build from and the `builders` to invoke):
+`source` to build from; the builder skills follow `AGENTS.md` § "Skill routing"):
 
 ```
-I am going to implement this feature using [builders, e.g.
+I am going to implement this feature using [builder skills, e.g.
 front-end-astro then seo-guide-lines] against the source cited above.
 I will pause once it's built so you can review the diff before verification.
 
@@ -328,8 +328,8 @@ this lane too.
   - Spec mode: the spec path, the step number and the step's text
     **verbatim**, the spec's Scope In/Out, and the acceptance criteria
     relevant to that step.
-  - Feature mode: the entry's `id`, and its `source`, `acceptance` and
-    `builders` verbatim (there is no numbered step).
+  - Feature mode: the entry's `id`, and its `source` and `acceptance`
+    verbatim, plus the builder skills to invoke (there is no numbered step).
   - Both: the active branch, and these constraints — implement this step
     (or this feature) only; do not commit; do not edit the spec or
     `feature_list.json`; if something the spec or `source` doesn't resolve
@@ -354,7 +354,7 @@ this lane too.
   files you touched and what you did, say `Step N completed. Could you
   review the diff and let me know if I continue with Step N+1?`, wait for
   confirmation before continuing.
-- **Feature mode:** build the feature per `source`, using the `builders`
+- **Feature mode:** build the feature per `source`, using the builder
   skill(s) in order (`front-end-astro` for sections, then
   `seo-guide-lines` if the feature closes a page — see `AGENTS.md` §
   "Skill routing"). Show a summary of which files you touched, then say
@@ -435,7 +435,7 @@ field.
   Phase 2  →  No other feature in_progress; source + acceptance present → ✅ continues
   Phase 3  →  Marks status: "in_progress" → git checkout -b feature/hero-home
               Shows source and acceptance checklist
-  Phase 4  →  Builds the feature per its builders, pauses for review
+  Phase 4  →  Builds the feature with its builder skills, pauses for review
               Ends by pointing at spec-verifier (feature mode); does not set "done" itself
 
 /spec-impl feature contact-cta  (source or acceptance missing)

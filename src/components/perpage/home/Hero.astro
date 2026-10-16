@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import { COMPANY_INFO } from "@/config/companyInfo";
+import { COMPANY } from "@/config/company";
+import { PAGES } from "@/config/pages";
 import heroPhoto from "@/assets/images/Hero-home-reference-opt1.webp";
 import WhatsappIcon from "@/assets/icons/whatsApp.svg";
 import ArrowUp from "@/assets/icons/arrow-up.svg";
@@ -43,7 +44,7 @@ const focusRing =
         data-hero-item
         class="text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl xl:text-6xl"
       >
-        Odontóloga en Bogotá, especialista en Rehabilitación Oral
+        {PAGES.home.h1}
       </h1>
 
       <p
@@ -59,7 +60,7 @@ const focusRing =
 
       <div data-hero-item class="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         <a
-          href={COMPANY_INFO.whatsapp}
+          href={COMPANY.whatsapp}
           target="_blank"
           rel="noopener noreferrer"
           class:list={[
@@ -112,7 +113,7 @@ const focusRing =
     >
       <Image
         src={heroPhoto}
-        alt={`${COMPANY_INFO.name}, odontóloga, sentada junto a la silla dental en un consultorio luminoso`}
+        alt={`${COMPANY.name}, odontóloga, sentada junto a la silla dental en un consultorio luminoso`}
         priority
         widths={[480, 768, 1024, heroPhoto.width]}
         sizes="(min-width: 1024px) 50vw, 100vw"

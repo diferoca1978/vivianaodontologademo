@@ -1,87 +1,69 @@
 {
-  "_doc": "Generated per client during brief ingestion. Each entry: { id, status, builders, nota, source, acceptance }. This is the light lane of spec-driven design (SDD) — see AGENTS.md § Spec-first and specs/README.md.",
-  "_status": "pending | in_progress | done — only ONE feature may be in_progress at a time. A feature cannot move to in_progress without both source and acceptance filled in.",
-  "_builders": "subset of [front-end-astro, seo-guide-lines]. Sections -> front-end-astro; close each page with seo-guide-lines.",
-  "_source": "REQUIRED. The brief section (or other approved document) this feature's content comes from, e.g. \"arquitectura-informacion.md §2.1\". No document → this isn't light-lane work, write a full spec with /spec instead.",
-  "_acceptance": "REQUIRED. Boolean checklist derived from _source plus any CHECKPOINTS.md items that apply, e.g. [\"h1 matches the copy in §2.1\", \"CTA links to /contacto\"]. Verified for real by spec-verifier, same as a spec's Acceptance criteria.",
+  "_doc": "One feature per page or section, generated from the brief. status: pending → in_progress (set by /spec-impl, one at a time) → done (pnpm build passes with the gate green, pnpm check is clean and every acceptance item holds) → delivered (on main, deployed, and check-seo --url clean on the real domain). See AGENTS.md § Done and delivered.",
+  "_source": "Required: the brief section the feature's content comes from, e.g. \"textos-sitio.md §2\". No source in the brief means the feature is not ready to build: ask first.",
+  "_acceptance": "Required: a checklist of verifiable statements from the source, e.g. [\"the h1 is PAGES.blanqueamiento.h1\", \"the CTA links to /contacto/\"].",
   "client": "Dra. Viviana Rodríguez — Odontóloga, especialista en Rehabilitación Oral (Bogotá)",
   "features": [
     {
       "id": "global-navbar",
-      "status": "done",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "Resolve D4 (turquoise contrast, client-gaps.md § Decisiones pendientes) before building: it applies to every section with links or turquoise text. Replaces the scaffold stub in src/components/global/NavBar.astro. Logos: src/assets/images/logonobg.png / logobgwhite.png (brand.md § Activos).",
+      "description": "Navbar (every page). Resolve D4 (turquoise contrast, client-gaps.md § Decisiones pendientes) before building: it applies to every section with links or turquoise text. Replaces the scaffold stub in src/components/global/NavBar.astro. Logos: src/assets/images/logonobg.png / logobgwhite.png (brand.md § Activos). Since 2026-10-16 the links to pages not built yet are hidden through PENDING_PAGES (src/utils/navigation.ts), so the SEO gate's url-resolves passes; each page feature brings its links back.",
       "source": "arquitectura-informacion.md §3 Navegación (Header)",
       "acceptance": [
         "Header links, in this order, rendered from MainNavigation in src/utils/navigation.ts: Inicio (/), Blanqueamiento Dental (/blanqueamiento-dental/), Rehabilitación Oral (/rehabilitacion-oral/), Contacto (/contacto/)",
-        "A CTA labeled exactly 'Agendar Cita' links to COMPANY_INFO.whatsapp and stays visible while scrolling (fixed/sticky header)",
+        "A CTA labeled exactly 'Agendar Cita' links to COMPANY.whatsapp and stays visible while scrolling (fixed/sticky header)",
         "Logo rendered with <Image> from astro:assets, non-empty alt, linking to /",
         "All 4 links and the CTA are reachable at mobile width (≤ 375px) and by keyboard",
         "Colors only via global.css tokens; no inline style, no arbitrary values"
-      ]
+      ],
+      "status": "done"
     },
     {
       "id": "global-footer",
-      "status": "done",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "Reopened on 2026-10-02 to add the opening hours: the user chose to publish the ones on the Google Business Profile (COMPANY_INFO.openingHours) and confirm them with the client later. Everything else was already built. The 'Política de privacidad' link ships as a placeholder (href='#' + TODO); its page is the page-privacidad feature, so the footer is no longer blocked on it.",
+      "description": "Footer (every page). Reopened on 2026-10-02 to add the opening hours: the user chose to publish the ones on the Google Business Profile (COMPANY.openingHours) and confirm them with the client later. Everything else was already built. The 'Política de privacidad' link ships as a placeholder (href='#' + TODO); its page is the page-privacidad feature, so the footer is no longer blocked on it. Since 2026-10-16 the links to pages not built yet are hidden through PENDING_PAGES (src/utils/navigation.ts), so the SEO gate's url-resolves passes; each page feature brings its links back.",
       "source": "arquitectura-informacion.md §3 Estructura del sitio › Navegación › Footer + §1 Datos del negocio + client-gaps.md #1 (hours from the Google Business Profile, 2026-10-02)",
       "acceptance": [
-        "Address rendered from COMPANY_INFO.business.address, reading exactly 'Cra 15 # 104-30, Consultorio 302' + Bogotá (single NAP form, brief §1)",
-        "Phone/WhatsApp from COMPANY_INFO.phone linking to COMPANY_INFO.whatsapp; email from COMPANY_INFO.email as a mailto: link",
-        "Instagram and TikTok links from COMPANY_INFO.socialMedia",
+        "Address rendered from COMPANY.business.address, reading exactly 'Cra 15 # 104-30, Consultorio 302' + Bogotá (single NAP form, brief §1)",
+        "Phone/WhatsApp from COMPANY.phone linking to COMPANY.whatsapp; email from COMPANY.email as a mailto: link",
+        "Instagram and TikTok links from COMPANY.socialMedia",
         "A link to /contacto/",
-        "Opening hours rendered from COMPANY_INFO.openingHours, in Spanish, with no hand-written hours outside companyInfo.ts",
+        "Opening hours rendered from COMPANY.openingHours, in Spanish, with no hand-written hours outside company.ts",
         "A 'Política de privacidad' link is rendered in the footer bottom bar (its real target is wired in the page-privacidad feature)",
         "The scaffold 'Footer' stub is gone (harness/lint-customization.sh reports no Footer stub)"
-      ]
+      ],
+      "status": "done"
     },
     {
       "id": "global-whatsapp-float",
-      "status": "done",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "src/components/ui/WhatsApp.astro uses the owner-approved Uiverse design: WhatsApp-green button with a hover tooltip '¿Necesitas ayuda?'. These are deliberate deviations from the brief (owner decision), reflected in the acceptance below. The scaffold tooltip '¿Necesitas asesoría profesional?' and its amber/stone colors are gone.",
+      "description": "Floating WhatsApp button (every page). src/components/ui/WhatsApp.astro uses the owner-approved Uiverse design: WhatsApp-green button with a hover tooltip '¿Necesitas ayuda?'. These are deliberate deviations from the brief (owner decision), reflected in the acceptance below. The scaffold tooltip '¿Necesitas asesoría profesional?' and its amber/stone colors are gone.",
       "source": "arquitectura-informacion.md §3 Navegación (Botón flotante de WhatsApp en todas las páginas)",
       "acceptance": [
-        "A floating WhatsApp button renders on every page, linking to COMPANY_INFO.whatsapp with target=_blank and rel='noopener noreferrer'",
+        "A floating WhatsApp button renders on every page, linking to COMPANY.whatsapp with target=_blank and rel='noopener noreferrer'",
         "The button has an accessible name (aria-label 'Chat de WhatsApp'); decorative icon is aria-hidden",
         "The only visible text is the hover tooltip '¿Necesitas ayuda?'; the scaffold tooltip '¿Necesitas asesoría profesional?' is gone and there is no notification badge",
         "Button uses WhatsApp green (green-500/green-600) with white icon; the ring and tooltip use global.css tokens (ivory, turquoise); no amber/stone Tailwind palette",
         "The icon is imported from @/assets/icons/whatsApp.svg, no inline <svg>"
-      ]
+      ],
+      "status": "done"
     },
     {
       "id": "home-hero",
-      "status": "done",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "Visual reference: references/Hero-home-reference.png. Real photos are /src/assets/images/Hero-home-reference.webp. Replaces the scaffold stub 'Nueva web app'.",
+      "description": "Home: hero. Visual reference: references/Hero-home-reference.png. Real photos are /src/assets/images/Hero-home-reference.webp. Replaces the scaffold stub 'Nueva web app'.",
       "source": "textos-sitio.md §1 Inicio › Hero",
       "acceptance": [
         "Exactly one <h1> on /, reading 'Odontóloga en Bogotá, especialista en Rehabilitación Oral'",
         "Tagline 'Odontología de Calma Activa: cuidamos tu sonrisa y tu tranquilidad.' present",
         "Paragraph present verbatim: 'No solo transformamos sonrisas: cuidamos la tranquilidad de las personas que hay detrás de ellas. Consultorio particular en Chicó, Bogotá, con tecnología sin dolor y atención personalizada.'",
-        "Button 'Agendar por WhatsApp' links to COMPANY_INFO.whatsapp",
+        "Button 'Agendar por WhatsApp' links to COMPANY.whatsapp",
         "Button 'Conocer servicios' links to the Servicios block on / (#servicios)",
         "Three highlights present: '+12 años en odontología', 'Especialista en Rehabilitación Oral desde 2019', 'Consultorio propio en Chicó, norte de Bogotá'",
         "Any animation lives in src/utils/scripts/animations/ and uses gsap.matchMedia() with a reduced-motion branch that leaves content visible (autoAlpha: 1)",
         "The scaffold text 'Nueva web app' is gone"
-      ]
+      ],
+      "status": "done"
     },
     {
       "id": "home-calma-activa",
-      "status": "done",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Home: Odontología de Calma Activa",
       "source": "textos-sitio.md §1 Inicio › Bloque: Odontología de Calma Activa",
       "acceptance": [
         "h2 'Odontología de Calma Activa'",
@@ -97,15 +79,12 @@
         "Each of the five cards fades in from the bottom (autoAlpha + y) via ScrollTrigger.batch as it enters the viewport, once; in the reduced-motion branch the cards are never hidden and land visible",
         "Tooth logo is drawn with GSAP DrawSVGPlugin (data-calma-logo hook, paths stroke-drawn then fills fade in) once when it enters the viewport; in the reduced-motion branch it is left untouched and fully visible",
         "Section is less tall on desktop (lg:py-16) while mobile and tablet spacing is unchanged"
-      ]
+      ],
+      "status": "done"
     },
     {
       "id": "home-servicios",
-      "status": "done",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "Design references: references/our-serviceshome-reference.png (main services: left tab list, right detail with image, title, text and two buttons) and references/otherservices-home-reference.png (other services: row of tall rounded cards, icon badge top-left, title bottom). The 8 short cards show the title only (no description); image areas render a brand-token placeholder when an entry has no photo. The 2 featured services come from services, and the 8 names and anchors from serviceCards (src/config/services.ts).",
+      "description": "Home: services. Design references: references/our-serviceshome-reference.png (main services: left tab list, right detail with image, title, text and two buttons) and references/otherservices-home-reference.png (other services: row of tall rounded cards, icon badge top-left, title bottom). The 8 short cards show the title only (no description); image areas render a brand-token placeholder when an entry has no photo. The 2 featured services come from services, and the 8 names and anchors from serviceCards (src/config/services.ts). Since 2026-10-16 the links to pages not built yet are hidden through PENDING_PAGES (src/utils/navigation.ts), so the SEO gate's url-resolves passes; each page feature brings its links back.",
       "source": "textos-sitio.md §1 Inicio › Bloque: Servicios + arquitectura-informacion.md §3 (tarjetas con ancla propia)",
       "acceptance": [
         "Section is src/components/perpage/home/Servicios.astro, rendered on / after CalmaActiva, with id='servicios' and aria-labelledby pointing at the h2",
@@ -113,7 +92,7 @@
         "Desktop (lg+) is two columns: the left has the h2 and a list of the 2 services titles as tabs, active one in dark text with a bottom rule, inactive one light grey",
         "The tab list is an ARIA tablist: role=tab/tabpanel, aria-selected, aria-controls, roving tabindex and arrow-key/Home/End navigation. A service is selected on mouse hover, click or keyboard. The first tab is selected by default. Without JS the first panel is visible",
         "The right column shows the active service's detail: image area, h3 title, the approved text, and two buttons. Both panels render from services, not hardcoded. Blanqueamiento uses 'Una sonrisa más blanca, sin ansiedad ni sorpresas. Uno de nuestros tratamientos más solicitados.'; Rehabilitación uses 'La especialidad de la Dra. Viviana: recuperar función y estética a la vez, con un enfoque cálido.'",
-        "Primary button 'Ver el servicio' (with the small arrow-up-right icon) links to /blanqueamiento-dental/ or /rehabilitacion-oral/. Outline button 'Agendar por WhatsApp' links to COMPANY_INFO.whatsapp. No other CTA is invented",
+        "Primary button 'Ver el servicio' (with the small arrow-up-right icon) links to /blanqueamiento-dental/ or /rehabilitacion-oral/. Outline button 'Agendar por WhatsApp' links to COMPANY.whatsapp. No other CTA is invented",
         "The image area renders <Image> from service.image (imported in src/config/services.ts). When an entry has no image it renders a brand-token placeholder (turquoise gradient with a tooth-outline watermark). No stock or invented photo",
         "On mobile the tabs become a horizontal list above a single panel, and the layout is single-column",
         "'También ofrecemos' renders the 8 serviceCards in brief order as tall rounded cards. Each has its anchor id (e.g. id='implantes') on the first copy only, a circular icon badge top-left from @/assets/icons/, and the title only (no description) at the bottom over a dark brand-token overlay. The card shows <Image> from serviceCard.image, or a placeholder background when absent",
@@ -121,15 +100,12 @@
         "The reference's eyebrow, left intro paragraph and 'Book Appointment' wording are not copied. Only brief copy appears",
         "Icons are imported from @/assets/icons/, aria-hidden, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only",
         "GSAP lives in src/utils/scripts/animations/: home/servicios.ts (reveal), home/servicios-tabs.ts (service switch) and utils/marquee.ts (marquee loop), each with a gsap.matchMedia() reduced-motion branch that lands everything visible (autoAlpha: 1) and never loops or hides content for those users. The headings and the marquee row fade in from the bottom via ScrollTrigger.batch, once. The service switch fades the current panel out and staggers the next one in"
-      ]
+      ],
+      "status": "done"
     },
     {
       "id": "home-sobre",
-      "status": "done",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "Design reference: references/aboutme-home-reference.png (left: two-photo collage with a turquoise offset block; the reference's circular badge is not built, dropped at review on 2026-10-02, and the tooth logo goes above the h2 as in CalmaActiva instead; right: two-weight h2, body copy, checklist, CTA). Photos (client-supplied, both 1024×1536 portraits): src/assets/images/aboutme-home2.webp (the doctor at work at the dental unit) is the large back photo, like the reference's clinical scene; src/assets/images/aboutme-home.webp (the doctor smiling in an armchair) is the smaller front photo, like the reference's portrait. Copy is rendered from AUTHORS in src/config/authorBio.ts. The optional quote about Rehabilitación Oral (client-gaps.md #10) is not built until the client sends it.",
+      "description": "Home: about Dra. Viviana. Design reference: references/aboutme-home-reference.png (left: two-photo collage with a turquoise offset block; the reference's circular badge is not built, dropped at review on 2026-10-02, and the tooth logo goes above the h2 as in CalmaActiva instead; right: two-weight h2, body copy, checklist, CTA). Photos (client-supplied, both 1024×1536 portraits): src/assets/images/aboutme-home2.webp (the doctor at work at the dental unit) is the large back photo, like the reference's clinical scene; src/assets/images/aboutme-home.webp (the doctor smiling in an armchair) is the smaller front photo, like the reference's portrait. Copy is rendered from AUTHORS in src/config/authors.ts. The optional quote about Rehabilitación Oral (client-gaps.md #10) is not built until the client sends it.",
       "source": "textos-sitio.md §1 Inicio › Bloque: Sobre la Dra. Viviana",
       "acceptance": [
         "Section is src/components/perpage/home/Sobre.astro, rendered on / right after Servicios, with id='sobre' and aria-labelledby pointing at the h2",
@@ -141,21 +117,18 @@
         "A turquoise brand-token rounded block sits offset behind the large photo's lower-left corner, as in the reference",
         "The reference's circular badge is not built: no badge disc or ring, and nothing in the collage besides the two photos and the turquoise block",
         "The tooth logo from @/assets/icons/tooth-logo.svg sits above the h2 as in CalmaActiva: same classes (mb-4 size-16 sm:size-20), aria-hidden, left-aligned with the heading, and outside the text block that fades in",
-        "One CTA, 'Agendar por WhatsApp', as a pill button with the arrow-up-right icon in a circle (the reference's 'Schedule Appointment' style). It links to COMPANY_INFO.whatsapp, opens in a new tab and says so for screen readers",
+        "One CTA, 'Agendar por WhatsApp', as a pill button with the arrow-up-right icon in a circle (the reference's 'Schedule Appointment' style). It links to COMPANY.whatsapp, opens in a new tab and says so for screen readers",
         "Elements in the reference with no copy in the brief are not built: the script eyebrow, the '25+ Year Of Experiences' stat, the second paragraph and the 'Call Us Now' phone block. Only brief copy appears",
         "Icons are imported from @/assets/icons/, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only (no hardcoded colors)",
         "Animation lives in src/utils/scripts/animations/home/sobre.ts (data-sobre-* hooks) with a gsap.matchMedia() reduced-motion branch that sets everything visible (autoAlpha: 1). The two photos and the text column fade in from the bottom via ScrollTrigger, once, with the small photo slightly after the large one",
         "The h2 is split by words with GSAP SplitText (type 'words'), and each word fades in from below with a stagger, once, when the text column enters the viewport. The bio, credentials and CTA fade in from below right after. The h2 is outside the block that fades as a whole, so the two animations don't overlap. The two-weight spans and the turquoise full stop survive the split, and screen readers still read the full heading. With reduced motion the h2 is not split and is fully visible",
         "The tooth logo gets the same draw animation as in CalmaActiva: DrawSVGPlugin strokes its paths in, then the fills fade in and the stroke goes back to its authored width. It plays once when the logo enters the viewport, and with reduced motion the logo is left untouched and fully visible. The draw logic moves to a shared helper in src/utils/scripts/animations/utils/ (e.g. draw-tooth-logo.ts), called by both calma-activa.ts and sobre.ts, so it is not duplicated. CalmaActiva's logo animation behaves exactly as before"
-      ]
+      ],
+      "status": "done"
     },
     {
       "id": "home-testimonios",
-      "status": "done",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "Unblocked on 2026-10-02. The user chose 5 real Google reviews and the signature rule; both are in docs/source/resenas-google.md and still need the client's confirmation. Card design reference: references/testimonial-card-reference.png (big quote marks overlapping the card's top-left and bottom-right edges, 5 stars, the review, a short divider, then the name with a subtitle). The user dropped the reference's avatar: the signature is the name only, with 'Reseña de Google' as the subtitle where the reference has 'Customer – Dubai'. The reference's orange background, dot grids and circle arc are not built: the section stays ivory like the rest of the home, and the cards take CalmaActiva's surface. Section layout as in CalmaActiva, per the user: a centred header and the five cards in a 3 + 2 grid. Client decision 2026-10-02 (post-verification): the client wants the section as currently built — 3 reviews (Uriel R., Sentir es sagrado, Diana G.), only the opening quote mark on the top-left edge, and the 3 cards in a single row on lg — so acceptance items 3, 5 and 8 were adjusted to match; the implementation is NOT to be 'fixed' to the old 5-review/closing-quote criteria. Each card also carries tooth-logo.svg as a centred low-opacity watermark behind the text, a later explicit user request (not in the section header).",
+      "description": "Home: testimonials. Unblocked on 2026-10-02. The user chose 5 real Google reviews and the signature rule; both are in docs/source/resenas-google.md and still need the client's confirmation. Card design reference: references/testimonial-card-reference.png (big quote marks overlapping the card's top-left and bottom-right edges, 5 stars, the review, a short divider, then the name with a subtitle). The user dropped the reference's avatar: the signature is the name only, with 'Reseña de Google' as the subtitle where the reference has 'Customer – Dubai'. The reference's orange background, dot grids and circle arc are not built: the section stays ivory like the rest of the home, and the cards take CalmaActiva's surface. Section layout as in CalmaActiva, per the user: a centred header and the five cards in a 3 + 2 grid. Client decision 2026-10-02 (post-verification): the client wants the section as currently built — 3 reviews (Uriel R., Sentir es sagrado, Diana G.), only the opening quote mark on the top-left edge, and the 3 cards in a single row on lg — so acceptance items 3, 5 and 8 were adjusted to match; the implementation is NOT to be 'fixed' to the old 5-review/closing-quote criteria. Each card also carries tooth-logo.svg as a centred low-opacity watermark behind the text, a later explicit user request (not in the section header).",
       "source": "textos-sitio.md §1 Inicio › Bloque: Testimonios + arquitectura-informacion.md §7 + docs/source/resenas-google.md",
       "acceptance": [
         "Section is src/components/perpage/home/Testimonios.astro, rendered on / right after Sobre, with id='testimonios' and aria-labelledby pointing at the h2",
@@ -168,74 +141,63 @@
         "Layout per client decision 2026-10-02 (3 cards): the cards are a <ul role='list'> with 1 column on mobile, 2 on tablet (the third card at half width on its own row), and on lg a 6-col grid where each card spans 2 so the 3 cards fill a single centred row",
         "Cards in the same row share the same height, and the divider and signature sit at the bottom of each card whatever the length of its text",
         "The quote marks that overlap the card edges cause no horizontal scroll at 375px and don't cover the neighbouring cards or the text",
-        "Below the cards, centred, a 'Ver todas las reseñas en Google' link to COMPANY_INFO.socialMedia.googleBusiness, with target='_blank' and rel='noopener noreferrer', that says it opens in a new tab for screen readers",
+        "Below the cards, centred, a 'Ver todas las reseñas en Google' link to COMPANY.socialMedia.googleBusiness, with target='_blank' and rel='noopener noreferrer', that says it opens in a new tab for screen readers",
         "No Review or AggregateRating JSON-LD (brief §6 doesn't list it, and Google ignores reviews a business marks up about itself)",
         "Icons imported from @/assets/icons/, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only (no hardcoded colors)",
         "Animation lives in src/utils/scripts/animations/home/testimonios.ts (data-testimonios-* hooks) with a gsap.matchMedia() reduced-motion branch that sets everything visible (autoAlpha: 1). The cards fade in from the bottom via ScrollTrigger.batch as they enter the viewport, once, as in CalmaActiva"
-      ]
+      ],
+      "status": "done"
     },
     {
       "id": "home-cta-final",
-      "status": "done",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "Replaces the home-ubicacion feature at the client's request on 2026-10-02. Visual reference: references/cta-home-reference.png. The CTA uses existing client-supplied dental photography as the surrounding collage; no location block is rendered in this slot.",
+      "description": "Home: final CTA. Replaces the home-ubicacion feature at the client's request on 2026-10-02. Visual reference: references/cta-home-reference.png. The CTA uses existing client-supplied dental photography as the surrounding collage; no location block is rendered in this slot.",
       "source": "textos-sitio.md §1 Inicio › CTA final + user request 2026-10-02 (references/cta-home-reference.png)",
       "acceptance": [
         "Section is src/components/perpage/home/CtaFinal.astro and replaces home-ubicacion in the home section order",
         "Heading 'Agenda tu valoración y empieza tu tratamiento con calma.'",
         "Supporting copy is present and communicates personalized dental care in the calm, warm brand voice without inventing a new service or claim",
-        "Primary button 'Escribir por WhatsApp' links to COMPANY_INFO.whatsapp and opens in a new tab with an accessible announcement",
+        "Primary button 'Escribir por WhatsApp' links to COMPANY.whatsapp and opens in a new tab with an accessible announcement",
         "The secondary central element is the tooth-logo.svg from @/assets/icons/tooth-logo.svg, decorative and animated with the same draw treatment used in CalmaActiva",
         "The section uses a rounded turquoise-light card with subtle abstract brand-token shapes, matching references/cta-reference-home.png without avatars",
         "The section has no visible address/location block, map, service-image collage, or home-ubicacion copy",
         "Layout remains usable at 375px with no horizontal scroll; the tooth logo is the only decorative visual",
         "Colors use only global.css brand tokens; no inline styles or arbitrary Tailwind values",
         "Any animation lives in src/utils/scripts/animations/home/cta-final.ts and respects prefers-reduced-motion"
-      ]
+      ],
+      "status": "done"
     },
     {
       "id": "home-faq",
-      "status": "in_progress",
-      "builders": [
-        "front-end-astro",
-        "seo-guide-lines"
-      ],
-      "nota": "Decisión del cliente: las respuestas se muestran colapsadas inicialmente y se abren al activar cada pregunta.",
+      "description": "Home: FAQ. Decisión del cliente: las respuestas se muestran colapsadas inicialmente y se abren al activar cada pregunta.",
       "source": "textos-sitio.md §1 Inicio › Preguntas frecuentes + arquitectura-informacion.md §5 (FAQ visible) and §6 (FAQPage)",
       "acceptance": [
         "Renders the 4 faqs with category 'inicio' from src/config/faqs.ts, questions and answers verbatim",
         "Every answer is collapsed by default and opens when its question is activated by click or keyboard",
         "The '¿Dónde queda el consultorio?' answer reads 'En la Cra 15 # 104-30, Consultorio 302, zona de Chicó, al norte de Bogotá.'",
-        "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> built from the same faqs, with text identical to the visible text"
-      ]
+        "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
+      ],
+      "status": "done"
     },
     {
       "id": "page-home",
-      "status": "pending",
-      "builders": [
-        "seo-guide-lines"
-      ],
-      "nota": "Before closing: D1 (title vs generatePageSEO suffix), D2 (medicalSpecialty in the Dentist node), D5 (FAQ display) — client-gaps.md § Decisiones pendientes.",
+      "description": "Home page: SEO and assembly. Before closing: D1 (the title gets the ' | Dra. Viviana Rodríguez' suffix: 83 characters), D2 (medicalSpecialty, openingHoursSpecification and listingName in the Dentist node), D5 (FAQ display) — client-gaps.md § Decisiones pendientes.",
       "source": "textos-sitio.md §1 Inicio (Meta title, Meta description) + arquitectura-informacion.md §3 Enlazado interno, §4, §6",
       "acceptance": [
-        "<title> is 'Odontóloga en Bogotá — Especialista en Rehabilitación Oral'",
+        "The head comes from seo.pageHead(PAGES.home), and PAGES.home holds textos-sitio.md §1's meta title, meta description and h1 verbatim",
+        "<title> follows the D1 decision (today 'Odontóloga en Bogotá — Especialista en Rehabilitación Oral | Dra. Viviana Rodríguez', a title-length warning)",
         "meta description is 'Odontología de Calma Activa en Bogotá (Chicó). Rehabilitación oral, blanqueamiento y diseño de sonrisa con tecnología sin dolor. Agenda tu cita hoy.'",
-        "Exactly one <h1> on the page",
+        "Exactly one <h1>, rendering PAGES.home.h1",
         "Sections in order: Hero, Calma Activa, Servicios, Sobre la Dra. Viviana, Testimonios (only once real ones exist), Ubicación, Preguntas frecuentes, CTA final",
-        "JSON-LD on / comes from MainLayout only: a Dentist node (NAP identical to the visible text, sameAs Instagram + TikTok), WebSite, and a Person for viviana-rodriguez",
-        "/ links to /blanqueamiento-dental/ and /rehabilitacion-oral/ from the nav and the service cards",
-        "The scaffold title 'Home - My Website' is gone"
-      ]
+        "JSON-LD on / is seo.homeNodes() in one @graph: the Dentist node (NAP identical to the visible text, sameAs Instagram, TikTok and the Google Business Profile), the WebSite, and the Person viviana-rodriguez",
+        "/ links to /blanqueamiento-dental/ and /rehabilitacion-oral/ from the nav and the service cards (both paths out of PENDING_PAGES)",
+        "The scaffold title 'Home - My Website' is gone",
+        "pnpm build passes with the SEO gate green and pnpm check reports 0 errors"
+      ],
+      "status": "pending"
     },
     {
       "id": "blanqueamiento-hero",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Blanqueamiento Dental: hero",
       "source": "textos-sitio.md §2 Blanqueamiento Dental (H1, subtítulo, intro) + arquitectura-informacion.md §3 Breadcrumbs, §4, §5",
       "acceptance": [
         "Visible breadcrumb 'Inicio > Blanqueamiento Dental', with Inicio linking to /",
@@ -243,82 +205,63 @@
         "Subtitle 'Una sonrisa más blanca, sin ansiedad ni sorpresas.'",
         "Intro present verbatim: 'El blanqueamiento (o aclaramiento) dental es uno de los tratamientos estéticos más solicitados en nuestro consultorio. Aclara el tono natural del esmalte de forma segura, con seguimiento personalizado y sin dolor.'",
         "The intro (the direct answer) falls within the first 100 words of the page's main content"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "blanqueamiento-beneficios",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Blanqueamiento Dental: benefits",
       "source": "textos-sitio.md §2 Blanqueamiento Dental › Beneficios",
       "acceptance": [
         "h2 'Beneficios'",
         "The 4 benefits rendered verbatim from services[blanqueamiento-dental].benefits in src/config/services.ts"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "blanqueamiento-como-se-hace",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Blanqueamiento Dental: how it is done",
       "source": "textos-sitio.md §2 Blanqueamiento Dental › Cómo se hace",
       "acceptance": [
         "h2 'Cómo se hace'",
         "Ordered list (<ol>) of 3 steps, each title + text verbatim: Valoración inicial, Ambiente de calma, Aplicación y seguimiento"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "blanqueamiento-enlace-cruzado",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Blanqueamiento Dental: cross-link to Rehabilitación Oral. /rehabilitacion-oral/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
       "source": "textos-sitio.md §2 Blanqueamiento Dental › Enlace cruzado + arquitectura-informacion.md §3 Enlazado interno",
       "acceptance": [
         "Text 'Si además buscas corregir forma o alineación, conoce nuestro servicio de Rehabilitación Oral.' present",
         "'Rehabilitación Oral' is a descriptive-anchor link to /rehabilitacion-oral/"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "blanqueamiento-faq",
-      "status": "pending",
-      "builders": [
-        "front-end-astro",
-        "seo-guide-lines"
-      ],
-      "nota": "D5 (answers always open vs accordion) decides the display.",
+      "description": "Blanqueamiento Dental: FAQ. D5 (answers always open vs accordion) decides the display.",
       "source": "textos-sitio.md §2 Blanqueamiento Dental › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
       "acceptance": [
         "Renders the 4 faqs with category 'blanqueamiento-dental' from src/config/faqs.ts, verbatim",
         "Every answer is visible on the page by default, not collapsed",
-        "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> from the same faqs, with text identical to the visible text"
-      ]
+        "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
+      ],
+      "status": "pending"
     },
     {
       "id": "blanqueamiento-cta-final",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "textos-sitio gives only the heading; the target comes from arquitectura §3 ('Todas las páginas terminan con CTA a Contacto').",
+      "description": "Blanqueamiento Dental: final CTA. textos-sitio gives only the heading; the target comes from arquitectura §3 ('Todas las páginas terminan con CTA a Contacto'). /contacto/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
       "source": "textos-sitio.md §2 Blanqueamiento Dental › CTA final + arquitectura-informacion.md §3 Enlazado interno",
       "acceptance": [
         "Final CTA 'Agenda tu valoración' is the last section of the page",
         "The CTA links to /contacto/"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "page-blanqueamiento",
-      "status": "pending",
-      "builders": [
-        "seo-guide-lines"
-      ],
-      "nota": "Before closing: D2 (Service generator, full-lane spec), D3 (source of the last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. The title fits generatePageSEO({ title: 'Blanqueamiento Dental en Bogotá' }).",
+      "description": "Blanqueamiento Dental page: SEO and assembly. Before closing: D2 (Service node: the package has no generator), D3 (source of the last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Its title already holds the company name, so seo.pageHead() adds no suffix.",
       "source": "textos-sitio.md §2 Blanqueamiento Dental (Meta title, Meta description) + arquitectura-informacion.md §4, §5, §6",
       "acceptance": [
         "Route src/pages/blanqueamiento-dental.astro serves /blanqueamiento-dental/",
@@ -328,18 +271,16 @@
         "Sections in order: hero, Beneficios, Cómo se hace, enlace cruzado, Preguntas frecuentes, CTA final",
         "Both 'anestesia digital' and the calm environment ('ambiente de calma') are mentioned on the page",
         "BreadcrumbList JSON-LD (Inicio → Blanqueamiento Dental) passed through MainLayout's schemas, matching the visible breadcrumb",
-        "Service JSON-LD with provider = generateBusinessRef() and areaServed Bogotá",
+        "Service JSON-LD with provider = seo.businessRef() and areaServed Bogotá",
         "A visible last-updated date on the page, matching dateModified if the schema carries one",
-        "No business, WebSite or Person node on this page"
-      ]
+        "No business, WebSite or Person node on this page",
+        "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
+      ],
+      "status": "pending"
     },
     {
       "id": "rehabilitacion-hero",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Rehabilitación Oral: hero",
       "source": "textos-sitio.md §3 Rehabilitación Oral (H1, subtítulo, intro) + arquitectura-informacion.md §3 Breadcrumbs, §5",
       "acceptance": [
         "Visible breadcrumb 'Inicio > Rehabilitación Oral', with Inicio linking to /",
@@ -347,96 +288,74 @@
         "Subtitle 'La especialidad de la Dra. Viviana Rodríguez.'",
         "Intro present verbatim: 'La rehabilitación oral recupera la función, la estética y la salud de tu boca cuando hay desgaste, pérdida de dientes o problemas articulares, combinando tratamientos según cada caso.'",
         "The intro (the direct answer) falls within the first 100 words of the page's main content"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "rehabilitacion-cuando",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Rehabilitación Oral: when you need it",
       "source": "textos-sitio.md §3 Rehabilitación Oral › Cuándo la necesitas",
       "acceptance": [
         "h2 'Cuándo la necesitas'",
         "4 items verbatim: 'Desgaste dental visible', 'Pérdida de una o varias piezas', 'Bruxismo o dolor articular', 'Buscas recuperar función y estética a la vez'"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "rehabilitacion-tratamientos",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Rehabilitación Oral: included treatments",
       "source": "textos-sitio.md §3 Rehabilitación Oral › Tratamientos incluidos",
       "acceptance": [
         "h2 'Tratamientos incluidos'",
         "5 treatments in brief order: Coronas en Zirconio, Incrustaciones Dentales, Prótesis Removibles, Placas de Bruxismo, Implantes",
         "No invented description text for the treatments"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "rehabilitacion-como-se-hace",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Rehabilitación Oral: how it is done",
       "source": "textos-sitio.md §3 Rehabilitación Oral › Cómo se hace",
       "acceptance": [
         "h2 'Cómo se hace'",
         "Ordered list (<ol>) of 3 steps, each title + text verbatim: Diagnóstico con escáner intraoral, Plan de tratamiento claro, Tratamiento en ambiente de calma"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "rehabilitacion-enlace-cruzado",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Rehabilitación Oral: cross-link to Blanqueamiento Dental. /blanqueamiento-dental/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
       "source": "textos-sitio.md §3 Rehabilitación Oral › Enlace cruzado + arquitectura-informacion.md §3 Enlazado interno",
       "acceptance": [
         "Text '¿Buscas solo aclarar el tono de tu esmalte? Conoce nuestro servicio de Blanqueamiento Dental.' present",
         "'Blanqueamiento Dental' is a descriptive-anchor link to /blanqueamiento-dental/"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "rehabilitacion-faq",
-      "status": "pending",
-      "builders": [
-        "front-end-astro",
-        "seo-guide-lines"
-      ],
-      "nota": "D5 (answers always open vs accordion) decides the display.",
+      "description": "Rehabilitación Oral: FAQ. D5 (answers always open vs accordion) decides the display.",
       "source": "textos-sitio.md §3 Rehabilitación Oral › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
       "acceptance": [
         "Renders the 3 faqs with category 'rehabilitacion-oral' from src/config/faqs.ts, verbatim",
         "Every answer is visible on the page by default, not collapsed",
-        "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> from the same faqs, with text identical to the visible text"
-      ]
+        "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
+      ],
+      "status": "pending"
     },
     {
       "id": "rehabilitacion-cta-final",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "textos-sitio gives only the heading; the target comes from arquitectura §3 ('Todas las páginas terminan con CTA a Contacto').",
+      "description": "Rehabilitación Oral: final CTA. textos-sitio gives only the heading; the target comes from arquitectura §3 ('Todas las páginas terminan con CTA a Contacto'). /contacto/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
       "source": "textos-sitio.md §3 Rehabilitación Oral › CTA final + arquitectura-informacion.md §3 Enlazado interno",
       "acceptance": [
         "Final CTA 'Agenda tu valoración' is the last section of the page",
         "The CTA links to /contacto/"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "page-rehabilitacion",
-      "status": "pending",
-      "builders": [
-        "seo-guide-lines"
-      ],
-      "nota": "Before closing: D1 (title — the brief's title already carries its own suffix), D2 (Service generator), D3 (last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Also needs client item #4: an approved sentence mentioning anestesia digital (textos-sitio §3 never mentions it, brief §5 requires it).",
+      "description": "Rehabilitación Oral page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix), D2 (Service generator), D3 (last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Also needs client item #4: an approved sentence mentioning anestesia digital (textos-sitio §3 never mentions it, brief §5 requires it).",
       "source": "textos-sitio.md §3 Rehabilitación Oral (Meta title, Meta description) + arquitectura-informacion.md §4, §5, §6",
       "acceptance": [
         "Route src/pages/rehabilitacion-oral.astro serves /rehabilitacion-oral/",
@@ -446,64 +365,52 @@
         "Sections in order: hero, Cuándo la necesitas, Tratamientos incluidos, Cómo se hace, enlace cruzado, Preguntas frecuentes, CTA final",
         "Both 'anestesia digital' and the calm environment ('ambiente de calma') are mentioned on the page",
         "BreadcrumbList JSON-LD (Inicio → Rehabilitación Oral) passed through MainLayout's schemas, matching the visible breadcrumb",
-        "Service JSON-LD with provider = generateBusinessRef() and areaServed Bogotá",
+        "Service JSON-LD with provider = seo.businessRef() and areaServed Bogotá",
         "A visible last-updated date on the page, matching dateModified if the schema carries one",
-        "No business, WebSite or Person node on this page"
-      ]
+        "No business, WebSite or Person node on this page",
+        "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
+      ],
+      "status": "pending"
     },
     {
       "id": "contacto-hero",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "",
+      "description": "Contacto: hero",
       "source": "textos-sitio.md §4 Contacto (H1, intro)",
       "acceptance": [
         "Exactly one <h1>: 'Agenda tu Cita'",
         "Intro 'Consultorio en Bogotá (Chicó). Resolvemos tus dudas antes de tu primera visita.' present"
-      ]
+      ],
+      "status": "pending"
     },
     {
       "id": "contacto-datos",
-      "status": "pending",
-      "builders": [
-        "front-end-astro"
-      ],
-      "nota": "The map and the opening hours have been available since 2026-10-02 (client-gaps.md #1, #7). Before building, choose the map's form: a static 'Ver en Google Maps' link (recommended: light, no third-party cookies) or an embedded Google Maps iframe (heavier, and its cookies must be mentioned in the privacy policy).",
+      "description": "Contacto: contact details. The map and the opening hours have been available since 2026-10-02 (client-gaps.md #1, #7). Before building, choose the map's form: a static 'Ver en Google Maps' link (recommended: light, no third-party cookies) or an embedded Google Maps iframe (heavier, and its cookies must be mentioned in the privacy policy).",
       "source": "textos-sitio.md §4 Contacto › Datos de contacto + client-gaps.md #1, #7 (Google Business Profile, 2026-10-02)",
       "acceptance": [
-        "WhatsApp from COMPANY_INFO.phone linking to COMPANY_INFO.whatsapp",
-        "Email from COMPANY_INFO.email as a mailto: link (no hand-written address outside companyInfo.ts)",
-        "Address from COMPANY_INFO.business.address as 'Cra 15 # 104-30, Consultorio 302, Bogotá'",
+        "WhatsApp from COMPANY.phone linking to COMPANY.whatsapp",
+        "Email from COMPANY.email as a mailto: link (no hand-written address outside company.ts)",
+        "Address from COMPANY.business.address as 'Cra 15 # 104-30, Consultorio 302, Bogotá'",
         "Payment methods: 'débito, crédito, datáfono y código QR (no EPS ni seguros)'",
-        "Instagram and TikTok links from COMPANY_INFO.socialMedia, shown as @dra.vivianarodriguez_",
-        "Opening hours rendered from COMPANY_INFO.openingHours, in Spanish, with no hand-written hours outside companyInfo.ts",
-        "A map element that opens COMPANY_INFO.socialMedia.googleBusiness, with no hand-written map URL or coordinates outside companyInfo.ts"
-      ]
+        "Instagram and TikTok links from COMPANY.socialMedia, shown as @dra.vivianarodriguez_",
+        "Opening hours rendered from COMPANY.openingHours, in Spanish, with no hand-written hours outside company.ts",
+        "A map element that opens COMPANY.socialMedia.googleBusiness, with no hand-written map URL or coordinates outside company.ts"
+      ],
+      "status": "pending"
     },
     {
       "id": "contacto-faq",
-      "status": "pending",
-      "builders": [
-        "front-end-astro",
-        "seo-guide-lines"
-      ],
-      "nota": "D5 (answers always open vs accordion) decides the display.",
+      "description": "Contacto: FAQ. D5 (answers always open vs accordion) decides the display.",
       "source": "textos-sitio.md §4 Contacto › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
       "acceptance": [
         "Renders the 2 faqs with category 'contacto' from src/config/faqs.ts, verbatim",
         "Every answer is visible on the page by default, not collapsed",
-        "The section emits FAQPage JSON-LD with <JsonLd schema={generateFAQSchema(…)} /> from the same faqs, with text identical to the visible text"
-      ]
+        "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
+      ],
+      "status": "pending"
     },
     {
       "id": "page-contacto",
-      "status": "pending",
-      "builders": [
-        "seo-guide-lines"
-      ],
-      "nota": "Before closing: D1 (title — the brief's title already carries its own suffix), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written.",
+      "description": "Contacto page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written.",
       "source": "textos-sitio.md §4 Contacto (Meta title, Meta description) + arquitectura-informacion.md §4",
       "acceptance": [
         "Route src/pages/contacto.astro serves /contacto/",
@@ -511,29 +418,27 @@
         "meta description is 'Agenda tu cita con la Dra. Viviana Rodríguez en Bogotá. WhatsApp, dirección, mapa y horarios de atención. Resolvemos tus dudas antes de tu primera visita.'",
         "Exactly one <h1> on the page",
         "Sections in order: hero, Datos de contacto, Preguntas frecuentes",
-        "No business, WebSite or Person node on this page"
-      ]
+        "No business, WebSite or Person node on this page",
+        "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
+      ],
+      "status": "pending"
     },
     {
       "id": "page-privacidad",
-      "status": "pending",
-      "builders": [
-        "front-end-astro",
-        "seo-guide-lines"
-      ],
-      "nota": "BLOCKED on client data: docs/source/politica-privacidad-estructura.md is a structure with [placeholders] (legal name, C.C./NIT, tarjeta profesional) and must be completed and approved by the client/legal before publishing. Never invent those values. Name, address, email and phone can come from COMPANY_INFO. The source describes a Google Calendar Appointment Schedule channel, but the brief's booking CTAs only use WhatsApp: confirm with the client whether that channel exists, otherwise remove §3.1. The route slug is not in the brief: /politica-de-privacidad/ is proposed, confirm. Wires the placeholder href='#' (TODO) in src/components/global/Footer.astro.",
+      "description": "Privacy policy page. BLOCKED on client data: docs/source/politica-privacidad-estructura.md is a structure with [placeholders] (legal name, C.C./NIT, tarjeta profesional) and must be completed and approved by the client/legal before publishing. Never invent those values. Name, address, email and phone can come from COMPANY. The source describes a Google Calendar Appointment Schedule channel, but the brief's booking CTAs only use WhatsApp: confirm with the client whether that channel exists, otherwise remove §3.1. The route slug is not in the brief: /politica-de-privacidad/ is proposed, confirm. Wires the placeholder href='#' (TODO) in src/components/global/Footer.astro. Its PAGES entry is added once the slug is confirmed; if it stays indexable, it needs a keyword from the brief (ask).",
       "source": "docs/source/politica-privacidad-estructura.md (all sections, once completed with client data)",
       "acceptance": [
         "Route src/pages/politica-de-privacidad.astro serves /politica-de-privacidad/ (slug confirmed)",
         "Exactly one <h1>: 'Política de Tratamiento de Datos Personales y Privacidad'",
         "The 9 sections of the source appear in order, with its text verbatim once the client has completed it",
         "Zero '[...]' placeholders remain in the rendered page (legal name, C.C./NIT, tarjeta profesional, address, email, phone all filled in)",
-        "Responsable data matches COMPANY_INFO where it overlaps (name, address 'Cra 15 # 104-30, Consultorio 302, Bogotá', email, phone), single NAP form",
+        "Responsable data matches COMPANY where it overlaps (name, address 'Cra 15 # 104-30, Consultorio 302, Bogotá', email, phone), single NAP form",
         "External links (Google, WhatsApp privacy policies) open with target=_blank and rel='noopener noreferrer'",
         "The footer anchor 'Política de privacidad' in src/components/global/Footer.astro links to the page's route and the TODO comment is removed",
-        "<title> and meta description set via generatePageSEO, and the page is in the sitemap",
+        "<title> and meta description from seo.pageHead(PAGES.privacidad), and the page is in the sitemap",
         "No business, WebSite or Person node on this page"
-      ]
+      ],
+      "status": "pending"
     }
   ]
 }

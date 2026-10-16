@@ -1,4 +1,4 @@
-import { LOCALE, type DayOfWeek, type OpeningHours } from '@/config/companyInfo';
+import { LOCALE, type DayOfWeek, type OpeningHours } from '@/config/company';
 
 // Opening hours as display rows: one row per entry, ordered by its first day, then one
 // row with the closed days. Shared by the footer and the contact page.

@@ -5,8 +5,7 @@
     "**/*"
   ],
   "exclude": [
-    "dist",
-    "harness/modules"
+    "dist"
   ],
   "compilerOptions": {
     "paths": {
