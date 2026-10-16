@@ -42,7 +42,7 @@ export const PAGES = {
     keyword: 'citas odontología Chicó Bogotá / contacto odontóloga Bogotá',
     title: 'Contacto y Citas | Dra. Viviana Rodríguez — Odontóloga Bogotá',
     description:
-      'Agenda tu cita con la Dra. Viviana Rodríguez en Bogotá. WhatsApp, dirección, mapa y horarios de atención. Resolvemos tus dudas antes de tu primera visita.',
+      'Consultorio en Bogotá (Chicó). Resolvemos tus dudas antes de tu primera visita.',
     h1: 'Agenda tu Cita',
     source: 'textos-sitio.md §4',
   },

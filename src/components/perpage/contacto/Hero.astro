@@ -1,0 +1,39 @@
+---
+import { COMPANY } from "@/config/company";
+import { PAGES } from "@/config/pages";
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+---
+
+<section
+  aria-labelledby="contacto-title"
+  class="mx-auto flex min-h-screen max-w-7xl items-center px-4 py-20 sm:px-8"
+>
+  <div class="mx-auto flex w-full max-w-3xl flex-col items-center text-center">
+    <p class="mb-5 text-sm font-semibold tracking-widest text-turquoise-dark uppercase">
+      Dra. Viviana Rodríguez
+    </p>
+    <h1
+      id="contacto-title"
+      class="text-6xl leading-none font-medium tracking-tight text-charcoal sm:text-7xl lg:text-8xl"
+    >
+      {PAGES.contacto.h1}
+    </h1>
+    <p class="mt-8 max-w-xl text-lg leading-relaxed text-charcoal sm:text-xl">
+      Consultorio en Bogotá (Chicó). Resolvemos tus dudas antes de tu primera
+      visita.
+    </p>
+    <a
+      href={COMPANY.whatsapp}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="group mt-10 inline-flex items-center gap-3 rounded-full bg-turquoise-dark px-7 py-4 text-base font-semibold text-ivory transition-colors motion-reduce:transition-none hover:bg-charcoal focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal sm:text-lg"
+    >
+      Escribir por WhatsApp
+      <span class="sr-only">(se abre en una pestaña nueva)</span>
+      <ArrowUpRight
+        class="h-5 w-5 transition-transform motion-reduce:transition-none group-hover:rotate-45"
+        aria-hidden="true"
+      />
+    </a>
+  </div>
+</section>

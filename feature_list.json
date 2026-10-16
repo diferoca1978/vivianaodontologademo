@@ -410,7 +410,7 @@
     },
     {
       "id": "page-contacto",
-      "description": "Contacto page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written.",
+      "description": "Contacto page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written. Note (2026-10-16): a basic placeholder page exists only so the check passes — src/pages/contacto.astro with src/components/perpage/contacto/Hero.astro (the H1, the brief's intro and one WhatsApp button), and /contacto/ is already out of PENDING_PAGES. It does not implement this feature, contacto-datos or contacto-faq, which stay pending as written. Until then, PAGES.contacto.description in src/config/pages.ts is a shorter temporary text, because the brief's mentions an address, a map and hours the placeholder does not show: restore the brief's when building this feature.",
       "source": "textos-sitio.md §4 Contacto (Meta title, Meta description) + arquitectura-informacion.md §4",
       "acceptance": [
         "Route src/pages/contacto.astro serves /contacto/",

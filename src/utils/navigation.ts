@@ -10,7 +10,7 @@ const NAVIGATION = [
 // Pages from the brief that are not built yet. The SEO gate fails the build on a link to a
 // page that does not exist (url-resolves), so the nav, the footer and the service cards hide
 // these links until the page exists. The feature that builds a page removes its path here.
-const PENDING_PAGES = ["/blanqueamiento-dental/", "/rehabilitacion-oral/", "/contacto/"];
+const PENDING_PAGES = ["/blanqueamiento-dental/", "/rehabilitacion-oral/"];
 
 export function isBuilt(path: string): boolean {
   return !PENDING_PAGES.includes(path);
