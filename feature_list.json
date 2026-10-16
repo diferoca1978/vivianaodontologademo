@@ -46,6 +46,20 @@
       "status": "done"
     },
     {
+      "id": "global-address-link",
+      "description": "The address links to the Google Business Profile wherever it is shown (user request, 2026-10-16): the home hero highlight, the footer (every page) and the home FAQ answer '¿Dónde queda el consultorio?'. FAQ.astro wraps COMPANY.business.address.street in the link inside any answer that contains it, so src/config/faqs.ts stays plain text and later FAQs that mention the address get the link too.",
+      "source": "client-gaps.md #7 (Google Business Profile URL in COMPANY.socialMedia.googleBusiness, 2026-10-02) + arquitectura-informacion.md §1 (single NAP form) + the maintainer's request on 2026-10-16",
+      "acceptance": [
+        "The home hero address highlight, the footer <address> and the home FAQ answer '¿Dónde queda el consultorio?' each link to COMPANY.socialMedia.googleBusiness (https://www.google.com/maps?cid=13310363482939215067); no component writes that URL by hand",
+        "Each address link has target=_blank, rel='noopener noreferrer' and an sr-only '(ver en Google Maps, se abre en una pestaña nueva)'",
+        "The linked text is the single NAP form 'Cra 15 # 104-30, Consultorio 302' (brief §1), read from COMPANY.business.address",
+        "In the FAQ only the street is a link, and the answer still reads 'En la Cra 15 # 104-30, Consultorio 302, zona de Chicó, al norte de Bogotá.'",
+        "The other two hero highlights render no link, and data-hero-highlight stays on each <li> (the GSAP entrance is unchanged)",
+        "Every address link shows a visible focus style (focus-visible outline)"
+      ],
+      "status": "done"
+    },
+    {
       "id": "home-hero",
       "description": "Home: hero. Visual reference: references/Hero-home-reference.png. Real photos are /src/assets/images/Hero-home-reference.webp. Replaces the scaffold stub 'Nueva web app'.",
       "source": "textos-sitio.md §1 Inicio › Hero",

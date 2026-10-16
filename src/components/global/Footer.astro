@@ -129,8 +129,16 @@ const year = new Date().getFullYear();
                 </span>
                 <div class="flex flex-col">
                   <span class="text-sm text-gray-light">Consultorio</span>
-                  <address class="not-italic text-ivory">
-                    {address.street}, {address.city}
+                  <address class="not-italic">
+                    <a
+                      href={COMPANY.socialMedia.googleBusiness}
+                      class={linkClass}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {address.street}, {address.city}
+                      <span class="sr-only">(ver en Google Maps, se abre en una pestaña nueva)</span>
+                    </a>
                   </address>
                 </div>
               </li>
