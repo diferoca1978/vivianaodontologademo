@@ -230,7 +230,7 @@
         "h2 'Beneficios'",
         "The 4 benefits rendered verbatim from services[blanqueamiento-dental].benefits in src/config/services.ts"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "blanqueamiento-como-se-hace",

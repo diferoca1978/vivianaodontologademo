@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import { services } from "@/config/services";
+import blanqueamientoImage from "@/assets/images/blanqueamiento.webp";
+import Good from "@/assets/icons/good.svg";
+import Smile from "@/assets/icons/smile.svg";
+import SmileConfidence from "@/assets/icons/smile-confidence.svg";
+import Steps from "@/assets/icons/steps.svg";
+
+// Copy: docs/brief/textos-sitio.md §2 Blanqueamiento Dental › Beneficios (verbatim).
+// Design: the user-provided reference image (see references/blanqueamiento-beneficios/references.md) —
+// four benefits arranged around a centered, radially faded image.
+const benefits =
+  services.find(({ slug }) => slug === "blanqueamiento-dental")?.benefits ?? [];
+const benefitIcons = [Smile, Good, SmileConfidence, Steps] as const;
+---
+
+<section id="beneficios" aria-labelledby="beneficios-title" class="bg-ivory">
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:py-28 xl:px-8">
+    <h2
+      id="beneficios-title"
+      class="text-center text-4xl leading-tight font-medium tracking-tight sm:text-5xl"
+    >
+      Beneficios
+    </h2>
+
+    <div class="relative isolate mt-10 sm:mt-14 lg:mt-16">
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute top-1/2 left-1/2 z-0 aspect-square w-full max-w-xl -translate-x-1/2 -translate-y-1/2 opacity-30 mask-radial-from-10% mask-radial-to-65% sm:opacity-45"
+      >
+        <Image
+          src={blanqueamientoImage}
+          alt=""
+          widths={[320, 480, 640, blanqueamientoImage.width]}
+          sizes="(min-width: 1024px) 40vw, 90vw"
+          class="h-full w-full object-contain"
+        />
+      </div>
+
+      <ol
+        class="relative z-10 grid grid-cols-1 items-center gap-x-10 gap-y-10 sm:grid-cols-2 sm:gap-x-16 sm:gap-y-16 lg:gap-x-48 lg:gap-y-20"
+        role="list"
+      >
+        {
+          benefits.map((benefit, index) => {
+            const Icon = benefitIcons[index] ?? Smile;
+
+            return (
+              <li class="flex min-h-36 flex-col items-center justify-center text-center sm:min-h-44">
+                <Icon aria-hidden="true" class="mb-4 size-8 text-turquoise-dark sm:size-9" />
+                <p class="max-w-sm text-xl leading-snug font-medium text-charcoal sm:text-2xl">
+                  {benefit}
+                </p>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </div>
+</section>
