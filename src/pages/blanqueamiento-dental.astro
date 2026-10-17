@@ -1,0 +1,16 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import Hero from "@/components/perpage/blanqueamiento/Hero.astro";
+import { PAGES } from "@/config/pages";
+import { seo } from "@/config/seo";
+
+const head = seo.pageHead(PAGES.blanqueamiento);
+const crumbs = [
+  { name: "Inicio", path: "/" },
+  { name: "Blanqueamiento Dental", path: PAGES.blanqueamiento.path },
+];
+---
+
+<MainLayout head={head} schemas={[seo.businessRef(), seo.breadcrumbNode(crumbs)]}>
+  <Hero crumbs={crumbs} />
+</MainLayout>

@@ -20,7 +20,7 @@ const linkClass =
   "relative whitespace-nowrap text-charcoal underline-offset-8 decoration-turquoise decoration-2 hover:underline focus-visible:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal aria-[current=page]:no-underline aria-[current=page]:after:absolute aria-[current=page]:after:-bottom-5 aria-[current=page]:after:left-0 aria-[current=page]:after:h-1 aria-[current=page]:after:w-full aria-[current=page]:after:bg-turquoise";
 ---
 
-<header class="sticky top-0 z-50 border-b border-turquoise-light bg-ivory xl:border-b-0 xl:shadow-sm">
+<header class="sticky top-0 z-50 border-b border-turquoise-light bg-ivory xl:border-b-0 xl:drop-shadow-sm">
   <nav
     aria-label="Principal"
     class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 xl:gap-10 xl:px-8"
@@ -84,10 +84,10 @@ const linkClass =
     </div>
   </nav>
 
-  <!-- Desktop: the bar dips below the logo as a tab with concave corners (reference) -->
+  <!-- Desktop: the bar dips below the logo as a tab with concave corners (reference). No shadow of its own: the header's drop-shadow outlines bar and tab as one shape -->
   <div aria-hidden="true" class="pointer-events-none absolute top-full left-1/2 hidden -translate-x-1/2 items-start xl:flex">
     <NotchCorner class="h-4 w-4 text-ivory" />
-    <div class="h-12 w-72 rounded-b-3xl bg-ivory shadow-sm"></div>
+    <div class="h-12 w-72 rounded-b-3xl bg-ivory"></div>
     <NotchCorner class="h-4 w-4 -scale-x-100 text-ivory" />
   </div>
 

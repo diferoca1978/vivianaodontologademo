@@ -196,6 +196,12 @@ en 9 reseñas. El enlace está en `COMPANY.socialMedia.googleBusiness`.
   - [ ] Agregar el sitio web cuando esté publicado. Hoy la ficha no tiene
     ninguno.
 
+## Decided on 2026-10-17 (Blanqueamiento hero)
+
+- **H1 of `/blanqueamiento-dental/`:** "Blanqueamiento Dental", without "en Bogotá". The
+  `<title>` and meta description keep "en Bogotá". `docs/brief/textos-sitio.md` §2 and the
+  `blanqueamiento-hero` criterion were updated to match.
+
 ## Decided on 2026-10-02 (Google Business Profile)
 
 - **Testimonials:** the 5 reviews and the signature rule in

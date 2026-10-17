@@ -126,7 +126,7 @@ Fix the cause in the page, `pages.ts` or the config. Do not work around a rule.
   only for a decorative image). SVG icons imported from `@/assets/icons/`, never inline
   `<svg>`.
 - Never hardcode client data in a component: read it from `src/config/*`.
-- No `scrollbar-hide` on `<html>`.
+- The page scrollbar is hidden on `<html>` in `global.css` (`scrollbar-width: none`), by the maintainer's decision on 2026-10-17. Scrolling itself must keep working.
 - `public/` holds the favicon, the logo (at least 112 px) and the `og-image`.
 - The Netlify adapter stays while the site may need server code (the booking spec);
   every page is prerendered.

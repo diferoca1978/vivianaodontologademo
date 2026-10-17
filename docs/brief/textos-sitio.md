@@ -90,7 +90,7 @@ Botón: **Escribir por WhatsApp**
 **Meta title:** Blanqueamiento Dental en Bogotá | Dra. Viviana Rodríguez
 **Meta description:** Blanqueamiento dental profesional en Bogotá (Chicó), en un consultorio pensado para tu calma. Resultados visibles, sin dolor y con seguimiento personalizado.
 
-**H1:** Blanqueamiento Dental en Bogotá
+**H1:** Blanqueamiento Dental *(decidido el 2026-10-17: sin "en Bogotá"; el meta title lo conserva)*
 
 *Una sonrisa más blanca, sin ansiedad ni sorpresas.*
 
