@@ -1,0 +1,100 @@
+---
+import { Image } from "astro:assets";
+import type { BreadcrumbItem } from "@shine/seo-core";
+import Breadcrumb from "@/components/ui/navigation/Breadcrumb.astro";
+import { COMPANY } from "@/config/company";
+import { PAGES } from "@/config/pages";
+import WhatsappIcon from "@/assets/icons/whatsApp.svg";
+import heroPhoto from "@/assets/images/hero-blanqueamiento.webp";
+
+// Copy: docs/brief/textos-sitio.md §2 Blanqueamiento Dental (H1, subtítulo, intro), verbatim.
+// "aclaramiento" only appears as a synonym inside the intro, never in the H1.
+// Layout: references/blanqueamiento-hero/01-odyssee.png. A full-bleed close-up photo with the
+// copy laid over it. The photo's left third is clean white, so the copy sits there in charcoal
+// (the reference's white-on-photo text is the contrast problem referencias.md says to avoid).
+// Below lg it stacks: copy on ivory, photo underneath.
+interface Props {
+  crumbs: BreadcrumbItem[];
+}
+
+const { crumbs } = Astro.props;
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal";
+
+// The H1 stays PAGES.blanqueamiento.h1; only its last word is set in italic.
+const h1Words = PAGES.blanqueamiento.h1.split(" ");
+const h1Accent = h1Words.pop();
+const h1Lead = h1Words.join(" ");
+---
+
+<section
+  aria-labelledby="blanqueamiento-title"
+  class="relative isolate flex flex-col overflow-hidden bg-ivory lg:min-h-176"
+>
+  <!-- Photo: below the copy on mobile, full-bleed behind it on desktop -->
+  <div class="relative order-last aspect-4/3 w-full overflow-hidden lg:absolute lg:inset-0 lg:left-32 lg:-z-10 lg:order-0 lg:aspect-auto">
+    <Image
+      src={heroPhoto}
+      alt="Primer plano de una sonrisa con dientes blancos y parejos"
+      priority
+      widths={[640, 1024, 1536, heroPhoto.width]}
+      sizes="100vw"
+      class="h-full w-full object-cover object-right"
+    />
+    <!-- Ivory fade on top (below lg) so the photo melts into the copy above it -->
+    <div
+      aria-hidden="true"
+      class="absolute inset-x-0 top-0 h-1/2 bg-linear-to-b from-ivory to-transparent lg:hidden"
+    ></div>
+    <!-- Ivory fade on the left (lg only) so the copy keeps its contrast and the white of the
+         photo melts into the page background -->
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 hidden bg-linear-to-r from-ivory from-30% via-ivory/60 via-45% to-transparent lg:block"
+    ></div>
+  </div>
+
+  <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col lg:relative px-4 pt-8 pb-10 sm:pt-10 lg:pt-10 lg:pb-16 xl:px-8">
+    <Breadcrumb items={crumbs} />
+
+    <!-- Desktop: H1 and intro left at mid-height, CTA pinned bottom-right -->
+    <div class="mt-10 flex flex-col gap-8 lg:my-auto">
+      <div class="flex max-w-xl flex-col gap-6 lg:max-w-lg">
+        <p class="font-cormorant text-2xl leading-snug font-medium text-turquoise-dark italic sm:text-3xl">
+          Una sonrisa más blanca, sin ansiedad ni sorpresas.
+        </p>
+        <h1
+          id="blanqueamiento-title"
+          class="text-5xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-6xl xl:text-8xl"
+        >
+          {h1Lead} <em class="font-normal">{h1Accent}</em>
+        </h1>
+        <p class="max-w-md text-base leading-relaxed text-charcoal text-justify sm:text-lg">
+          El blanqueamiento (o aclaramiento) dental es uno de los tratamientos
+          estéticos más solicitados en nuestro consultorio. Aclara el tono
+          natural del esmalte de forma segura, con seguimiento personalizado y
+          sin dolor.
+        </p>
+      </div>
+      <!-- CTA pinned bottom-right on lg -->
+      <div class="flex max-w-md flex-col gap-6 lg:absolute lg:right-0 lg:bottom-4 lg:rounded-3xl lg:p-8">
+        <div>
+          <a
+            href={COMPANY.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            class:list={[
+              "inline-flex items-center justify-center gap-3 rounded-full bg-turquoise px-7 py-4 font-medium whitespace-nowrap text-ivory shadow-lg shadow-turquoise/20 transition-colors duration-300 hover:bg-turquoise-dark motion-reduce:transition-none",
+              focusRing,
+            ]}
+          >
+            <WhatsappIcon class="size-5" aria-hidden="true" />
+            Agendar por WhatsApp
+            <span class="sr-only">(se abre en una pestaña nueva)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

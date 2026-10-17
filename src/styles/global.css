@@ -1,11 +1,19 @@
 @import "tailwindcss";
 
 @layer base {
+  /* Page scrollbar hidden on purpose (decided 2026-10-17); scrolling still works */
+  html {
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
   body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
     background-color: var(--color-ivory);
     color: var(--color-charcoal);
   }

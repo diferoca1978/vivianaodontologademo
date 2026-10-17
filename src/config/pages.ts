@@ -24,7 +24,7 @@ export const PAGES = {
     title: 'Blanqueamiento Dental en Bogotá | Dra. Viviana Rodríguez',
     description:
       'Blanqueamiento dental profesional en Bogotá (Chicó), en un consultorio pensado para tu calma. Resultados visibles, sin dolor y con seguimiento personalizado.',
-    h1: 'Blanqueamiento Dental en Bogotá',
+    h1: 'Blanqueamiento Dental',
     source: 'textos-sitio.md §2',
   },
   rehabilitacion: {

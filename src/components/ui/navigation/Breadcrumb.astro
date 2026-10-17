@@ -1,0 +1,48 @@
+---
+import type { BreadcrumbItem } from "@shine/seo-core";
+
+// Visible breadcrumb trail. The page passes the same items to seo.breadcrumbNode() so the
+// JSON-LD always matches what is shown. The last item is the current page and is not a link.
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal";
+---
+
+<nav aria-label="Migas de pan">
+  <ol class="flex flex-wrap items-center gap-2 text-sm font-medium">
+    {
+      items.map((item, index) => {
+        const isLast = index === items.length - 1;
+        return (
+          <li class="flex items-center gap-2">
+            {isLast ? (
+              <span aria-current="page" class="text-charcoal/80">
+                {item.name}
+              </span>
+            ) : (
+              <>
+                <a
+                  href={item.path}
+                  class:list={[
+                    "rounded text-turquoise-dark underline-offset-4 transition-colors duration-300 hover:underline motion-reduce:transition-none",
+                    focusRing,
+                  ]}
+                >
+                  {item.name}
+                </a>
+                <span aria-hidden="true" class="text-gray-neutral">
+                  &gt;
+                </span>
+              </>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>

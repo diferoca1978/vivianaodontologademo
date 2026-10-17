@@ -215,12 +215,12 @@
       "source": "textos-sitio.md §2 Blanqueamiento Dental (H1, subtítulo, intro) + arquitectura-informacion.md §3 Breadcrumbs, §4, §5",
       "acceptance": [
         "Visible breadcrumb 'Inicio > Blanqueamiento Dental', with Inicio linking to /",
-        "Exactly one <h1>: 'Blanqueamiento Dental en Bogotá' (never 'aclaramiento' in the H1)",
+        "Exactly one <h1>: 'Blanqueamiento Dental' (no 'en Bogotá' in the H1; the <title> keeps it; decided 2026-10-17) (never 'aclaramiento' in the H1)",
         "Subtitle 'Una sonrisa más blanca, sin ansiedad ni sorpresas.'",
         "Intro present verbatim: 'El blanqueamiento (o aclaramiento) dental es uno de los tratamientos estéticos más solicitados en nuestro consultorio. Aclara el tono natural del esmalte de forma segura, con seguimiento personalizado y sin dolor.'",
         "The intro (the direct answer) falls within the first 100 words of the page's main content"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "blanqueamiento-beneficios",
