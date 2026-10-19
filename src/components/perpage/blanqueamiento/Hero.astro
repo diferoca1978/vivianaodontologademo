@@ -5,10 +5,13 @@ import Breadcrumb from "@/components/ui/navigation/Breadcrumb.astro";
 import { COMPANY } from "@/config/company";
 import { PAGES } from "@/config/pages";
 import WhatsappIcon from "@/assets/icons/whatsApp.svg";
+import MoodSearch from "@/assets/icons/moodsearch.svg";
+import ThreeFingers from "@/assets/icons/threefingers.svg";
 import heroPhoto from "@/assets/images/hero-blanqueamiento.webp";
 
-// Copy: docs/brief/textos-sitio.md §2 Blanqueamiento Dental (H1, subtítulo, intro), verbatim.
-// "aclaramiento" only appears as a synonym inside the intro, never in the H1.
+// Copy: docs/brief/textos-blanqueamiento.md, top section (H1, subtítulo, 3 puntos, CTA); the brief's
+// typo "revision" is written "revisión" and "3 modalidades" is "Tres modalidades". The H1 comes from
+// PAGES.blanqueamiento.h1. The intro paragraph lives in Intro.astro (specs/03), not in the hero.
 // Layout: references/blanqueamiento-hero/01-odyssee.png. A full-bleed close-up photo with the
 // copy laid over it. The photo's left third is clean white, so the copy sits there in charcoal
 // (the reference's white-on-photo text is the contrast problem referencias.md says to avoid).
@@ -18,6 +21,21 @@ interface Props {
 }
 
 const { crumbs } = Astro.props;
+
+interface Highlight {
+  lead: string;
+  text: string;
+  icon: typeof ThreeFingers
+}
+
+const highlights: Highlight[] = [
+  {
+    lead: "Valoración clínica previa:",
+    text: "revisión exhaustiva de tus dientes antes de recomendarte una opción.",
+    icon: MoodSearch
+  },
+  { lead: "Tres modalidades:", text: "en consultorio, en casa o mixto.", icon: ThreeFingers },
+];
 
 const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal";
@@ -30,7 +48,7 @@ const h1Lead = h1Words.join(" ");
 
 <section
   aria-labelledby="blanqueamiento-title"
-  class="relative isolate flex flex-col overflow-hidden bg-ivory lg:min-h-176"
+  class="relative isolate flex flex-col overflow-hidden bg-ivory lg:h-screen"
 >
   <!-- Photo: below the copy on mobile, full-bleed behind it on desktop -->
   <div class="relative order-last aspect-4/3 w-full overflow-hidden lg:absolute lg:inset-0 lg:left-32 lg:-z-10 lg:order-0 lg:aspect-auto">
@@ -53,32 +71,45 @@ const h1Lead = h1Words.join(" ");
       aria-hidden="true"
       class="absolute inset-0 hidden bg-linear-to-r from-ivory from-30% via-ivory/60 via-45% to-transparent lg:block"
     ></div>
+    <!-- Ivory fade at the bottom so the photo melts into the next section (same as the home hero) -->
+    <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-ivory to-transparent"></div>
   </div>
 
   <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col lg:relative px-4 pt-8 pb-10 sm:pt-10 lg:pt-10 lg:pb-16 xl:px-8">
     <Breadcrumb items={crumbs} />
 
-    <!-- Desktop: H1 and intro left at mid-height, CTA pinned bottom-right -->
-    <div class="mt-10 flex flex-col gap-8 lg:my-auto">
+    <!-- Desktop: subtitle, H1 and highlights left at mid-height, CTA pinned bottom-right -->
+    <div class="mt-10 flex flex-col gap-8 lg:my-auto lg:pt-8">
       <div class="flex max-w-xl flex-col gap-6 lg:max-w-lg">
         <p class="font-cormorant text-2xl leading-snug font-medium text-turquoise-dark italic sm:text-3xl">
-          Una sonrisa más blanca, sin ansiedad ni sorpresas.
+          Una sonrisa más luminosa, sin perder su apariencia natural.
         </p>
         <h1
           id="blanqueamiento-title"
-          class="text-5xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-6xl xl:text-8xl"
+          class="text-5xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-6xl xl:text-7xl"
         >
-          {h1Lead} <em class="font-normal">{h1Accent}</em>
+          {h1Lead} <em class="font-normal block">{h1Accent}</em>
         </h1>
-        <p class="max-w-md text-base leading-relaxed text-charcoal text-justify sm:text-lg">
-          El blanqueamiento (o aclaramiento) dental es uno de los tratamientos
-          estéticos más solicitados en nuestro consultorio. Aclara el tono
-          natural del esmalte de forma segura, con seguimiento personalizado y
-          sin dolor.
-        </p>
+        
+        <ul role="list" class="flex max-w-md flex-col gap-3">
+          {
+            highlights.map(({ lead, text, icon: Icon }) => (
+               
+                <li class="flex items-start gap-3 text-sm leading-snug text-charcoal sm:text-base">
+                  <span aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-turquoise-dark sm:size-5">
+                    <Icon class="size-full" />
+                  </span>
+                  <span>
+                    <strong class="font-semibold">{lead}</strong> {text}
+                  </span>
+                </li>
+            
+              ))
+          }
+        </ul>
       </div>
       <!-- CTA pinned bottom-right on lg -->
-      <div class="flex max-w-md flex-col gap-6 lg:absolute lg:right-0 lg:bottom-4 lg:rounded-3xl lg:p-8">
+      <div class="flex max-w-md flex-col gap-6 lg:absolute lg:right-0 lg:bottom-16 lg:rounded-3xl lg:p-8">
         <div>
           <a
             href={COMPANY.whatsapp}
@@ -90,7 +121,7 @@ const h1Lead = h1Words.join(" ");
             ]}
           >
             <WhatsappIcon class="size-5" aria-hidden="true" />
-            Agendar por WhatsApp
+            Agenda tu valoración
             <span class="sr-only">(se abre en una pestaña nueva)</span>
           </a>
         </div>

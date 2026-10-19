@@ -9,9 +9,10 @@ export interface FAQItem {
   category?: string;
 }
 
-// Source: textos-sitio.md, verbatim. category = the slug of the page that shows it
-// ('inicio' for /). The one change from the brief: the home "¿Dónde queda...?" answer
-// uses "Cra 15" instead of "Carrera 15", for the single NAP form (brief §1).
+// Source: textos-sitio.md (Blanqueamiento: textos-blanqueamiento.md), verbatim.
+// category = the slug of the page that shows it ('inicio' for /). The one change from
+// the brief: the home "¿Dónde queda...?" answer uses "Cra 15" instead of "Carrera 15",
+// for the single NAP form (brief §1).
 export const faqs: FAQItem[] = [
   // Inicio — textos-sitio.md §1
   {
@@ -37,30 +38,25 @@ export const faqs: FAQItem[] = [
     answer: 'Por WhatsApp al 302 544 5760, indicando el servicio de tu interés.',
   },
 
-  // Blanqueamiento Dental — textos-sitio.md §2
+  // Blanqueamiento Dental — textos-blanqueamiento.md › Preguntas frecuentes sobre el
+  // blanqueamiento dental (2026-10-19; supersedes textos-sitio.md §2)
   {
     category: 'blanqueamiento-dental',
-    question: '¿Es doloroso el blanqueamiento dental?',
+    question: '¿Cuánto duran los resultados y cada cuánto debo hacer un retoque?',
     answer:
-      'En la mayoría de los casos no genera dolor; algunos pacientes sienten sensibilidad temporal, que manejamos con productos específicos y, si es necesario, anestesia digital.',
+      'Depende de tus hábitos, tu alimentación y tu higiene oral. No hay una frecuencia única para los retoques: los valoramos en tus controles periódicos y, en algunos casos, puede considerarse uno al año.',
   },
   {
     category: 'blanqueamiento-dental',
-    question: '¿Cuánto dura el efecto de un blanqueamiento dental?',
+    question: '¿El blanqueamiento dental produce sensibilidad?',
     answer:
-      'Entre 1 y 3 años, dependiendo de hábitos como el café, el vino o el cigarrillo, y de los cuidados posteriores.',
+      'Puede presentarse sensibilidad temporal. Durante el tratamiento la monitoreamos y ajustamos el protocolo: en consultorio aplicamos flúor cuando está indicado, y el kit casero incluye crema desensibilizante.',
   },
   {
     category: 'blanqueamiento-dental',
     question: '¿Cuánto cuesta un blanqueamiento dental en Bogotá?',
     answer:
-      'El valor varía según el tipo de blanqueamiento y el estado de tu esmalte. Lo definimos con precisión en tu valoración inicial.',
-  },
-  {
-    category: 'blanqueamiento-dental',
-    question: '¿Quiénes pueden hacerse un blanqueamiento dental?',
-    answer:
-      'La mayoría de personas con buena salud oral son candidatas; en la valoración revisamos encías y esmalte antes de recomendar el tratamiento adecuado.',
+      'Depende de la modalidad y de tu valoración clínica. En tu cita te damos el valor exacto antes de iniciar cualquier procedimiento.',
   },
 
   // Rehabilitación Oral — textos-sitio.md §3

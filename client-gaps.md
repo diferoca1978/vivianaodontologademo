@@ -178,6 +178,8 @@ existe (`url-resolves`), así que esos enlaces se pintan con `isBuilt()`
 | 11 | *(optional)* Postal code | Dentist `address` | — |
 | 12 | *(optional)* Pre-filled WhatsApp message. `COMPANY.whatsapp` currently opens a chat with no text. | — | — |
 | 13 | *(optional)* Should "llave" and the financing plans appear in the copy? arquitectura §1 lists them, but the payment copy in textos §1 and §4 doesn't. | — | arquitectura §1 |
+| 14 | **Blanqueamiento copy left out of the 2026-10-19 brief.** (a) The new FAQ "¿El blanqueamiento dental produce sensibilidad?" says "Puede presentarse sensibilidad temporal", while the page's meta description (still from textos §2, `PAGES.blanqueamiento.description`) promises "sin dolor". (b) The home service card (`src/config/services.ts:46`) still has the old subtitle "Una sonrisa más blanca, sin ansiedad ni sorpresas…"; the page's new subtitle is "Una sonrisa más luminosa, sin perder su apariencia natural." (c) `services.ts` also keeps the old §2 copy in the blanqueamiento `seoDescription` ("sin dolor", which feeds `llms.txt`) and in `benefits` (the old Beneficios, still rendered by `Beneficios.astro` until the new sections replace it). All stay as they are until the client decides. | nothing (consistency only) | textos-blanqueamiento.md › Preguntas frecuentes · textos §1 Servicios, §2 Meta description |
+| 15 | **Short version of the Blanqueamiento intro.** On 2026-10-19 the maintainer chose a shorter intro than the one the brief had before (the longer text in `textos-sitio.md` §2 and the old hero, which mentioned "en Chicó" and "nuestro consultorio"): the new one drops "en Chicó" and "su nombre clínico" and names "el consultorio de la Dra. Viviana Rodríguez". `textos-blanqueamiento.md:5` already carries a near-identical version, with only minor wording differences ("lo realizamos" / "pensado" vs "realizamos el procedimiento" / "diseñado"). It appears as highlighted text below the hero (`specs/03-blanqueamiento-hero-intro-destacada.md`). The client has to confirm it. The highlights also write "Tres modalidades" where the brief has "3 modalidades", and the hero shows only 2 of the brief's 3 points (the maintainer dropped "En consultorio:") in a different order. | nothing (the page builds with the short text) | textos-blanqueamiento.md:5, 7 · specs/03 |
 
 ## Ficha de Google (Google Business Profile) — revisada el 2026-10-02
 
@@ -196,8 +198,17 @@ en 9 reseñas. El enlace está en `COMPANY.socialMedia.googleBusiness`.
   - [ ] Agregar el sitio web cuando esté publicado. Hoy la ficha no tiene
     ninguno.
 
-## Decided on 2026-10-17 (Blanqueamiento hero)
+## Decided on 2026-10-19 (new Blanqueamiento brief)
 
+- **H1 of `/blanqueamiento-dental/`:** "Blanqueamiento Dental en Bogotá". The client's new
+  brief, `docs/brief/textos-blanqueamiento.md` (2026-10-19), puts "en Bogotá" back in the
+  H1, so it supersedes the 2026-10-17 decision below. `PAGES.blanqueamiento.h1`,
+  `docs/brief/textos-sitio.md` §2 and the `blanqueamiento-hero` criterion match it. The
+  maintainer confirmed it on 2026-10-19.
+
+## Decided on 2026-10-17 (Blanqueamiento hero) — superseded on 2026-10-19
+
+- *Superseded by «Decided on 2026-10-19» above. Kept as history.*
 - **H1 of `/blanqueamiento-dental/`:** "Blanqueamiento Dental", without "en Bogotá". The
   `<title>` and meta description keep "en Bogotá". `docs/brief/textos-sitio.md` §2 and the
   `blanqueamiento-hero` criterion were updated to match.

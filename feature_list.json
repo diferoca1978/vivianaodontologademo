@@ -211,53 +211,84 @@
     },
     {
       "id": "blanqueamiento-hero",
-      "description": "Blanqueamiento Dental: hero",
-      "source": "textos-sitio.md §2 Blanqueamiento Dental (H1, subtítulo, intro) + arquitectura-informacion.md §3 Breadcrumbs, §4, §5",
+      "description": "Blanqueamiento Dental: hero. REWRITTEN 2026-10-19 from the new brief (textos-blanqueamiento.md); status back to pending because the copy changed. Reuse src/components/perpage/blanqueamiento/Hero.astro (breadcrumb, full-bleed photo, layout and the motion hooks of specs/01): change the copy, add the highlights (2 of the brief's 3) and the CTA label. UPDATED 2026-10-19 (specs/03): the intro leaves the hero (see blanqueamiento-intro) and the highlights are final as built (own icons, 'Tres modalidades', only 2 of the brief's 3 points). The new brief puts 'en Bogotá' back in the H1, which reverses the 2026-10-17 decision; the maintainer confirmed it on 2026-10-19 and PAGES.blanqueamiento.h1, client-gaps.md and textos-sitio.md §2 already match.",
+      "source": "textos-blanqueamiento.md › Blanqueamiento Dental en Bogotá (H1, subtítulo, 3 puntos, CTA; la intro pasa a blanqueamiento-intro) + arquitectura-informacion.md §3 Breadcrumbs, §4, §5",
       "acceptance": [
         "Visible breadcrumb 'Inicio > Blanqueamiento Dental', with Inicio linking to /",
-        "Exactly one <h1>: 'Blanqueamiento Dental' (no 'en Bogotá' in the H1; the <title> keeps it; decided 2026-10-17) (never 'aclaramiento' in the H1)",
-        "Subtitle 'Una sonrisa más blanca, sin ansiedad ni sorpresas.'",
-        "Intro present verbatim: 'El blanqueamiento (o aclaramiento) dental es uno de los tratamientos estéticos más solicitados en nuestro consultorio. Aclara el tono natural del esmalte de forma segura, con seguimiento personalizado y sin dolor.'",
-        "The intro (the direct answer) falls within the first 100 words of the page's main content"
+        "Exactly one <h1>: 'Blanqueamiento Dental en Bogotá' (PAGES.blanqueamiento.h1 matches it)",
+        "Subtitle 'Una sonrisa más luminosa, sin perder su apariencia natural.'",
+        "2 highlights in a <ul>, in this order, bold lead + text: 'Valoración clínica previa:' revisión exhaustiva de tus dientes antes de recomendarte una opción.; 'Tres modalidades:' en consultorio, en casa o mixto. (brief wording, with 'revisión' accented and 'Tres' spelled out; the brief's third point 'En consultorio:' was dropped by the maintainer on 2026-10-19), each with a decorative icon (moodsearch, threefingers)",
+        "CTA labeled 'Agenda tu valoración' links to COMPANY.whatsapp, opens in a new tab and has the sr-only new-tab note",
+        "The hero no longer contains the intro paragraph (it lives in blanqueamiento-intro)"
       ],
       "status": "done"
     },
     {
-      "id": "blanqueamiento-beneficios",
-      "description": "Blanqueamiento Dental: benefits",
-      "source": "textos-sitio.md §2 Blanqueamiento Dental › Beneficios",
+      "id": "blanqueamiento-intro",
+      "description": "Blanqueamiento Dental: highlighted intro right below the hero (pull-quote style, plain <p>, no <blockquote>, no heading). Depends on specs/03-blanqueamiento-hero-intro-destacada.md being Approved: it defines the design and the short text, which is not in the approved brief and awaits the client (client-gaps.md #15). New component src/components/perpage/blanqueamiento/Intro.astro.",
+      "source": "specs/03-blanqueamiento-hero-intro-destacada.md (Source of the content; short version chosen by the maintainer on 2026-10-19) + textos-blanqueamiento.md:5 (full intro, not used as is)",
       "acceptance": [
-        "h2 'Beneficios'",
-        "The 4 benefits rendered verbatim from services[blanqueamiento-dental].benefits in src/config/services.ts"
+        "Intro.astro is mounted between Hero and Beneficios",
+        "One <p> with exactly: 'El blanqueamiento o aclaramiento dental es un procedimiento estético que aclara el tono de tus dientes naturales y reduce pigmentaciones. En el consultorio de la Dra. Viviana Rodríguez, realizamos el procedimiento con un protocolo planificado, supervisión profesional y un ambiente diseñado para tu tranquilidad.'",
+        "No <blockquote> and no heading in the section; the text is visible at every breakpoint",
+        "The intro falls within the first 100 words of the page's main content"
       ],
       "status": "done"
     },
     {
-      "id": "blanqueamiento-como-se-hace",
-      "description": "Blanqueamiento Dental: how it is done",
-      "source": "textos-sitio.md §2 Blanqueamiento Dental › Cómo se hace",
+      "id": "blanqueamiento-modalidades",
+      "description": "Blanqueamiento Dental: the 3 modalities (consultorio, casero, mixto). Replaces the old Beneficios and Cómo se hace sections. Candidate to reuse the pinned 3-panel pattern of src/components/perpage/blanqueamiento/Pasos.astro (+ animations/blanqueamiento-dental/pasos.ts), which already holds 3 panels; each panel here also needs the 'Incluye' list, so adapting it is a design decision for the maintainer (full lane if the pattern changes). Pasos.astro stays in the repo until then.",
+      "source": "textos-blanqueamiento.md › ¿Qué tipo de blanqueamiento dental es ideal para ti? (intro + 3 modalidades)",
       "acceptance": [
-        "h2 'Cómo se hace'",
-        "Ordered list (<ol>) of 3 steps, each title + text verbatim: Valoración inicial, Ambiente de calma, Aplicación y seguimiento"
+        "h2 '¿Qué tipo de blanqueamiento dental es ideal para ti?'",
+        "Intro paragraph verbatim: 'Todo tratamiento inicia con una valoración clínica: revisamos el color de tus dientes, tus restauraciones, tus hábitos y tus expectativas para recomendarte la modalidad adecuada.'",
+        "3 h3 in this order: 'Blanqueamiento dental en consultorio', 'Blanqueamiento dental casero', 'Blanqueamiento dental mixto', each with its description verbatim",
+        "'En consultorio' and 'casero' each render their 'Incluye:' list verbatim (3 and 4 items, bold leads kept); 'mixto' has no list",
+        "The section is readable without JavaScript and respects prefers-reduced-motion if it keeps the pinned stage"
       ],
-      "status": "done"
+      "status": "pending"
     },
     {
-      "id": "blanqueamiento-enlace-cruzado",
-      "description": "Blanqueamiento Dental: cross-link to Rehabilitación Oral. /rehabilitacion-oral/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
-      "source": "textos-sitio.md §2 Blanqueamiento Dental › Enlace cruzado + arquitectura-informacion.md §3 Enlazado interno",
+      "id": "blanqueamiento-seguridad",
+      "description": "Blanqueamiento Dental: is it harmful? Short answer block (direct answer, AEO). Good fit for a plain text block.",
+      "source": "textos-blanqueamiento.md › ¿El blanqueamiento dental daña los dientes?",
       "acceptance": [
-        "Text 'Si además buscas corregir forma o alineación, conoce nuestro servicio de Rehabilitación Oral.' present",
-        "'Rehabilitación Oral' is a descriptive-anchor link to /rehabilitacion-oral/"
+        "h2 '¿El blanqueamiento dental daña los dientes?'",
+        "Answer paragraph verbatim, starting 'No, cuando está bien indicado.' and ending '…Por eso siempre empezamos con una valoración.'"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "blanqueamiento-contraindicaciones",
+      "description": "Blanqueamiento Dental: who should not get it, with the cross-link to Rehabilitación Oral (replaces the old blanqueamiento-enlace-cruzado). /rehabilitacion-oral/ must exist before the link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts. The brief writes the href without the trailing slash (/rehabilitacion-oral); use PAGES.rehabilitacion.path (/rehabilitacion-oral/). Beneficios.astro (icon grid of 4) does not fit 5 items as is; it stays in the repo as a layout reference.",
+      "source": "textos-blanqueamiento.md › ¿Quién no debe hacerse un blanqueamiento dental? + arquitectura-informacion.md §3 Enlazado interno",
+      "acceptance": [
+        "h2 '¿Quién no debe hacerse un blanqueamiento dental?'",
+        "Lead-in 'El tratamiento debe posponerse o requiere una valoración especial en casos de:' present",
+        "5 items verbatim, bold lead + text, in order: Hipersensibilidad dental, Embarazo y lactancia, Caries activas o restauraciones defectuosas, Enfermedad de las encías, Fisuras o desgaste dental",
+        "Text '¿Tienes desgaste o restauraciones que corregir? Conoce nuestro servicio de Rehabilitación Oral.' present",
+        "'Rehabilitación Oral' is a descriptive-anchor link to PAGES.rehabilitacion.path (/rehabilitacion-oral/), rendered only when the page is built (isBuilt)"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "blanqueamiento-cuidados",
+      "description": "Blanqueamiento Dental: aftercare. A 5-item list.",
+      "source": "textos-blanqueamiento.md › Cuidados después del blanqueamiento dental",
+      "acceptance": [
+        "h2 'Cuidados después del blanqueamiento dental'",
+        "5 items rendered verbatim as a list (<ul>), in the brief's order, from 'Modera el café, el té…' to 'Consúltanos si la sensibilidad es intensa o persistente.'"
       ],
       "status": "pending"
     },
     {
       "id": "blanqueamiento-faq",
-      "description": "Blanqueamiento Dental: FAQ. D5 (answers always open vs accordion) decides the display.",
-      "source": "textos-sitio.md §2 Blanqueamiento Dental › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
+      "description": "Blanqueamiento Dental: FAQ, now 3 questions (the old 4 are replaced in src/config/faqs.ts). D5 (answers always open vs accordion) decides the display. src/components/perpage/home/FAQ.astro is the reference to reuse. The brief says 'Depende de la modalidad' for the price answer: no figure is given and none is invented.",
+      "source": "textos-blanqueamiento.md › Preguntas frecuentes sobre el blanqueamiento dental + arquitectura-informacion.md §5, §6",
       "acceptance": [
-        "Renders the 4 faqs with category 'blanqueamiento-dental' from src/config/faqs.ts, verbatim",
+        "h2 'Preguntas frecuentes sobre el blanqueamiento dental'",
+        "src/config/faqs.ts holds exactly 3 faqs with category 'blanqueamiento-dental', verbatim: '¿Cuánto duran los resultados y cada cuánto debo hacer un retoque?', '¿El blanqueamiento dental produce sensibilidad?', '¿Cuánto cuesta un blanqueamiento dental en Bogotá?'",
+        "The page renders those 3 faqs, verbatim",
         "Every answer is visible on the page by default, not collapsed",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
@@ -265,25 +296,24 @@
     },
     {
       "id": "blanqueamiento-cta-final",
-      "description": "Blanqueamiento Dental: final CTA. textos-sitio gives only the heading; the target comes from arquitectura §3 ('Todas las páginas terminan con CTA a Contacto'). /contacto/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
-      "source": "textos-sitio.md §2 Blanqueamiento Dental › CTA final + arquitectura-informacion.md §3 Enlazado interno",
+      "description": "Blanqueamiento Dental: final CTA. The new brief makes the button 'Agendar por WhatsApp' (the old entry linked to /contacto/). src/components/perpage/home/CtaFinal.astro is the reference to reuse.",
+      "source": "textos-blanqueamiento.md › CTA final (Agenda tu valoración y descubre qué blanqueamiento se adapta a tu sonrisa.) + arquitectura-informacion.md §3 Enlazado interno",
       "acceptance": [
-        "Final CTA 'Agenda tu valoración' is the last section of the page",
-        "The CTA links to /contacto/"
+        "Heading 'Agenda tu valoración y descubre qué blanqueamiento se adapta a tu sonrisa.' present; the CTA section is the last section of the page",
+        "Button labeled 'Agendar por WhatsApp' links to COMPANY.whatsapp, opens in a new tab and has the sr-only new-tab note"
       ],
       "status": "pending"
     },
     {
       "id": "page-blanqueamiento",
-      "description": "Blanqueamiento Dental page: SEO and assembly. Before closing: D2 (Service node: the package has no generator), D3 (source of the last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Its title already holds the company name, so seo.pageHead() adds no suffix.",
-      "source": "textos-sitio.md §2 Blanqueamiento Dental (Meta title, Meta description) + arquitectura-informacion.md §4, §5, §6",
+      "description": "Blanqueamiento Dental page: SEO and assembly. REWRITTEN 2026-10-19 for the new brief (textos-blanqueamiento.md). Meta title and description are not in the new brief: they stay as in textos-sitio.md §2 (note: its 'sin dolor' sits next to the new FAQ on temporary sensitivity; raise it with the client, do not change it here). Before closing: D2 (Service node: the package has no generator), D3 (source of the last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Its title already holds the company name, so seo.pageHead() adds no suffix. The page currently renders Hero + Beneficios + Pasos; Beneficios.astro and Pasos.astro are kept in the repo for reuse and are dropped from the page when their replacement sections land.",
+      "source": "textos-sitio.md §2 Blanqueamiento Dental (Meta title, Meta description) + textos-blanqueamiento.md (sections and order) + arquitectura-informacion.md §4, §5, §6",
       "acceptance": [
         "Route src/pages/blanqueamiento-dental.astro serves /blanqueamiento-dental/",
         "<title> is 'Blanqueamiento Dental en Bogotá | Dra. Viviana Rodríguez'",
         "meta description is 'Blanqueamiento dental profesional en Bogotá (Chicó), en un consultorio pensado para tu calma. Resultados visibles, sin dolor y con seguimiento personalizado.'",
         "Exactly one <h1> on the page",
-        "Sections in order: hero, Beneficios, Cómo se hace, enlace cruzado, Preguntas frecuentes, CTA final",
-        "Both 'anestesia digital' and the calm environment ('ambiente de calma') are mentioned on the page",
+        "Sections in order: hero, modalidades, ¿daña los dientes?, ¿quién no debe?, cuidados, Preguntas frecuentes, CTA final",
         "BreadcrumbList JSON-LD (Inicio → Blanqueamiento Dental) passed through MainLayout's schemas, matching the visible breadcrumb",
         "Service JSON-LD with provider = seo.businessRef() and areaServed Bogotá",
         "A visible last-updated date on the page, matching dateModified if the schema carries one",

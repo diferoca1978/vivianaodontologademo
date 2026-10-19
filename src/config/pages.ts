@@ -4,7 +4,7 @@ import type { PageSeo } from '@shine/seo-core';
 // renders PAGES.x.h1 and passes PAGES.x to seo.pageHead(). keyword and source are never
 // published. astro.config.mjs imports this file, so it may only import types.
 //
-// keyword: arquitectura-informacion.md §5. title, description and h1: textos-sitio.md, verbatim.
+// keyword: arquitectura-informacion.md §5. title, description and h1: textos-sitio.md, verbatim (Blanqueamiento h1: textos-blanqueamiento.md).
 // pageHead() adds " | Dra. Viviana Rodríguez" unless the title already holds the name.
 // The privacy page joins once its slug and text are confirmed (feature page-privacidad).
 
@@ -24,8 +24,8 @@ export const PAGES = {
     title: 'Blanqueamiento Dental en Bogotá | Dra. Viviana Rodríguez',
     description:
       'Blanqueamiento dental profesional en Bogotá (Chicó), en un consultorio pensado para tu calma. Resultados visibles, sin dolor y con seguimiento personalizado.',
-    h1: 'Blanqueamiento Dental',
-    source: 'textos-sitio.md §2',
+    h1: 'Blanqueamiento Dental en Bogotá',
+    source: 'textos-sitio.md §2 (title, description); textos-blanqueamiento.md (h1)',
   },
   rehabilitacion: {
     path: '/rehabilitacion-oral/',
