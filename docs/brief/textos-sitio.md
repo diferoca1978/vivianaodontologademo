@@ -87,33 +87,39 @@ Botón: **Escribir por WhatsApp**
 
 ## 2. Blanqueamiento Dental (`/blanqueamiento-dental`)
 
+> **Desde el 2026-10-19 el texto de esta página vive en [`textos-blanqueamiento.md`](./textos-blanqueamiento.md).** Reemplaza el H1, el subtítulo, la intro y todas las secciones de abajo. El **Meta title** y la **Meta description** de este apartado siguen vigentes: el nuevo brief no los trae, así que su fuente sigue siendo esta.
+
 **Meta title:** Blanqueamiento Dental en Bogotá | Dra. Viviana Rodríguez
 **Meta description:** Blanqueamiento dental profesional en Bogotá (Chicó), en un consultorio pensado para tu calma. Resultados visibles, sin dolor y con seguimiento personalizado.
 
-**H1:** Blanqueamiento Dental *(decidido el 2026-10-17: sin "en Bogotá"; el meta title lo conserva)*
+**H1:** Blanqueamiento Dental en Bogotá *(según `textos-blanqueamiento.md`, 2026-10-19; reemplaza lo decidido el 2026-10-17, que lo dejaba sin "en Bogotá")*
+
+### Texto anterior (reemplazado el 2026-10-19, solo como historial)
+
+> **No usar.** Lo que sigue, hasta el apartado 3, es el texto de esta página antes del 2026-10-19. Se conserva como historial; el vigente está en `textos-blanqueamiento.md`.
 
 *Una sonrisa más blanca, sin ansiedad ni sorpresas.*
 
 El blanqueamiento (o aclaramiento) dental es uno de los tratamientos estéticos más solicitados en nuestro consultorio. Aclara el tono natural del esmalte de forma segura, con seguimiento personalizado y sin dolor.
 
-### Beneficios
+#### Beneficios
 
 - Sonrisa notablemente más luminosa
 - Procedimiento no invasivo
 - Mejora visible en la autoestima
 - Resultados en pocas sesiones
 
-### Cómo se hace
+#### Cómo se hace
 
 1. **Valoración inicial** — Revisamos el estado de tu esmalte y encías antes de recomendar cualquier tratamiento.
 2. **Ambiente de calma** — Aromaterapia, música y audífonos de cancelación de ruido durante todo el procedimiento.
 3. **Aplicación y seguimiento** — Control de sensibilidad y recomendaciones de cuidado para mantener el resultado.
 
-### Enlace cruzado
+#### Enlace cruzado
 
 Si además buscas corregir forma o alineación, conoce nuestro servicio de Rehabilitación Oral. (→ `/rehabilitacion-oral`)
 
-### Preguntas frecuentes
+#### Preguntas frecuentes
 
 **¿Es doloroso el blanqueamiento dental?**
 En la mayoría de los casos no genera dolor; algunos pacientes sienten sensibilidad temporal, que manejamos con productos específicos y, si es necesario, anestesia digital.
@@ -127,7 +133,7 @@ El valor varía según el tipo de blanqueamiento y el estado de tu esmalte. Lo d
 **¿Quiénes pueden hacerse un blanqueamiento dental?**
 La mayoría de personas con buena salud oral son candidatas; en la valoración revisamos encías y esmalte antes de recomendar el tratamiento adecuado.
 
-### CTA final
+#### CTA final
 
 **Agenda tu valoración**
 

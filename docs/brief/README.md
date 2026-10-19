@@ -11,7 +11,9 @@ The content source of truth for this site. Three files, all required:
 This site's brief predates that layout: the SEO table (`arquitectura-informacion.md` §5)
 holds the keyword and the intent, and each page's meta title, meta description and h1 are
 in `textos-sitio.md`. `docs/source/` holds material the client supplied later (the Google
-reviews, the privacy policy draft).
+reviews, the privacy policy draft). `textos-blanqueamiento.md` (2026-10-19) is the new copy
+of the Blanqueamiento Dental page, h1 included; it supersedes `textos-sitio.md` §2 except
+its meta title and meta description.
 
 Rules:
 

@@ -66,7 +66,7 @@ El texto literal de cada página y servicio (metas, H1, subtítulos, bloques, FA
 | Página | Texto en | Keyword principal | Keywords secundarias | Intención |
 | --- | --- | --- | --- | --- |
 | Inicio `/` | `textos-sitio.md` §1 | odontóloga especialista en Bogotá / odontología sin dolor Bogotá | rehabilitación oral Bogotá, blanqueamiento dental Bogotá, diseño de sonrisa Bogotá | Navegacional + local + emocional |
-| Blanqueamiento Dental `/blanqueamiento-dental` | `textos-sitio.md` §2 | blanqueamiento dental Bogotá | aclaramiento dental Bogotá (solo como sinónimo en el texto), blanqueamiento dental precio Bogotá, blanqueamiento dental sin dolor | Transaccional |
+| Blanqueamiento Dental `/blanqueamiento-dental` | `textos-blanqueamiento.md` (meta title y description: `textos-sitio.md` §2) | blanqueamiento dental Bogotá | aclaramiento dental Bogotá (solo como sinónimo en el texto), blanqueamiento dental precio Bogotá, blanqueamiento dental sin dolor | Transaccional |
 | Rehabilitación Oral `/rehabilitacion-oral` | `textos-sitio.md` §3 | rehabilitación oral Bogotá | especialista en rehabilitación oral Bogotá, qué es la rehabilitación oral, prótesis dental Bogotá | Transaccional + informacional |
 | Contacto `/contacto` | `textos-sitio.md` §4 | citas odontología Chicó Bogotá / contacto odontóloga Bogotá | — | Transaccional / navegacional |
 
