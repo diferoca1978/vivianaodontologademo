@@ -76,7 +76,7 @@ Construir la sección "¿Qué tipo de blanqueamiento dental es ideal para ti?" (
 - [x] La lógica GSAP vive en `animations/utils/pinned-panels.ts`; los componentes solo llevan hooks `data-pinned*`.
 - [x] Sin colores escritos a mano, sin `style=""` inline ni valores arbitrarios de Tailwind; el HTML final no contiene `[CLIENTE]`.
 - [x] `feature_list.json` queda actualizado (acceptance de `blanqueamiento-modalidades` y descripciones que nombran `Pasos`); `AGENTS.md` revisado.
-- [ ] `pnpm check` sin errores, warnings ni hints.
+- [x] `pnpm check` sin errores, warnings ni hints.
 - [x] `pnpm build` termina correctamente y el gate SEO no introduce errores.
 
 ## Implementation plan
