@@ -237,13 +237,14 @@
     },
     {
       "id": "blanqueamiento-modalidades",
-      "description": "Blanqueamiento Dental: the 3 modalities (consultorio, casero, mixto). Replaces the old Beneficios and Cómo se hace sections. Candidate to reuse the pinned 3-panel pattern of src/components/perpage/blanqueamiento/Pasos.astro (+ animations/blanqueamiento-dental/pasos.ts), which already holds 3 panels; each panel here also needs the 'Incluye' list, so adapting it is a design decision for the maintainer (full lane if the pattern changes). Pasos.astro stays in the repo until then.",
+      "description": "Blanqueamiento Dental: the 3 modalities (consultorio, casero, mixto). Replaces the old Beneficios and Cómo se hace sections (they do not coexist). Design and motion are defined by specs/04-blanqueamiento-modalidades-pinned.md (full lane, Approved): Pasos.astro becomes the generic ui/sections/PinnedPanels.astro (props, data-pinned* hooks, script in animations/utils/pinned-panels.ts), fed by perpage/blanqueamiento/Modalidades.astro. Each panel shows a compact 'Incluye' list under the paragraph; the big 01-03 number stays as decoration; existing photos for now (firstcheck2, calmenvironment, postservice), to be swapped later by the maintainer. Beneficios.astro stays in the repo, unmounted.",
       "source": "textos-blanqueamiento.md › ¿Qué tipo de blanqueamiento dental es ideal para ti? (intro + 3 modalidades)",
       "acceptance": [
         "h2 '¿Qué tipo de blanqueamiento dental es ideal para ti?'",
         "Intro paragraph verbatim: 'Todo tratamiento inicia con una valoración clínica: revisamos el color de tus dientes, tus restauraciones, tus hábitos y tus expectativas para recomendarte la modalidad adecuada.'",
         "3 h3 in this order: 'Blanqueamiento dental en consultorio', 'Blanqueamiento dental casero', 'Blanqueamiento dental mixto', each with its description verbatim",
         "'En consultorio' and 'casero' each render their 'Incluye:' list verbatim (3 and 4 items, bold leads kept); 'mixto' has no list",
+        "Built with the generic PinnedPanels component per specs/04-blanqueamiento-modalidades-pinned.md: the 'Incluye' list sits under each paragraph in a compact layout, the big 01-03 number is kept (aria-hidden), no 'Cómo se hace' section remains on the page",
         "The section is readable without JavaScript and respects prefers-reduced-motion if it keeps the pinned stage"
       ],
       "status": "pending"
@@ -306,7 +307,7 @@
     },
     {
       "id": "page-blanqueamiento",
-      "description": "Blanqueamiento Dental page: SEO and assembly. REWRITTEN 2026-10-19 for the new brief (textos-blanqueamiento.md). Meta title and description are not in the new brief: they stay as in textos-sitio.md §2 (note: its 'sin dolor' sits next to the new FAQ on temporary sensitivity; raise it with the client, do not change it here). Before closing: D2 (Service node: the package has no generator), D3 (source of the last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Its title already holds the company name, so seo.pageHead() adds no suffix. The page currently renders Hero + Beneficios + Pasos; Beneficios.astro and Pasos.astro are kept in the repo for reuse and are dropped from the page when their replacement sections land.",
+      "description": "Blanqueamiento Dental page: SEO and assembly. REWRITTEN 2026-10-19 for the new brief (textos-blanqueamiento.md). Meta title and description are not in the new brief: they stay as in textos-sitio.md §2 (note: its 'sin dolor' sits next to the new FAQ on temporary sensitivity; raise it with the client, do not change it here). Before closing: D2 (Service node: the package has no generator), D3 (source of the last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Its title already holds the company name, so seo.pageHead() adds no suffix. The page currently renders Hero + Intro + Modalidades (Beneficios was unmounted on 2026-10-19 and kept in the repo; Pasos became ui/sections/PinnedPanels.astro and Modalidades replaced it, spec 04).",
       "source": "textos-sitio.md §2 Blanqueamiento Dental (Meta title, Meta description) + textos-blanqueamiento.md (sections and order) + arquitectura-informacion.md §4, §5, §6",
       "acceptance": [
         "Route src/pages/blanqueamiento-dental.astro serves /blanqueamiento-dental/",

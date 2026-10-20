@@ -27,8 +27,12 @@ export interface OpeningHours {
 
 // What the site shows beyond the package's Company type. None of it reaches the JSON-LD
 // yet: listingName and openingHours wait on client-gaps.md D2.
+// business is narrowed to the package's `local` branch, so address.street is always typed.
+
+type LocalBusiness = Extract<Company['business'], { kind: 'local' }>;
 
 interface SiteCompany extends Company {
+  business: LocalBusiness; // always local: a street address the site shows, with geo
   listingName?: string; // the name on the Google Business Profile, when it differs from name
   whatsapp: string;
   openingHours?: OpeningHours[];

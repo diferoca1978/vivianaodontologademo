@@ -6,7 +6,7 @@ const homeFaqs = faqs.filter((faq) => faq.category === "inicio");
 
 // An answer that contains the address links it to the Google Business Profile, as the hero
 // and the footer do. Returns the text before and after the address, or null.
-const street = COMPANY.business.kind === "local" ? COMPANY.business.address?.street : undefined;
+const street = COMPANY.business.kind === "local" ? COMPANY.business.address.street : undefined;
 const splitAtAddress = (answer: string): [string, string] | null => {
   const at = street ? answer.indexOf(street) : -1;
   return street && at >= 0 ? [answer.slice(0, at), answer.slice(at + street.length)] : null;

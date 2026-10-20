@@ -2,13 +2,18 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { drawToothLogo } from "@/utils/scripts/animations/utils/draw-tooth-logo";
 
-// Scroll motion for src/components/perpage/blanqueamiento/Pasos.astro (spec 02).
+// Scroll motion for src/components/ui/sections/PinnedPanels.astro (specs 02 and 04).
+// Every `[data-pinned]` section on the page is initialized on its own: Astro bundles this module
+// once per page however many PinnedPanels it mounts, so it walks all of them (in document order)
+// and gives each one its own stage, panels, numbers, texts and logo, looked up inside that root,
+// and its own gsap.matchMedia(), so a breakpoint or motion-preference change reverts each instance
+// independently. No `[data-pinned]` on the page: nothing runs.
 // The component's base CSS is the stacked layout (one panel after another), visible without JS.
-// Three gsap.matchMedia() branches:
-// - Desktop with motion (≥768px, no reduced motion): "stage mode". The <ol> gets the
+// Per instance, three gsap.matchMedia() branches:
+// - Desktop with motion (≥768px, no reduced motion): "stage mode". The <ul> gets the
 //   `data-stage` attribute (the component's `data-stage:` / `group-data-stage:` classes overlay
 //   the panels on it) and an inline height of 100svh minus the sticky NavBar, so the nav never
-//   covers the photo. The <ol> is pinned with its top on the nav's bottom edge, and one scrubbed
+//   covers the photo. The <ul> is pinned with its top on the nav's bottom edge, and one scrubbed
 //   timeline wipes each incoming panel in with clip-path (bottom to top) over the outgoing one,
 //   while the outgoing number and text rise and fade out and the incoming ones rise in from
 //   below. ~100svh of scroll per transition, plus short holds on each step. No snap.
@@ -20,25 +25,28 @@ import { drawToothLogo } from "@/utils/scripts/animations/utils/draw-tooth-logo"
 // Only clip-path, transform and opacity are animated. Leaving a branch (resize across 768px,
 // motion preference change) reverts everything it did: ScrollTriggers and pin spacer, inline
 // props set by GSAP, the stage attribute and the inline height.
+// Instances are set up top to bottom, so their ScrollTriggers are created (and refreshed) in
+// page order and an earlier instance's pin spacer is accounted for in a later one's positions.
 // Lenis (src/utils/scripts/lennis.js) drives the native window scroll, so ScrollTrigger reads it
 // from the regular scroll events; the numeric scrub smooths the playhead on top of it.
 gsap.registerPlugin(ScrollTrigger);
 
-const section = document.querySelector<HTMLElement>("[data-pasos]");
-const stage = section?.querySelector<HTMLElement>("[data-pasos-stage]");
+// The site's only sticky header (src/components/global/NavBar.astro), shared by every instance.
+const nav = document.querySelector<HTMLElement>("header");
 
-if (section && stage) {
-  const panels = gsap.utils.toArray<HTMLElement>("[data-pasos-panel]", stage);
-  const numbers = gsap.utils.toArray<HTMLElement>("[data-pasos-number]", stage);
-  const texts = gsap.utils.toArray<HTMLElement>("[data-pasos-text]", stage);
-  // The site's only sticky header (src/components/global/NavBar.astro).
-  const nav = document.querySelector<HTMLElement>("header");
-  const logo = section.querySelector<SVGElement>("[data-pasos-logo]");
+// Read on every refresh (resize, orientation, font/image load), never cached.
+const navHeight = () => nav?.offsetHeight ?? 0;
+const stageHeight = () => window.innerHeight - navHeight();
+
+const initPinnedPanels = (section: HTMLElement) => {
+  const stage = section.querySelector<HTMLElement>("[data-pinned-stage]");
+  if (!stage) return;
+
+  const panels = gsap.utils.toArray<HTMLElement>("[data-pinned-panel]", stage);
+  const numbers = gsap.utils.toArray<HTMLElement>("[data-pinned-number]", stage);
+  const texts = gsap.utils.toArray<HTMLElement>("[data-pinned-text]", stage);
+  const logo = section.querySelector<SVGElement>("[data-pinned-logo]");
   const mm = gsap.matchMedia();
-
-  // Read on every refresh (resize, orientation, font/image load), never cached.
-  const navHeight = () => nav?.offsetHeight ?? 0;
-  const stageHeight = () => window.innerHeight - navHeight();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
     if (logo) drawToothLogo(logo);
@@ -52,8 +60,8 @@ if (section && stage) {
   mm.add("(max-width: 767.98px) and (prefers-reduced-motion: no-preference)", () => {
     panels.forEach((panel) => {
       const content = [
-        ...gsap.utils.toArray<HTMLElement>("[data-pasos-number]", panel),
-        ...gsap.utils.toArray<HTMLElement>("[data-pasos-text]", panel),
+        ...gsap.utils.toArray<HTMLElement>("[data-pinned-number]", panel),
+        ...gsap.utils.toArray<HTMLElement>("[data-pinned-text]", panel),
       ];
       if (!content.length) return;
 
@@ -149,4 +157,6 @@ if (section && stage) {
       gsap.set([...panels, ...numbers, ...texts], { clearProps: "clipPath,transform,opacity" });
     };
   });
-}
+};
+
+document.querySelectorAll<HTMLElement>("[data-pinned]").forEach(initPinnedPanels);
