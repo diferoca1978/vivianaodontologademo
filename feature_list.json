@@ -270,7 +270,7 @@
         "Text '¿Tienes desgaste o restauraciones que corregir? Conoce nuestro servicio de Rehabilitación Oral.' present",
         "'Rehabilitación Oral' is a descriptive-anchor link to PAGES.rehabilitacion.path (/rehabilitacion-oral/), rendered only when the page is built (isBuilt)"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "blanqueamiento-cuidados",
@@ -280,7 +280,7 @@
         "h2 'Cuidados después del blanqueamiento dental'",
         "5 items rendered verbatim as a list (<ul>), in the brief's order, from 'Modera el café, el té…' to 'Consúltanos si la sensibilidad es intensa o persistente.'"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "blanqueamiento-faq",
