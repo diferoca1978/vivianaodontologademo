@@ -60,7 +60,9 @@ There is no test runner: `pnpm build` (with the gate) and `pnpm check` are the t
 
 Components: `src/components/global/` (navbar, footer), `src/components/perpage/<page>/`
 (sections of one page) and `src/components/ui/` (primitives, grouped as
-`ui/<category>/`). PascalCase file names. Route files in `src/pages/` are lowercase
+`ui/<category>/`). `ui/sections/` holds generic, prop-driven sections reused across pages
+(e.g. `PinnedPanels.astro`): no page copy inside, the data comes from a `perpage/<page>/`
+component. PascalCase file names. Route files in `src/pages/` are lowercase
 kebab-case Spanish slugs.
 
 **Fonts** are spread over three files (Astro Fonts API): `astro.config.mjs` `fonts[]`
@@ -142,7 +144,9 @@ framework-specific GSAP API (`useGSAP`): this site has no UI framework.
   component. One folder per route (`home/`, `blanqueamiento-dental/`,
   `rehabilitacion-oral/`, `contacto/`), `global/` for what every page shares (navbar,
   footer, floating button) and `utils/` for helpers. One file per section, named after
-  it (`home/hero.ts`), imported by that section's component.
+  it (`home/hero.ts`), imported by that section's component. A script shared by several
+  pages lives in `utils/` and initializes every instance by its `data-*` hook
+  (`utils/pinned-panels.ts`, used by `ui/sections/PinnedPanels.astro`).
 - **Reduced motion is mandatory:** every timeline is wrapped in `gsap.matchMedia()` with a
   `(prefers-reduced-motion: reduce)` branch that leaves elements in their final, visible
   state (`autoAlpha: 1`). CSS motion degrades with the `motion-reduce:` variant. Content

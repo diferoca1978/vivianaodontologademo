@@ -1,0 +1,137 @@
+---
+import ToothLogo from "@/assets/icons/tooth-logo.svg";
+import { Image } from "astro:assets";
+
+// Generic pinned 3-panel stage (specs 02 and 04). It carries no page copy: every text and image
+// comes in through props from a perpage/<page>/ section.
+// Design: references/blanqueamiento-como-se-hace/04-dentica-pinned-steps.png (spec 02). One panel
+// per viewport, full-bleed photo under a charcoal overlay, giant number bottom-left, title, text
+// and the optional "includes" list bottom-right. The number is decoration only (aria-hidden): the
+// list is a <ul>, so it implies no order. The photos are decorative next to the panel text,
+// hence alt="".
+// Base layout is the stacked one, visible without JS. The pinned stage (panels overlaid, clip-path
+// wipe) is switched on from src/utils/scripts/animations/utils/pinned-panels.ts through the
+// data-pinned* hooks below.
+interface IncludeItem {
+  /** Bold opening, punctuation included (e.g. "Profilaxis profesional:"). Only where the source bolds it. */
+  lead?: string;
+  text: string;
+}
+
+interface Includes {
+  heading: string;
+  items: IncludeItem[];
+}
+
+interface Panel {
+  title: string;
+  text: string;
+  image: ImageMetadata;
+  includes?: Includes;
+}
+
+interface Props {
+  /** Section id; the h2 id and aria-labelledby derive from it. */
+  id: string;
+  title: string;
+  /** Paragraph under the h2. */
+  intro?: string;
+  panels: Panel[];
+}
+
+const { id, title, intro, panels } = Astro.props;
+const titleId = `${id}-title`;
+---
+
+<section id={id} aria-labelledby={titleId} class="bg-charcoal text-ivory" data-pinned>
+  <div
+    class="mx-auto flex max-w-7xl items-end justify-between gap-6 px-4 pt-20 pb-12 xl:px-8"
+  >
+    <div class="max-w-3xl">
+      <h2 id={titleId} class="text-4xl leading-tight font-medium tracking-tight sm:text-5xl">
+        {title}
+      </h2>
+      {
+        intro && (
+          <p class="mt-5 max-w-2xl text-base leading-relaxed text-ivory/80 sm:text-lg">
+            {intro}
+          </p>
+        )
+      }
+    </div>
+    <ToothLogo
+      data-pinned-logo
+      aria-hidden="true"
+      class="size-16 shrink-0 self-start text-turquoise sm:size-32"
+    />
+  </div>
+
+  <ul class="group/stage relative data-stage:overflow-hidden" role="list" data-pinned-stage>
+    {
+      panels.map((panel, index) => {
+        const includesId = `${id}-panel-${index + 1}-includes`;
+
+        return (
+          <li
+            class="relative isolate flex min-h-svh overflow-hidden md:h-svh md:min-h-160 group-data-stage/stage:absolute group-data-stage/stage:inset-0 group-data-stage/stage:h-full group-data-stage/stage:min-h-0"
+            data-pinned-panel
+          >
+            <div aria-hidden="true" class="absolute inset-0 -z-10" data-pinned-media>
+              <Image
+                src={panel.image}
+                alt=""
+                widths={[640, 1024, 1536, panel.image.width]}
+                sizes="100vw"
+                class="h-full w-full object-cover"
+              />
+              <div class="absolute inset-0 bg-charcoal/35" />
+              <div class="absolute inset-0 bg-linear-to-t from-charcoal/95 via-charcoal/60 via-45% to-transparent md:from-charcoal/90 md:via-charcoal/40" />
+            </div>
+
+            <div class="mx-auto flex w-full max-w-7xl flex-col justify-end gap-6 px-4 pb-10 sm:pb-12 md:grid md:grid-cols-12 md:items-end md:gap-8 md:pb-16 lg:pb-20 xl:px-8">
+              <span
+                aria-hidden="true"
+                class="font-cormorant text-8xl leading-none font-light tracking-tight text-ivory sm:text-9xl md:col-span-5 lg:col-span-6"
+                data-pinned-number
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+
+              <div class="max-w-md md:col-span-7 md:pb-3 lg:col-span-5 lg:col-start-7" data-pinned-text>
+                <h3 class="text-3xl leading-tight font-medium text-ivory sm:text-4xl lg:text-5xl">
+                  {panel.title}
+                </h3>
+                <p class="mt-4 text-base leading-relaxed text-ivory/90 sm:text-lg">
+                  {panel.text}
+                </p>
+
+                {panel.includes && (
+                  <div class="mt-5 border-t border-ivory/15 pt-4">
+                    <h4 id={includesId} class="text-sm font-semibold tracking-wide text-turquoise-light">
+                      {panel.includes.heading}
+                    </h4>
+                    <ul
+                      aria-labelledby={includesId}
+                      class="mt-2 list-disc space-y-1.5 pl-4 text-sm leading-snug text-ivory/85 marker:text-turquoise"
+                    >
+                      {panel.includes.items.map((item) => (
+                        <li class="pl-1">
+                          {item.lead && <strong class="font-semibold text-ivory">{item.lead}</strong>}{" "}
+                          {item.text}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/utils/pinned-panels";
+</script>

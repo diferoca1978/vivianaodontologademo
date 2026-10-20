@@ -1,0 +1,70 @@
+---
+// "¿Qué tipo de blanqueamiento dental es ideal para ti?" (spec 04). Data only: the copy is
+// verbatim from docs/brief/textos-blanqueamiento.md:13-40 (each "lead" is the part the brief
+// bolds, punctuation included) and the layout and motion live in the generic PinnedPanels stage.
+// Photos are the existing ones for now (spec 04 § Scope); the maintainer will swap them per
+// modality later, one import line each.
+import PinnedPanels from "@/components/ui/sections/PinnedPanels.astro";
+import firstCheckPhoto from "@/assets/images/firstcheck2.webp";
+import calmPhoto from "@/assets/images/calmenvironment.webp";
+import aftercarePhoto from "@/assets/images/postservice.webp";
+
+const title = "¿Qué tipo de blanqueamiento dental es ideal para ti?";
+const intro =
+  "Todo tratamiento inicia con una valoración clínica: revisamos el color de tus dientes, tus restauraciones, tus hábitos y tus expectativas para recomendarte la modalidad adecuada.";
+
+const panels = [
+  {
+    title: "Blanqueamiento dental en consultorio",
+    text: "Se realiza en el consultorio con productos profesionales a base de peróxido de hidrógeno. Cada cita incluye dos aplicaciones de 15 a 20 minutos, hasta un máximo de cuatro aplicaciones en dos citas. La segunda cita se programa entre 3 y 5 días después, según la respuesta de tus dientes.",
+    image: firstCheckPhoto,
+    includes: {
+      heading: "Incluye:",
+      items: [
+        {
+          lead: "Profilaxis profesional:",
+          text: "limpieza que elimina placa y pigmentaciones superficiales.",
+        },
+        {
+          lead: "Aplicación del agente aclarador,",
+          text: "con el que aclaramos el tono de tus dientes.",
+        },
+        {
+          lead: "Terapia de flúor,",
+          text: "cuando está indicada, para controlar la sensibilidad.",
+        },
+      ],
+    },
+  },
+  {
+    title: "Blanqueamiento dental casero",
+    text: "Haces el tratamiento desde casa con placas elaboradas a la medida de tus dientes, siguiendo nuestras indicaciones y con seguimiento profesional para lograr resultados progresivos.",
+    image: calmPhoto,
+    includes: {
+      heading: "Incluye:",
+      items: [
+        {
+          lead: "Placas blandas individualizadas,",
+          text: "hechas a partir de impresiones de tus dientes.",
+        },
+        { text: "Gel aclarador en jeringa." },
+        {
+          lead: "Kit de cuidado oral:",
+          text: "cepillo, crema desensibilizante, seda dental y humectante labial.",
+        },
+        {
+          lead: "Instrucciones personalizadas:",
+          text: "cantidad de producto, zonas de aplicación y tiempo de uso.",
+        },
+      ],
+    },
+  },
+  {
+    title: "Blanqueamiento dental mixto",
+    text: "Combina dos o tres aplicaciones en consultorio con placas individualizadas para continuar en casa. En algunos casos favorece un resultado más completo. El número de aplicaciones y el tiempo de uso se definen según tu respuesta clínica.",
+    image: aftercarePhoto,
+  },
+];
+---
+
+<PinnedPanels id="modalidades" title={title} intro={intro} panels={panels} />
