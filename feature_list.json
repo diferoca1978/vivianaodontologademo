@@ -247,7 +247,7 @@
         "Built with the generic PinnedPanels component per specs/04-blanqueamiento-modalidades-pinned.md: the 'Incluye' list sits under each paragraph in a compact layout, the big 01-03 number is kept (aria-hidden), no 'Cómo se hace' section remains on the page",
         "The section is readable without JavaScript and respects prefers-reduced-motion if it keeps the pinned stage"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "blanqueamiento-seguridad",
