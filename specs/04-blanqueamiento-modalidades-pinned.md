@@ -1,6 +1,6 @@
 # 04 — Blanqueamiento: sección de modalidades sobre el escenario pinned reutilizable
 
-**Status:** Approved <!-- Draft | Approved — only a human may change this to Approved -->
+**Status:** Implemented <!-- Draft | Approved — only a human may change this to Approved -->
 
 ## Goal
 
