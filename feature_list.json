@@ -280,7 +280,7 @@
         "h2 'Cuidados después del blanqueamiento dental'",
         "5 items rendered verbatim as a list (<ul>), in the brief's order, from 'Modera el café, el té…' to 'Consúltanos si la sensibilidad es intensa o persistente.'"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "blanqueamiento-faq",
@@ -290,10 +290,10 @@
         "h2 'Preguntas frecuentes sobre el blanqueamiento dental'",
         "src/config/faqs.ts holds exactly 3 faqs with category 'blanqueamiento-dental', verbatim: '¿Cuánto duran los resultados y cada cuánto debo hacer un retoque?', '¿El blanqueamiento dental produce sensibilidad?', '¿Cuánto cuesta un blanqueamiento dental en Bogotá?'",
         "The page renders those 3 faqs, verbatim",
-        "Every answer is visible on the page by default, not collapsed",
+        "Each faq is a native <details>/<summary> (collapsed by default) with a smooth open/close animation (GSAP, in src/utils/scripts/animations/blanqueamiento-dental/, reduced-motion respected); answers stay in the HTML (maintainer decision 2026-10-20, replaces 'always visible')",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "blanqueamiento-cta-final",

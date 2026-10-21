@@ -1,0 +1,74 @@
+---
+// Copy: docs/brief/textos-blanqueamiento.md › Preguntas frecuentes sobre el blanqueamiento dental
+// (verbatim, read from src/config/faqs.ts, category 'blanqueamiento-dental'). No FAQPage JSON-LD
+// (client-gaps.md D7). Each faq is a native <details>, collapsed on load, with the answer in the
+// HTML (maintainer decision 2026-10-20); the open/close animation lives in
+// src/utils/scripts/animations/blanqueamiento-dental/faq.ts.
+// Design: editorial two-column on ivory, echoing Contraindicaciones — the h2 on the left (sticky on
+// lg), the questions on the right, each with a decorative Cormorant index; stacked below lg.
+// The "+" turns into "×" while open; the script sets data-closing during the close animation so the
+// icon turns back right away instead of waiting for `open` to be removed.
+import { faqs } from "@/config/faqs";
+
+const pageFaqs = faqs.filter((faq) => faq.category === "blanqueamiento-dental");
+---
+
+<section id="preguntas-frecuentes" aria-labelledby="faq-title" class="bg-ivory">
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:py-28 xl:px-8">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-5">
+        <div class="lg:sticky lg:top-32">
+          <p class="mb-4 text-sm font-semibold tracking-widest text-turquoise-dark uppercase">
+            Resolvemos tus dudas
+          </p>
+          <h2
+            id="faq-title"
+            class="text-4xl leading-tight font-medium tracking-tight text-balance text-charcoal sm:text-5xl"
+          >
+            Preguntas frecuentes sobre el blanqueamiento dental
+          </h2>
+        </div>
+      </div>
+
+      <div class="divide-y divide-gray-light border-y border-gray-light lg:col-span-7">
+        {
+          pageFaqs.map((faq, index) => (
+            <details data-faq-item class="group">
+              <summary
+                class:list={[
+                  "flex min-h-16 cursor-pointer list-none items-center gap-5 py-6 text-left font-raleway sm:gap-8 sm:py-7",
+                  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise-dark",
+                ]}
+              >
+                <span
+                  aria-hidden="true"
+                  class="w-10 shrink-0 font-cormorant text-3xl leading-none font-medium text-turquoise-dark select-none sm:w-12 sm:text-4xl"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span class="flex-1 text-lg leading-snug font-semibold text-pretty text-charcoal transition-colors duration-300 group-hover:text-turquoise-dark motion-reduce:transition-none sm:text-xl">
+                  {faq.question}
+                </span>
+                <span
+                  aria-hidden="true"
+                  class="flex size-10 shrink-0 items-center justify-center rounded-full border border-turquoise-dark/30 text-2xl leading-none text-turquoise-dark transition-transform duration-300 group-open:rotate-45 group-data-closing:rotate-0 motion-reduce:transition-none"
+                >
+                  +
+                </span>
+              </summary>
+              <div data-faq-answer class="overflow-hidden">
+                <p class="max-w-2xl pr-14 pb-7 pl-15 text-base leading-relaxed text-pretty text-charcoal/80 sm:pl-20 sm:text-lg">
+                  {faq.answer}
+                </p>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/blanqueamiento-dental/faq";
+</script>
