@@ -1,0 +1,69 @@
+---
+// Copy: docs/brief/textos-blanqueamiento.md › CTA final (heading and button, verbatim). The brief
+// gives no paragraph for this CTA, so none is added. The page ends on it (arquitectura-informacion.md
+// §3 Enlazado interno); the new brief makes the button WhatsApp instead of /contacto/.
+// Design: same panel as home/CtaFinal (turquoise-light gradient, ivory rings, tooth logo). No
+// animation, like the other Blanqueamiento sections; only the button's hover moves.
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import ToothLogo from "@/assets/icons/tooth-logo.svg";
+import { COMPANY } from "@/config/company";
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal";
+---
+
+<section
+  id="cta-final"
+  aria-labelledby="cta-final-title"
+  class="relative isolate overflow-hidden px-4 py-16 sm:px-8 sm:py-20"
+>
+  <div
+    class="relative mx-auto max-w-7xl overflow-hidden rounded-4xl bg-linear-to-br from-turquoise-light via-turquoise-light/80 to-ivory px-6 py-12 shadow-lg shadow-turquoise-dark/10 sm:px-12 lg:px-20 lg:py-16"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-24 -left-20 size-72 rounded-full border-8 border-ivory/30"
+    >
+    </div>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -right-20 -bottom-36 size-96 rounded-full border-8 border-ivory/35"
+    >
+    </div>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute top-1/2 -right-12 size-40 -translate-y-1/2 rounded-full bg-ivory/30 blur-2xl"
+    >
+    </div>
+
+    <div
+      class="relative z-10 mx-auto flex max-w-3xl flex-col items-center justify-center text-center"
+    >
+      <ToothLogo aria-hidden="true" class="mb-5 size-16 text-turquoise-dark sm:size-24" />
+      <h2
+        id="cta-final-title"
+        class="max-w-2xl text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl"
+      >
+        Agenda tu valoración y descubre qué blanqueamiento se adapta a tu sonrisa.
+      </h2>
+      <a
+        href={COMPANY.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class:list={[
+          "group mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-turquoise-dark px-7 py-4 font-medium text-ivory transition-colors duration-300 hover:bg-turquoise hover:text-charcoal motion-reduce:transition-none",
+          focusRing,
+        ]}
+      >
+        Agendar por WhatsApp
+        <span class="sr-only">(se abre en una pestaña nueva)</span>
+        <span class="flex size-7 items-center justify-center rounded-full bg-ivory/20">
+          <ArrowUpRight
+            aria-hidden="true"
+            class="size-4 transition-transform duration-300 group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+          />
+        </span>
+      </a>
+    </div>
+  </div>
+</section>

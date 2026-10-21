@@ -303,7 +303,7 @@
         "Heading 'Agenda tu valoración y descubre qué blanqueamiento se adapta a tu sonrisa.' present; the CTA section is the last section of the page",
         "Button labeled 'Agendar por WhatsApp' links to COMPANY.whatsapp, opens in a new tab and has the sr-only new-tab note"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "page-blanqueamiento",
