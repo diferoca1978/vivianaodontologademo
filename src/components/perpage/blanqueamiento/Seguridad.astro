@@ -4,7 +4,8 @@
 // <p>. The answer's first sentence is set in bold so the direct "No" reads first; the text itself
 // is unchanged.
 // Design: editorial Q&A on ivory — the question in large Cormorant on the left, the answer on the
-// right behind a thin turquoise rule; stacked below lg. No animation.
+// right behind a thin turquoise rule; stacked below lg. The question then the answer fade up once
+// on scroll (src/utils/scripts/animations/blanqueamiento-dental/seguridad.ts).
 ---
 
 <section id="seguridad" aria-labelledby="seguridad-title" class="bg-ivory">
@@ -12,12 +13,13 @@
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center lg:gap-16">
       <h2
         id="seguridad-title"
+        data-seguridad-question
         class="text-4xl leading-tight font-medium tracking-tight text-balance text-charcoal sm:text-5xl lg:col-span-6"
       >
         ¿El blanqueamiento dental daña los dientes?
       </h2>
 
-      <div class="border-l-2 border-turquoise-dark pl-6 sm:pl-8 lg:col-span-6">
+      <div data-seguridad-answer class="border-l-2 border-turquoise-dark pl-6 sm:pl-8 lg:col-span-6">
         <p class="max-w-xl text-lg leading-relaxed text-pretty text-charcoal sm:text-xl">
           <strong class="font-semibold text-turquoise-dark">No, cuando está bien indicado.</strong> Es
           un procedimiento seguro si se realiza bajo supervisión odontológica, con productos de calidad
@@ -27,3 +29,7 @@
     </div>
   </div>
 </section>
+
+<script>
+  import "@/utils/scripts/animations/blanqueamiento-dental/seguridad";
+</script>

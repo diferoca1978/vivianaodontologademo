@@ -5,8 +5,10 @@
 // and no heading of its own (the section is labelled with aria-label instead).
 // Design: an editorial pull-quote right below the hero — large Cormorant on ivory, centered,
 // framed by a decorative opening quote mark and a short turquoise rule (both aria-hidden, not
-// part of the text). Visible at every breakpoint; no animation.
-// Behind the text sits the tooth logo as a decorative background (aria-hidden, low opacity).
+// part of the text). Visible at every breakpoint.
+// Behind the text sits the tooth logo as a decorative background (aria-hidden, low opacity). The
+// logo is drawn in and the quote mark, paragraph and rule fade up once on scroll
+// (src/utils/scripts/animations/blanqueamiento-dental/intro.ts).
 // The doctor's name comes from AUTHORS in src/config/authors.ts (it stores it without "Dra.").
 import { AUTHORS } from "@/config/authors";
 import ToothLogo from "@/assets/icons/tooth-logo.svg";
@@ -16,18 +18,21 @@ const author = AUTHORS[0];
 
 <section aria-label="Introducción al blanqueamiento dental" class="relative isolate overflow-hidden bg-ivory">
   <ToothLogo
+    data-intro-logo
     aria-hidden="true"
     class="pointer-events-none absolute top-1/2 left-1/2 -z-10 size-96 -translate-x-1/2 -translate-y-1/2 opacity-25 select-none lg:size-128"
   />
   <div class="mx-auto max-w-7xl px-4 py-16 sm:py-20 lg:py-24 xl:px-8">
     <div class="mx-auto flex max-w-4xl flex-col items-center text-center">
       <span
+        data-intro-item
         aria-hidden="true"
         class="font-cormorant text-7xl leading-none text-turquoise-dark select-none sm:text-8xl"
         >&ldquo;</span
       >
 
       <p
+        data-intro-item
         class="-mt-4 font-cormorant text-2xl leading-snug font-medium text-pretty text-charcoal sm:-mt-6 sm:text-3xl lg:text-4xl"
       >
         El blanqueamiento o aclaramiento dental es un procedimiento estético que aclara el tono de
@@ -36,7 +41,11 @@ const author = AUTHORS[0];
         ambiente diseñado para tu tranquilidad.
       </p>
 
-      <span aria-hidden="true" class="mt-8 h-px w-16 bg-turquoise-dark sm:mt-10"></span>
+      <span data-intro-item aria-hidden="true" class="mt-8 h-px w-16 bg-turquoise-dark sm:mt-10"></span>
     </div>
   </div>
 </section>
+
+<script>
+  import "@/utils/scripts/animations/blanqueamiento-dental/intro";
+</script>
