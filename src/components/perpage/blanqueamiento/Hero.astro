@@ -53,6 +53,7 @@ const h1Lead = h1Words.join(" ");
   <!-- Photo: below the copy on mobile, full-bleed behind it on desktop -->
   <div class="relative order-last aspect-4/3 w-full overflow-hidden lg:absolute lg:inset-0 lg:left-32 lg:-z-10 lg:order-0 lg:aspect-auto">
     <Image
+      data-hero-image
       src={heroPhoto}
       alt="Primer plano de una sonrisa con dientes blancos y parejos"
       priority
@@ -81,11 +82,12 @@ const h1Lead = h1Words.join(" ");
     <!-- Desktop: subtitle, H1 and highlights left at mid-height, CTA pinned bottom-right -->
     <div class="mt-10 flex flex-col gap-8 lg:my-auto lg:pt-8">
       <div class="flex max-w-xl flex-col gap-6 lg:max-w-lg">
-        <p class="font-cormorant text-2xl leading-snug font-medium text-turquoise-dark italic sm:text-3xl">
+        <p data-hero-item class="font-cormorant text-2xl leading-snug font-medium text-turquoise-dark italic sm:text-3xl">
           Una sonrisa más luminosa, sin perder su apariencia natural.
         </p>
         <h1
           id="blanqueamiento-title"
+          data-hero-item
           class="text-5xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-6xl xl:text-7xl"
         >
           {h1Lead} <em class="font-normal block">{h1Accent}</em>
@@ -95,7 +97,7 @@ const h1Lead = h1Words.join(" ");
           {
             highlights.map(({ lead, text, icon: Icon }) => (
                
-                <li class="flex items-start gap-3 text-sm leading-snug text-charcoal sm:text-base">
+                <li data-hero-highlight class="flex items-start gap-3 text-sm leading-snug text-charcoal sm:text-base">
                   <span aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-turquoise-dark sm:size-5">
                     <Icon class="size-full" />
                   </span>
@@ -110,7 +112,7 @@ const h1Lead = h1Words.join(" ");
       </div>
       <!-- CTA pinned bottom-right on lg -->
       <div class="flex max-w-md flex-col gap-6 lg:absolute lg:right-0 lg:bottom-16 lg:rounded-3xl lg:p-8">
-        <div>
+        <div data-hero-cta>
           <a
             href={COMPANY.whatsapp}
             target="_blank"
@@ -129,3 +131,7 @@ const h1Lead = h1Words.join(" ");
     </div>
   </div>
 </section>
+
+<script>
+  import "@/utils/scripts/animations/blanqueamiento-dental/hero";
+</script>

@@ -9,7 +9,9 @@
 // The question and lead-in sit on the left (sticky on lg); the five cases on the right, each with a
 // decorative Cormorant index and a hairline divider; stacked below lg. Below the grid, a full-width
 // CTA panel (same look as home/CtaFinal) holds the closing sentence, with the Rehabilitación Oral
-// link as a pill button. No animation beyond the link's hover.
+// link as a pill button. The heading, the five cases and the CTA panel each fade up once on scroll
+// (src/utils/scripts/animations/blanqueamiento-dental/contraindicaciones.ts); the sticky wrapper
+// itself is never transformed.
 import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
 import { PAGES } from "@/config/pages";
 import { isBuilt } from "@/utils/navigation";
@@ -57,11 +59,12 @@ const showRehabLink = isBuilt(rehabPath);
         <div class="lg:sticky lg:top-32">
           <h2
             id="contraindicaciones-title"
+            data-contraindicaciones-head
             class="text-4xl leading-tight font-medium tracking-tight text-balance text-ivory sm:text-5xl"
           >
             ¿Quién no debe hacerse un blanqueamiento dental?
           </h2>
-          <p class="mt-6 max-w-md text-lg leading-relaxed text-pretty text-ivory sm:text-xl">
+          <p data-contraindicaciones-head class="mt-6 max-w-md text-lg leading-relaxed text-pretty text-ivory sm:text-xl">
             El tratamiento debe posponerse o requiere una valoración especial en casos de:
           </p>
         </div>
@@ -71,7 +74,7 @@ const showRehabLink = isBuilt(rehabPath);
         <ul class="divide-y divide-ivory/10 border-y border-ivory/10" role="list">
           {
             items.map(({ lead, text }, index) => (
-              <li class="flex gap-5 py-6 sm:gap-8 sm:py-7">
+              <li data-contraindicaciones-item class="flex gap-5 py-6 sm:gap-8 sm:py-7">
                 <span
                   aria-hidden="true"
                   class="w-10 shrink-0 font-cormorant text-3xl leading-none font-medium text-turquoise-dark select-none sm:w-12 sm:text-4xl"
@@ -89,6 +92,7 @@ const showRehabLink = isBuilt(rehabPath);
     </div>
 
     <div
+      data-contraindicaciones-cta
       class="relative mt-16 overflow-hidden rounded-4xl bg-linear-to-br from-ivory via-ivory/90 to-turquoise-light px-6 py-12 text-center shadow-lg shadow-turquoise-dark/10 sm:px-12 lg:mt-20 lg:px-20 lg:py-16"
     >
       <div
@@ -127,3 +131,7 @@ const showRehabLink = isBuilt(rehabPath);
     </div>
   </div>
 </section>
+
+<script>
+  import "@/utils/scripts/animations/blanqueamiento-dental/contraindicaciones";
+</script>
