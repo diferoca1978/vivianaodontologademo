@@ -42,6 +42,12 @@ export const faqs: FAQItem[] = [
   // blanqueamiento dental (2026-10-19; supersedes textos-sitio.md §2)
   {
     category: 'blanqueamiento-dental',
+    question: '¿Quiénes pueden hacerse un blanqueamiento dental?',
+    answer:
+      'La mayoría de personas con buena salud oral son candidatas; en la valoración revisamos encías y esmalte antes de recomendar el tratamiento adecuado.',
+  },
+  {
+    category: 'blanqueamiento-dental',
     question: '¿Cuánto duran los resultados y cada cuánto debo hacer un retoque?',
     answer:
       'Depende de tus hábitos, tu alimentación y tu higiene oral. No hay una frecuencia única para los retoques: los valoramos en tus controles periódicos y, en algunos casos, puede considerarse uno al año.',
@@ -58,6 +64,7 @@ export const faqs: FAQItem[] = [
     answer:
       'Depende de la modalidad y de tu valoración clínica. En tu cita te damos el valor exacto antes de iniciar cualquier procedimiento.',
   },
+
 
   // Rehabilitación Oral — textos-sitio.md §3
   {

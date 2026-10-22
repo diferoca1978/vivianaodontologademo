@@ -286,12 +286,12 @@
     },
     {
       "id": "blanqueamiento-faq",
-      "description": "Blanqueamiento Dental: FAQ, now 3 questions (the old 4 are replaced in src/config/faqs.ts). D5 (answers always open vs accordion) decides the display. src/components/perpage/home/FAQ.astro is the reference to reuse. The brief says 'Depende de la modalidad' for the price answer: no figure is given and none is invented.",
+      "description": "Blanqueamiento Dental: FAQ, now 4 questions (the old 4 are replaced in src/config/faqs.ts). D5 (answers always open vs accordion) decides the display. src/components/perpage/home/FAQ.astro is the reference to reuse. The brief says 'Depende de la modalidad' for the price answer: no figure is given and none is invented.",
       "source": "textos-blanqueamiento.md › Preguntas frecuentes sobre el blanqueamiento dental + arquitectura-informacion.md §5, §6",
       "acceptance": [
         "h2 'Preguntas frecuentes sobre el blanqueamiento dental'",
-        "src/config/faqs.ts holds exactly 3 faqs with category 'blanqueamiento-dental', verbatim: '¿Cuánto duran los resultados y cada cuánto debo hacer un retoque?', '¿El blanqueamiento dental produce sensibilidad?', '¿Cuánto cuesta un blanqueamiento dental en Bogotá?'",
-        "The page renders those 3 faqs, verbatim",
+        "src/config/faqs.ts holds exactly 4 faqs with category 'blanqueamiento-dental', verbatim: '¿Quiénes pueden hacerse un blanqueamiento dental?', '¿Cuánto duran los resultados y cada cuánto debo hacer un retoque?', '¿El blanqueamiento dental produce sensibilidad?', '¿Cuánto cuesta un blanqueamiento dental en Bogotá?'",
+        "The page renders those 4 faqs, verbatim",
         "Each faq is a native <details>/<summary> (collapsed by default) with a smooth open/close animation (GSAP, in src/utils/scripts/animations/blanqueamiento-dental/, reduced-motion respected); answers stay in the HTML (maintainer decision 2026-10-20, replaces 'always visible')",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
