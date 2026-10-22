@@ -274,11 +274,13 @@
     },
     {
       "id": "blanqueamiento-cuidados",
-      "description": "Blanqueamiento Dental: aftercare. A 5-item list.",
+      "description": "Blanqueamiento Dental: aftercare. Five care tips as icon cards, same design as the home's Odontología de Calma Activa.",
       "source": "textos-blanqueamiento.md › Cuidados después del blanqueamiento dental",
       "acceptance": [
         "h2 'Cuidados después del blanqueamiento dental'",
-        "5 items rendered verbatim as a list (<ul>), in the brief's order, from 'Modera el café, el té…' to 'Consúltanos si la sensibilidad es intensa o persistente.'"
+        "5 cards rendered as a list (<ol>), in the brief's order, each with the tip verbatim, from 'Modera el café, el té…' to 'Consúltanos si la sensibilidad es intensa o persistente.'",
+        "Each card has a decorative icon badge (coffee, smoke, citrus, dentalcream, asking, in that order) and a short editorial h3 title (not from the brief)",
+        "Card design matches home/CalmaActiva: 1 col mobile, 2 tablet, 3 + 2 centred on lg; no animation"
       ],
       "status": "done"
     },
