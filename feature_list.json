@@ -280,7 +280,7 @@
         "h2 'Cuidados después del blanqueamiento dental'",
         "5 cards rendered as a list (<ol>), in the brief's order, each with the tip verbatim, from 'Modera el café, el té…' to 'Consúltanos si la sensibilidad es intensa o persistente.'",
         "Each card has a decorative icon badge (coffee, smoke, citrus, dentalcream, asking, in that order) and a short editorial h3 title (not from the brief)",
-        "Card design matches home/CalmaActiva: 1 col mobile, 2 tablet, 3 + 2 centred on lg; no animation"
+        "Card design matches home/CalmaActiva: 1 col mobile, 2 tablet, 3 + 2 centred on lg; the only animation is the tooth logo above the h2, drawn in on scroll with the shared drawToothLogo (blanqueamiento-dental/cuidados.ts), skipped under reduced motion"
       ],
       "status": "done"
     },

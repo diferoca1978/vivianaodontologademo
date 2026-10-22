@@ -6,7 +6,9 @@
 // circular icon badge straddling the top edge, serif h3 and small centred text). 1 col on mobile,
 // 2 on tablet, and on lg a 6-col grid where the five cards span 2 each so the second row (2 cards)
 // sits centred under the first (3). Soft turquoise band so the page keeps alternating tones after
-// Contraindicaciones. No animation.
+// Contraindicaciones. The tooth logo sits above the h2 as in home/CalmaActiva and is drawn in on
+// scroll (src/utils/scripts/animations/blanqueamiento-dental/cuidados.ts); the rest is static.
+import ToothLogo from "@/assets/icons/tooth-logo.svg";
 import Coffee from "@/assets/icons/coffee.svg";
 import Smoke from "@/assets/icons/smoke.svg";
 import Citrus from "@/assets/icons/citrus.svg";
@@ -50,6 +52,7 @@ const items: Item[] = [
 
 <section id="cuidados" aria-labelledby="cuidados-title" class="">
   <div class="mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:py-16 xl:px-8">
+    <ToothLogo data-cuidados-logo aria-hidden="true" class="mx-auto mb-4 size-16 sm:size-20" />
     <h2
       id="cuidados-title"
       class="mx-auto max-w-3xl text-center text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl"
@@ -78,3 +81,7 @@ const items: Item[] = [
     </ol>
   </div>
 </section>
+
+<script>
+  import "@/utils/scripts/animations/blanqueamiento-dental/cuidados";
+</script>
