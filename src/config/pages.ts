@@ -12,7 +12,7 @@ export const PAGES = {
   home: {
     path: '/',
     keyword: 'odontóloga especialista en Bogotá / odontología sin dolor Bogotá',
-    title: 'Odontóloga en Bogotá — Especialista en Rehabilitación Oral | Dra. Viviana Rodríguez',
+    title: 'Odontóloga en Bogotá, Rehabilitación Oral',
     description:
       'Odontología de Calma Activa en Bogotá (Chicó). Rehabilitación oral, blanqueamiento y diseño de sonrisa con tecnología sin dolor. Agenda tu cita hoy.',
     h1: 'Odontóloga en Bogotá, especialista en Rehabilitación Oral',
@@ -30,7 +30,7 @@ export const PAGES = {
   rehabilitacion: {
     path: '/rehabilitacion-oral/',
     keyword: 'rehabilitación oral Bogotá',
-    title: 'Rehabilitación Oral en Bogotá | Especialista — Dra. Viviana',
+    title: 'Rehabilitación Oral en Bogotá',
     description:
       'Especialista en Rehabilitación Oral en Bogotá. Recupera función y estética dental con tecnología de punta, cero dolor y un enfoque cálido. Agenda tu cita.',
     h1: 'Rehabilitación Oral en Bogotá',
