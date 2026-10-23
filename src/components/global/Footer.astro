@@ -16,7 +16,7 @@ import ArrowUp from "@/assets/icons/arrow-up.svg";
 // Opening hours come from the Google Business Profile, still to be confirmed with the client
 // (client-gaps.md #1). The privacy policy link is a placeholder until page-privacidad exists.
 const { address } = COMPANY.business.kind === "local" ? COMPANY.business : { address: undefined };
-const openingHours = formatOpeningHours(COMPANY.openingHours ?? []);
+const openingHours = formatOpeningHours(COMPANY.business.hours ?? []);
 
 const socials = [
   { name: "Instagram", href: COMPANY.socialMedia.instagram, Icon: Instagram },
