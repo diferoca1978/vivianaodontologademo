@@ -18,10 +18,10 @@ Desde el 2026-10-16 el SEO del sitio viene de `@shine/seo-core` (`seo.pageHead()
 | Página (feature) | Decisiones | De la clienta (tabla de abajo) |
 | ---------------- | ---------- | ------------------------------ |
 | Todas — decidir **antes de construir la primera sección** | D4 | #6 og-image, #8 aviso legal (footer) |
-| Inicio (`page-home`) | D1, D2, D5 | #2 textos de las 8 tarjetas, #5 fotos |
-| Blanqueamiento (`page-blanqueamiento`) | D2, D3, D5 | #5 fotos |
-| Rehabilitación (`page-rehabilitacion`) | D1, D2, D3, D5 | #4 frase de anestesia digital, #5 fotos |
-| Contacto (`page-contacto`) | D5 | — (confirmar el horario #1, pero no bloquea) |
+| Inicio (`page-home`) | D1 | #2 textos de las 8 tarjetas, #5 fotos |
+| Blanqueamiento (`page-blanqueamiento`) | — | #5 fotos |
+| Rehabilitación (`page-rehabilitacion`) | D1 | #4 frase de anestesia digital, #5 fotos |
+| Contacto (`page-contacto`) | — | — (confirmar el horario #1, pero no bloquea) |
 
 **Orden de construcción:** Contacto conviene primero. Los CTA finales de
 Blanqueamiento y Rehabilitación enlazan a `/contacto/`, y las dos páginas de
@@ -52,41 +52,22 @@ existe (`url-resolves`), así que esos enlaces se pintan con `isBuilt()`
 
 ### D2 — Schema que el paquete no genera
 
-- [ ] Decidido: ___
-- **Problema:** `@shine/seo-core` (v0.1.2) no sabe hacer estas cosas, que piden
-  el brief (§6) y la ficha de Google. Su tipo `Company` tampoco tiene
-  `listingName` ni `openingHours`: esos campos viven en el tipo propio de
-  `company.ts` y hoy no llegan al JSON-LD.
-  - `Service` en las dos páginas de servicio, con el Dentist como proveedor y
-    Bogotá como área. No existe un generador `Service`.
-  - En el nodo Dentist:
-    - La especialidad (`medicalSpecialty`). Schema.org no tiene «Rehabilitación
-      Oral» ni «Prostodoncia»; el valor más cercano es `Dentistry`.
-    - El horario (`openingHoursSpecification`). Los datos ya están en
-      `COMPANY.openingHours` desde el 2026-10-02.
-    - El nombre de la ficha: `name` = `COMPANY.listingName` («Consultorio
-      Viviana Rodríguez») y `alternateName` = `COMPANY.name` («Dra.
-      Viviana Rodríguez»). Ya está decidido (ver «Decided on 2026-10-02»). El
-      dato ya está en `company.ts`.
-    - Los medios de pago (`paymentAccepted`, brief §1), que son opcionales.
-- **Opciones:**
-  - (a) Agregarlo al paquete: una spec en `shine-seo-core` y una versión
-    nueva. El horario y `Service` sirven a cualquier cliente local.
-  - (b) Extenderlo en el proyecto: campos sobre `seo.businessNode()` y un
-    nodo `Service` escrito a mano. Se aparta de la regla «JSON-LD construido
-    con los generadores» de `AGENTS.md`.
-- **Recomendación:** (a), partida en dos specs. Primero la del nodo Dentist,
-  que es pequeña y ya tiene sus datos; después la de `Service` junto con D3.
-- **Qué decides:** dónde va y si apruebas que se redacte la spec. `/spec` lo
-  corres tú, porque un agente no puede invocarlo. Tú la revisas y la pasas a
-  `Approved`; ningún agente puede hacerlo.
-- **Bloquea:** `page-blanqueamiento`, `page-rehabilitacion`, y en `page-home`
-  la especialidad, el horario y el nombre de la ficha del nodo Dentist.
+- [x] Decidido: resuelto con `@shine/seo-core` v0.1.3 y por descarte (2026-10-22).
+- **Resultado:**
+  - `Service`: retirado por decisión del mantenedor. Las páginas de servicio no
+    llevan nodo `Service`.
+  - Horario: `COMPANY.business.hours` → `openingHoursSpecification` (v0.1.3).
+  - Nombre de la ficha: `COMPANY.alternateName` → `alternateName` (v0.1.3).
+    `name` se queda en «Dra. Viviana Rodríguez», porque el paquete también lo
+    usa como `WebSite.name` y como sufijo de los títulos.
+  - `medicalSpecialty` y `paymentAccepted`: no se emiten. La documentación de
+    Google no los usa para ningún resultado enriquecido y no aportan señal.
+- **Bloquea:** nada.
 
 ### D3 — Fecha de «última actualización» visible en las páginas de servicio
 
-- [ ] Decidido: ___
-- **Problema:** el brief (§6) pide publicarla, pero no dice de dónde sale.
+- [x] Decidido: Opción 2: no se publica fecha de última actualización (2026-10-22).
+- **Problema:** el brief (§6) pedía publicarla, pero no decía de dónde sale.
 - **Opciones:**
   - (a) Una fecha fija por página, escrita a mano en la config, que se cambia
     solo cuando cambia el contenido. Es la honesta (recomendada).
@@ -94,9 +75,7 @@ existe (`url-resolves`), así que esos enlaces se pintan con `isBuilt()`
     cambie, lo que da una falsa señal de frescura.
   - (c) La fecha del último commit del archivo. Es automática, pero depende de
     tener el historial de git en el build de Netlify.
-- Se resuelve dentro de la spec de D2, para que la fecha visible y
-  `dateModified` coincidan.
-- **Bloquea:** `page-blanqueamiento`, `page-rehabilitacion`.
+- **Bloquea:** nada.
 
 ### D4 — Contraste del turquesa (decidir antes de la primera sección)
 
@@ -117,9 +96,9 @@ existe (`url-resolves`), así que esos enlaces se pintan con `isBuilt()`
 
 ### D5 — FAQ: ¿respuestas siempre abiertas o acordeón?
 
-- [ ] Decidido: ___ (Inicio ya está decidido: acordeón colapsado al cargar,
-  por decisión del cliente, en `home-faq`. Falta confirmar si las otras tres
-  páginas siguen igual.)
+- [x] Decidido: (b) acordeón `<details>` colapsado al cargar, con el texto en
+  el HTML, en las cuatro páginas (Inicio por decisión del cliente; Blanqueamiento
+  el 2026-10-20; confirmado para Rehabilitación y Contacto el 2026-10-22).
 - **Problema:** el brief (§5) dice «FAQ visible en la página, nunca oculta».
   En el acceptance lo tomé literal: todas las respuestas abiertas.
 - **Opciones:**
@@ -165,7 +144,7 @@ existe (`url-resolves`), así que esos enlaces se pintan con `isBuilt()`
 
 | # | Missing | Blocks | Brief reference |
 | - | ------- | ------ | --------------- |
-| 1 | **Opening hours — tentative since 2026-10-02.** Taken from the Google Business Profile and stored in `COMPANY.openingHours`: Tue & Thu 2–7 pm · Wed & Sat 8 am–1 pm · Fri 8 am–2 pm · Sun & Mon closed. The user chose to publish them now and correct them if needed. **Still to confirm with the client.** | nothing anymore. `global-footer` was reopened to show them. The Dentist `openingHoursSpecification` waits on D2. | arquitectura §1, §6, §7 · textos §4 |
+| 1 | **Opening hours — tentative since 2026-10-02.** Taken from the Google Business Profile and stored in `COMPANY.business.hours`: Tue & Thu 2–7 pm · Wed & Sat 8 am–1 pm · Fri 8 am–2 pm · Sun & Mon closed. The user chose to publish them now and correct them if needed. **Still to confirm with the client.** | nothing anymore. `global-footer` was reopened to show them. The Dentist `openingHoursSpecification` waits on D2. | arquitectura §1, §6, §7 · textos §4 |
 | 2 | **1-2 line description for each of the 8 short service cards** (Odontología General, Odontología Estética, Implantes, Coronas en Zirconio, Incrustaciones Dentales, Placas de Bruxismo, Prótesis Removibles, Diseño de Sonrisa) | `home-servicios` | arquitectura §5, §7 |
 | 3 | **Resolved 2026-10-02.** The user chose 5 Google reviews and the signature rule; both are in `docs/source/resenas-google.md`. Confirm the choice with the client. | nothing (`home-testimonios` is unblocked) | arquitectura §7 · textos §1 |
 | 4 | **A sentence mentioning anestesia digital on the Rehabilitación Oral page.** Brief §5 requires it on every service page, but textos §3 never mentions it. | `page-rehabilitacion` | arquitectura §5 · brand.md "Miedos a resolver" |
@@ -223,12 +202,13 @@ en 9 reseñas. El enlace está en `COMPANY.socialMedia.googleBusiness`.
 - **Address:** it stays "Cra 15 # 104-30, Consultorio 302" on the site, even
   though the profile writes "Ak 15 #104-30 consultorio 302".
 - **Business name in the schema:**
-  - The Dentist node takes `name` "Consultorio Viviana Rodríguez"
-    (`COMPANY.listingName`) and `alternateName` "Dra. Viviana Rodríguez".
+  - The Dentist node keeps `name` "Dra. Viviana Rodríguez" and takes
+    `alternateName` "Consultorio Viviana Rodríguez" (`COMPANY.alternateName`).
+    Changed on 2026-10-22: the package uses `name` for `WebSite.name` and the title suffix.
   - The doctor stays a `Person` through `founders`.
   - The visible brand and the meta-title suffix stay "Dra. Viviana Rodríguez",
     so `COMPANY.name` doesn't change.
-  - It waits on D2: the package does not emit `listingName` or `alternateName`.
+  - Resolved with `@shine/seo-core` v0.1.3 (D2).
 
 ## Decided at ingest (not in the brief) — 2026-09-30
 
