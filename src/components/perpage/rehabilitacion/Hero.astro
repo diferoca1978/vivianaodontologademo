@@ -1,0 +1,123 @@
+---
+import { Image } from "astro:assets";
+import type { BreadcrumbItem } from "@shine/seo-core";
+import Breadcrumb from "@/components/ui/navigation/Breadcrumb.astro";
+import { COMPANY } from "@/config/company";
+import { PAGES } from "@/config/pages";
+import WhatsappIcon from "@/assets/icons/whatsApp.svg";
+import heroPhoto from "@/assets/images/rehabilitacion1.2.webp";
+
+// Copy: docs/brief/textos-sitio.md §3 Rehabilitación Oral (H1, subtítulo, intro), verbatim. The H1
+// comes from PAGES.rehabilitacion.h1. The intro is the page's direct answer (arquitectura §5: within
+// the first 100 words), so it stays in the hero, right under the H1. The CTA reuses the §3 CTA
+// final's "Agenda tu valoración" (maintainer, 2026-10-23), right under the intro on the ivory side,
+// so its contrast never depends on the photo. No highlights: the source gives none.
+// Layout: the Blanqueamiento hero (perpage/blanqueamiento/Hero.astro) mirrored: photo on the left,
+// copy on the right. The breadcrumb and the copy share one right-hand column on the ivory side,
+// right-aligned on lg: every line ends flush at the container's right edge (the mirror of
+// Blanqueamiento's flush-left copy), and the intro's turquoise border moves to the right. Below lg
+// the copy stays left-aligned and the photo goes underneath it.
+// Photo (hero-rehabilitacion.webp, 4:3, the home's Rehabilitación photo at full resolution): a gloved
+// hand holding a transparent model with implants, the glove at ~17–75% of its width (the model
+// itself ~30–67%) and ~19–81% of its height, her smile at the top. On lg the photo bleeds off the
+// viewport's left edge (crisp, no fade there, the mirror of Blanqueamiento's right bleed) and runs
+// up to 1rem short of the copy column (max-w-md), its right edge fading into ivory. xl: the hero's
+// full height, centred crop; the glove stays clear of the left edge and the fade on every common
+// screen (it only touches them on tall ones like 1366×1024, where the model stays whole), no top fade
+// so the smile stays crisp, a short bottom fade into the next section. lg (1024–1279): full height
+// would crop the glove, so the box is a vertically centred square with top and bottom fades. Below
+// lg the photo is 4:3 under the copy, uncropped.
+interface Props {
+  crumbs: BreadcrumbItem[];
+}
+
+const { crumbs } = Astro.props;
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal";
+
+// The H1 stays PAGES.rehabilitacion.h1; only its last two words ("en Bogotá") are set in italic,
+// the same accent as the Blanqueamiento hero.
+const h1Words = PAGES.rehabilitacion.h1.split(" ");
+const h1Accent = h1Words.splice(-2).join(" ");
+const h1Lead = h1Words.join(" ");
+---
+
+<section
+  aria-labelledby="rehabilitacion-title"
+  class="relative isolate flex flex-col overflow-hidden bg-ivory lg:h-screen"
+>
+  <!-- Photo: below the copy on mobile; on lg it bleeds off the viewport's left edge (crisp, no fade
+       there) and runs up to 1rem short of the copy column (30rem from the right on lg, 9rem right of
+       the viewport's centre on xl), its right edge fading into ivory. lg: a square, vertically
+       centred, with top and bottom fades. xl: the hero's full height, crisp at the top under the
+       navbar, a short fade at the bottom into the next section -->
+  <div
+    class="relative order-last aspect-4/3 w-full overflow-hidden lg:absolute lg:top-1/2 lg:right-120 lg:left-0 lg:-z-10 lg:order-0 lg:aspect-square lg:max-h-full lg:w-auto lg:-translate-y-1/2 xl:inset-y-0 xl:right-1/2 xl:-mr-36 xl:aspect-auto xl:max-h-none xl:translate-y-0"
+  >
+    <Image
+      data-hero-image
+      src={heroPhoto}
+      alt="Odontóloga con guantes sostiene un modelo dental transparente con dientes e implantes"
+      priority
+      widths={[640, 1024, 1536, heroPhoto.width]}
+      sizes="(min-width: 1280px) 75vw, (min-width: 1024px) 55vw, 100vw"
+      class="h-full w-full object-cover object-center"
+    />
+    <!-- Ivory fade on top so the photo melts into the copy (mobile) or the page (lg); none on xl,
+         where the photo is full height and her smile sits at the top -->
+    <div aria-hidden="true" class="absolute inset-x-0 top-0 h-1/4 bg-linear-to-b from-ivory to-transparent xl:hidden"></div>
+    <!-- Ivory fade at the bottom so the photo melts into the next section -->
+    <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-ivory to-transparent xl:h-24"></div>
+  </div>
+
+  <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pt-8 pb-10 sm:pt-10 lg:relative lg:pt-10 lg:pb-16 xl:px-8 xl:pt-16">
+    <!-- One column on the right (lg): breadcrumb on top, copy at mid-height, both right-aligned
+         flush with the container's right edge -->
+    <div class="flex flex-1 flex-col lg:ml-auto lg:w-full lg:max-w-md lg:text-right">
+      <!-- Breadcrumb.astro takes no class prop: the wrapper pushes it right on lg -->
+      <div class="lg:flex lg:justify-end">
+        <Breadcrumb items={crumbs} />
+      </div>
+
+      <div class="mt-10 flex max-w-xl flex-col gap-6 lg:my-auto lg:pt-8">
+        <p
+          data-hero-item
+          class="font-cormorant text-2xl leading-snug font-medium text-turquoise-dark italic sm:text-3xl"
+        >
+          La especialidad de la Dra. Viviana Rodríguez.
+        </p>
+        <h1
+          id="rehabilitacion-title"
+          data-hero-item
+          class="text-5xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-6xl xl:text-7xl"
+        >
+          {h1Lead} <em class="block font-normal">{h1Accent}</em>
+        </h1>
+        <p
+          data-hero-item
+          class="max-w-md text-sm leading-relaxed text-charcoal sm:text-base lg:ml-auto lg:border-l-0 lg:pr-5 lg:pl-0"
+        >
+          La rehabilitación oral recupera la función, la estética y la salud de tu boca cuando hay desgaste,
+          pérdida de dientes o problemas articulares, combinando tratamientos según cada caso.
+        </p>
+        <!-- CTA under the intro; the column's lg:text-right pushes the inline-flex button right -->
+        <div data-hero-cta class="mt-2">
+          <a
+            href={COMPANY.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            class:list={[
+              "inline-flex items-center justify-center gap-3 rounded-full bg-turquoise px-7 py-4 font-medium whitespace-nowrap text-ivory shadow-lg shadow-turquoise/20 transition-colors duration-300 hover:bg-turquoise-dark motion-reduce:transition-none",
+              focusRing,
+            ]}
+          >
+            <WhatsappIcon class="size-5" aria-hidden="true" />
+            Agenda tu valoración
+            <span class="sr-only">(se abre en una pestaña nueva)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
