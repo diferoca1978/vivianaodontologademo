@@ -79,11 +79,11 @@ El texto literal de cada página y servicio (metas, H1, subtítulos, bloques, FA
 
 ## 6. Schema (JSON-LD)
 
-- `Dentist` (LocalBusiness): en el layout general; nombre, dirección (NAP), teléfono, geo (anidado en `PostalAddress`/`GeoCoordinates`), horario (pendiente), redes en `sameAs`, especialidad.
-- `Service`: en Blanqueamiento Dental y Rehabilitación Oral; proveedor = el Dentist, área de servicio Bogotá.
-- `FAQPage`: en las páginas con FAQ, con el mismo texto visible en la página.
+- `Dentist` (LocalBusiness): en el layout general; nombre, dirección (NAP), teléfono, geo (anidado en `PostalAddress`/`GeoCoordinates`), horario (pendiente de confirmar con la clienta), redes en `sameAs`. La especialidad y los medios de pago no se emiten en el JSON-LD (decisión del mantenedor, 2026-10-22).
+- `Service`: retirado por decisión del mantenedor (2026-10-22); las páginas de servicio no llevan nodo `Service`.
+- `FAQPage`: no se emite (decisión del 2026-10-16, client-gaps.md D7). Las preguntas siguen visibles en cada página, sin marcado.
 - `BreadcrumbList`: en las dos páginas de servicio.
-- Publicar la fecha de última actualización en cada página de servicio.
+- Fecha de última actualización: retirada por decisión del mantenedor (2026-10-22); no se publica en las páginas de servicio.
 
 ## 7. Pendiente de la clienta
 

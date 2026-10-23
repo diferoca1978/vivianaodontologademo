@@ -19,14 +19,14 @@
     },
     {
       "id": "global-footer",
-      "description": "Footer (every page). Reopened on 2026-10-02 to add the opening hours: the user chose to publish the ones on the Google Business Profile (COMPANY.openingHours) and confirm them with the client later. Everything else was already built. The 'Política de privacidad' link ships as a placeholder (href='#' + TODO); its page is the page-privacidad feature, so the footer is no longer blocked on it. Since 2026-10-16 the links to pages not built yet are hidden through PENDING_PAGES (src/utils/navigation.ts), so the SEO gate's url-resolves passes; each page feature brings its links back.",
+      "description": "Footer (every page). Reopened on 2026-10-02 to add the opening hours: the user chose to publish the ones on the Google Business Profile (COMPANY.business.hours) and confirm them with the client later. Everything else was already built. The 'Política de privacidad' link ships as a placeholder (href='#' + TODO); its page is the page-privacidad feature, so the footer is no longer blocked on it. Since 2026-10-16 the links to pages not built yet are hidden through PENDING_PAGES (src/utils/navigation.ts), so the SEO gate's url-resolves passes; each page feature brings its links back.",
       "source": "arquitectura-informacion.md §3 Estructura del sitio › Navegación › Footer + §1 Datos del negocio + client-gaps.md #1 (hours from the Google Business Profile, 2026-10-02)",
       "acceptance": [
         "Address rendered from COMPANY.business.address, reading exactly 'Cra 15 # 104-30, Consultorio 302' + Bogotá (single NAP form, brief §1)",
         "Phone/WhatsApp from COMPANY.phone linking to COMPANY.whatsapp; email from COMPANY.email as a mailto: link",
         "Instagram and TikTok links from COMPANY.socialMedia",
         "A link to /contacto/",
-        "Opening hours rendered from COMPANY.openingHours, in Spanish, with no hand-written hours outside company.ts",
+        "Opening hours rendered from COMPANY.business.hours, in Spanish, with no hand-written hours outside company.ts",
         "A 'Política de privacidad' link is rendered in the footer bottom bar (its real target is wired in the page-privacidad feature)",
         "The scaffold 'Footer' stub is gone (harness/lint-customization.sh reports no Footer stub)"
       ],
@@ -194,7 +194,7 @@
     },
     {
       "id": "page-home",
-      "description": "Home page: SEO and assembly. Before closing: D1 (the title gets the ' | Dra. Viviana Rodríguez' suffix: 83 characters), D2 (medicalSpecialty, openingHoursSpecification and listingName in the Dentist node), D5 (FAQ display) — client-gaps.md § Decisiones pendientes.",
+      "description": "Home page: SEO and assembly. Before closing: D1 (the title gets the ' | Dra. Viviana Rodríguez' suffix: 83 characters) — client-gaps.md § Decisiones pendientes.",
       "source": "textos-sitio.md §1 Inicio (Meta title, Meta description) + arquitectura-informacion.md §3 Enlazado interno, §4, §6",
       "acceptance": [
         "The head comes from seo.pageHead(PAGES.home), and PAGES.home holds textos-sitio.md §1's meta title, meta description and h1 verbatim",
@@ -286,7 +286,7 @@
     },
     {
       "id": "blanqueamiento-faq",
-      "description": "Blanqueamiento Dental: FAQ, now 4 questions (the old 4 are replaced in src/config/faqs.ts). D5 (answers always open vs accordion) decides the display. src/components/perpage/home/FAQ.astro is the reference to reuse. The brief says 'Depende de la modalidad' for the price answer: no figure is given and none is invented.",
+      "description": "Blanqueamiento Dental: FAQ, now 4 questions (the old 4 are replaced in src/config/faqs.ts). D5 decided: collapsed accordion (2026-10-22). src/components/perpage/home/FAQ.astro is the reference to reuse. The brief says 'Depende de la modalidad' for the price answer: no figure is given and none is invented.",
       "source": "textos-blanqueamiento.md › Preguntas frecuentes sobre el blanqueamiento dental + arquitectura-informacion.md §5, §6",
       "acceptance": [
         "h2 'Preguntas frecuentes sobre el blanqueamiento dental'",
@@ -309,7 +309,7 @@
     },
     {
       "id": "page-blanqueamiento",
-      "description": "Blanqueamiento Dental page: SEO and assembly. REWRITTEN 2026-10-19 for the new brief (textos-blanqueamiento.md). Meta title and description are not in the new brief: they stay as in textos-sitio.md §2 (note: its 'sin dolor' sits next to the new FAQ on temporary sensitivity; raise it with the client, do not change it here). Before closing: D2 (Service node: the package has no generator), D3 (source of the last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Its title already holds the company name, so seo.pageHead() adds no suffix. The page currently renders Hero + Intro + Modalidades (Beneficios was unmounted on 2026-10-19 and kept in the repo; Pasos became ui/sections/PinnedPanels.astro and Modalidades replaced it, spec 04).",
+      "description": "Blanqueamiento Dental page: SEO and assembly. REWRITTEN 2026-10-19 for the new brief (textos-blanqueamiento.md). Meta title and description are not in the new brief: they stay as in textos-sitio.md §2 (note: its 'sin dolor' sits next to the new FAQ on temporary sensitivity; raise it with the client, do not change it here). Service JSON-LD removed from this page by maintainer decision 2026-10-22 (D2). Its title already holds the company name, so seo.pageHead() adds no suffix. The page currently renders Hero + Intro + Modalidades (Beneficios was unmounted on 2026-10-19 and kept in the repo; Pasos became ui/sections/PinnedPanels.astro and Modalidades replaced it, spec 04).",
       "source": "textos-sitio.md §2 Blanqueamiento Dental (Meta title, Meta description) + textos-blanqueamiento.md (sections and order) + arquitectura-informacion.md §4, §5, §6",
       "acceptance": [
         "Route src/pages/blanqueamiento-dental.astro serves /blanqueamiento-dental/",
@@ -318,12 +318,10 @@
         "Exactly one <h1> on the page",
         "Sections in order: hero, modalidades, ¿daña los dientes?, ¿quién no debe?, cuidados, Preguntas frecuentes, CTA final",
         "BreadcrumbList JSON-LD (Inicio → Blanqueamiento Dental) passed through MainLayout's schemas, matching the visible breadcrumb",
-        "Service JSON-LD with provider = seo.businessRef() and areaServed Bogotá",
-        "A visible last-updated date on the page, matching dateModified if the schema carries one",
-        "No business, WebSite or Person node on this page",
+        "No business, WebSite, Person or Service node on this page",
         "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "rehabilitacion-hero",
@@ -381,11 +379,11 @@
     },
     {
       "id": "rehabilitacion-faq",
-      "description": "Rehabilitación Oral: FAQ. D5 (answers always open vs accordion) decides the display.",
+      "description": "Rehabilitación Oral: FAQ. D5 decided 2026-10-22: collapsed accordion, same as home-faq and blanqueamiento-faq (src/components/perpage/home/FAQ.astro is the reference).",
       "source": "textos-sitio.md §3 Rehabilitación Oral › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
       "acceptance": [
         "Renders the 3 faqs with category 'rehabilitacion-oral' from src/config/faqs.ts, verbatim",
-        "Every answer is visible on the page by default, not collapsed",
+        "Each faq is a native <details>/<summary> collapsed by default, opening on click or keyboard; answers stay in the HTML (maintainer decision 2026-10-22, D5)",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
       "status": "pending"
@@ -402,7 +400,7 @@
     },
     {
       "id": "page-rehabilitacion",
-      "description": "Rehabilitación Oral page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix), D2 (Service generator), D3 (last-updated date), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. Also needs client item #4: an approved sentence mentioning anestesia digital (textos-sitio §3 never mentions it, brief §5 requires it).",
+      "description": "Rehabilitación Oral page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix) — client-gaps.md § Decisiones pendientes. Also needs client item #4: an approved sentence mentioning anestesia digital (textos-sitio §3 never mentions it, brief §5 requires it).",
       "source": "textos-sitio.md §3 Rehabilitación Oral (Meta title, Meta description) + arquitectura-informacion.md §4, §5, §6",
       "acceptance": [
         "Route src/pages/rehabilitacion-oral.astro serves /rehabilitacion-oral/",
@@ -412,9 +410,7 @@
         "Sections in order: hero, Cuándo la necesitas, Tratamientos incluidos, Cómo se hace, enlace cruzado, Preguntas frecuentes, CTA final",
         "Both 'anestesia digital' and the calm environment ('ambiente de calma') are mentioned on the page",
         "BreadcrumbList JSON-LD (Inicio → Rehabilitación Oral) passed through MainLayout's schemas, matching the visible breadcrumb",
-        "Service JSON-LD with provider = seo.businessRef() and areaServed Bogotá",
-        "A visible last-updated date on the page, matching dateModified if the schema carries one",
-        "No business, WebSite or Person node on this page",
+        "No business, WebSite, Person or Service node on this page",
         "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
       ],
       "status": "pending"
@@ -439,25 +435,25 @@
         "Address from COMPANY.business.address as 'Cra 15 # 104-30, Consultorio 302, Bogotá'",
         "Payment methods: 'débito, crédito, datáfono y código QR (no EPS ni seguros)'",
         "Instagram and TikTok links from COMPANY.socialMedia, shown as @dra.vivianarodriguez_",
-        "Opening hours rendered from COMPANY.openingHours, in Spanish, with no hand-written hours outside company.ts",
+        "Opening hours rendered from COMPANY.business.hours, in Spanish, with no hand-written hours outside company.ts",
         "A map element that opens COMPANY.socialMedia.googleBusiness, with no hand-written map URL or coordinates outside company.ts"
       ],
       "status": "pending"
     },
     {
       "id": "contacto-faq",
-      "description": "Contacto: FAQ. D5 (answers always open vs accordion) decides the display.",
+      "description": "Contacto: FAQ. D5 decided 2026-10-22: collapsed accordion, same as home-faq and blanqueamiento-faq (src/components/perpage/home/FAQ.astro is the reference).",
       "source": "textos-sitio.md §4 Contacto › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
       "acceptance": [
         "Renders the 2 faqs with category 'contacto' from src/config/faqs.ts, verbatim",
-        "Every answer is visible on the page by default, not collapsed",
+        "Each faq is a native <details>/<summary> collapsed by default, opening on click or keyboard; answers stay in the HTML (maintainer decision 2026-10-22, D5)",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
       "status": "pending"
     },
     {
       "id": "page-contacto",
-      "description": "Contacto page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix), D5 (FAQ display) — client-gaps.md § Decisiones pendientes. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written. Note (2026-10-16): a basic placeholder page exists only so the check passes — src/pages/contacto.astro with src/components/perpage/contacto/Hero.astro (the H1, the brief's intro and one WhatsApp button), and /contacto/ is already out of PENDING_PAGES. It does not implement this feature, contacto-datos or contacto-faq, which stay pending as written. Until then, PAGES.contacto.description in src/config/pages.ts is a shorter temporary text, because the brief's mentions an address, a map and hours the placeholder does not show: restore the brief's when building this feature.",
+      "description": "Contacto page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix) — client-gaps.md § Decisiones pendientes. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written. Note (2026-10-16): a basic placeholder page exists only so the check passes — src/pages/contacto.astro with src/components/perpage/contacto/Hero.astro (the H1, the brief's intro and one WhatsApp button), and /contacto/ is already out of PENDING_PAGES. It does not implement this feature, contacto-datos or contacto-faq, which stay pending as written. Until then, PAGES.contacto.description in src/config/pages.ts is a shorter temporary text, because the brief's mentions an address, a map and hours the placeholder does not show: restore the brief's when building this feature.",
       "source": "textos-sitio.md §4 Contacto (Meta title, Meta description) + arquitectura-informacion.md §4",
       "acceptance": [
         "Route src/pages/contacto.astro serves /contacto/",
@@ -465,7 +461,7 @@
         "meta description is 'Agenda tu cita con la Dra. Viviana Rodríguez en Bogotá. WhatsApp, dirección, mapa y horarios de atención. Resolvemos tus dudas antes de tu primera visita.'",
         "Exactly one <h1> on the page",
         "Sections in order: hero, Datos de contacto, Preguntas frecuentes",
-        "No business, WebSite or Person node on this page",
+        "No business, WebSite, Person or Service node on this page",
         "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
       ],
       "status": "pending"
