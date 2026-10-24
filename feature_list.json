@@ -194,11 +194,11 @@
     },
     {
       "id": "page-home",
-      "description": "Home page: SEO and assembly. Before closing: D1 (the title gets the ' | Dra. Viviana Rodríguez' suffix: 83 characters) — client-gaps.md § Decisiones pendientes.",
+      "description": "Home page: SEO and assembly.",
       "source": "textos-sitio.md §1 Inicio (Meta title, Meta description) + arquitectura-informacion.md §3 Enlazado interno, §4, §6",
       "acceptance": [
         "The head comes from seo.pageHead(PAGES.home), and PAGES.home holds textos-sitio.md §1's meta title, meta description and h1 verbatim",
-        "<title> follows the D1 decision (today 'Odontóloga en Bogotá — Especialista en Rehabilitación Oral | Dra. Viviana Rodríguez', a title-length warning)",
+        "<title> is 'Odontóloga en Bogotá, Rehabilitación Oral | Dra. Viviana Rodríguez' (PAGES.home.title plus the suffix seo.pageHead() adds; 66 characters, a title-length warning accepted by the maintainer)",
         "meta description is 'Odontología de Calma Activa en Bogotá (Chicó). Rehabilitación oral, blanqueamiento y diseño de sonrisa con tecnología sin dolor. Agenda tu cita hoy.'",
         "Exactly one <h1>, rendering PAGES.home.h1",
         "Sections in order: Hero, Calma Activa, Servicios, Sobre la Dra. Viviana, Testimonios (only once real ones exist), Ubicación, Preguntas frecuentes, CTA final",
@@ -326,15 +326,17 @@
     {
       "id": "rehabilitacion-hero",
       "description": "Rehabilitación Oral: hero",
-      "source": "textos-sitio.md §3 Rehabilitación Oral (H1, subtítulo, intro) + arquitectura-informacion.md §3 Breadcrumbs, §5",
+      "source": "textos-sitio.md §3 Rehabilitación Oral (H1, subtítulo, intro; the CTA final's 'Agenda tu valoración', also used as the hero button by the maintainer's decision of 2026-10-23) + arquitectura-informacion.md §3 Breadcrumbs, §5 + the Blanqueamiento hero's entrance motion (specs/01-blanqueamiento-hero-beneficios-motion.md, Hero), requested for this hero by the maintainer on 2026-10-24",
       "acceptance": [
         "Visible breadcrumb 'Inicio > Rehabilitación Oral', with Inicio linking to /",
+        "A WhatsApp button 'Agenda tu valoración' right under the intro, right-aligned on lg: href COMPANY.whatsapp, target _blank with rel 'noopener noreferrer', and a visually hidden '(se abre en una pestaña nueva)', the same as the Blanqueamiento hero's",
         "Exactly one <h1>: 'Rehabilitación Oral en Bogotá'",
         "Subtitle 'La especialidad de la Dra. Viviana Rodríguez.'",
         "Intro present verbatim: 'La rehabilitación oral recupera la función, la estética y la salud de tu boca cuando hay desgaste, pérdida de dientes o problemas articulares, combinando tratamientos según cada caso.'",
-        "The intro (the direct answer) falls within the first 100 words of the page's main content"
+        "The intro (the direct answer) falls within the first 100 words of the page's main content",
+        "Load-in GSAP entrance in src/utils/scripts/animations/rehabilitacion-oral/hero.ts, the same as the Blanqueamiento hero's: subtitle, h1 and intro rise in staggered, then the CTA; the photo settles from a slight zoom without a fade. Wrapped in gsap.matchMedia() with a prefers-reduced-motion: reduce branch that leaves everything in its final, visible state (autoAlpha 1), and nothing hidden by CSS, so the content stays visible without JS"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "rehabilitacion-cuando",
@@ -400,11 +402,11 @@
     },
     {
       "id": "page-rehabilitacion",
-      "description": "Rehabilitación Oral page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix) — client-gaps.md § Decisiones pendientes. Also needs client item #4: an approved sentence mentioning anestesia digital (textos-sitio §3 never mentions it, brief §5 requires it).",
+      "description": "Rehabilitación Oral page: SEO and assembly. Before closing it needs client item #4: an approved sentence mentioning anestesia digital (textos-sitio §3 never mentions it, brief §5 requires it).",
       "source": "textos-sitio.md §3 Rehabilitación Oral (Meta title, Meta description) + arquitectura-informacion.md §4, §5, §6",
       "acceptance": [
         "Route src/pages/rehabilitacion-oral.astro serves /rehabilitacion-oral/",
-        "<title> is 'Rehabilitación Oral en Bogotá | Especialista — Dra. Viviana'",
+        "<title> is 'Rehabilitación Oral en Bogotá | Dra. Viviana Rodríguez' (PAGES.rehabilitacion.title plus the suffix seo.pageHead() adds)",
         "meta description is 'Especialista en Rehabilitación Oral en Bogotá. Recupera función y estética dental con tecnología de punta, cero dolor y un enfoque cálido. Agenda tu cita.'",
         "Exactly one <h1> on the page",
         "Sections in order: hero, Cuándo la necesitas, Tratamientos incluidos, Cómo se hace, enlace cruzado, Preguntas frecuentes, CTA final",
@@ -453,7 +455,7 @@
     },
     {
       "id": "page-contacto",
-      "description": "Contacto page: SEO and assembly. Before closing: D1 (title — the brief's title already carries its own suffix) — client-gaps.md § Decisiones pendientes. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written. Note (2026-10-16): a basic placeholder page exists only so the check passes — src/pages/contacto.astro with src/components/perpage/contacto/Hero.astro (the H1, the brief's intro and one WhatsApp button), and /contacto/ is already out of PENDING_PAGES. It does not implement this feature, contacto-datos or contacto-faq, which stay pending as written. Until then, PAGES.contacto.description in src/config/pages.ts is a shorter temporary text, because the brief's mentions an address, a map and hours the placeholder does not show: restore the brief's when building this feature.",
+      "description": "Contacto page: SEO and assembly. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written. Note (2026-10-16): a basic placeholder page exists only so the check passes — src/pages/contacto.astro with src/components/perpage/contacto/Hero.astro (the H1, the brief's intro and one WhatsApp button), and /contacto/ is already out of PENDING_PAGES. It does not implement this feature, contacto-datos or contacto-faq, which stay pending as written. Until then, PAGES.contacto.description in src/config/pages.ts is a shorter temporary text, because the brief's mentions an address, a map and hours the placeholder does not show: restore the brief's when building this feature.",
       "source": "textos-sitio.md §4 Contacto (Meta title, Meta description) + arquitectura-informacion.md §4",
       "acceptance": [
         "Route src/pages/contacto.astro serves /contacto/",

@@ -4,7 +4,7 @@ Texto final que ven los pacientes, por página. Un `[PENDIENTE]` es información
 
 ## 1. Inicio (`/`)
 
-**Meta title:** Odontóloga en Bogotá — Especialista en Rehabilitación Oral
+**Meta title:** Odontóloga en Bogotá, Rehabilitación Oral
 **Meta description:** Odontología de Calma Activa en Bogotá (Chicó). Rehabilitación oral, blanqueamiento y diseño de sonrisa con tecnología sin dolor. Agenda tu cita hoy.
 
 ### Hero
@@ -139,7 +139,7 @@ La mayoría de personas con buena salud oral son candidatas; en la valoración r
 
 ## 3. Rehabilitación Oral (`/rehabilitacion-oral`)
 
-**Meta title:** Rehabilitación Oral en Bogotá | Especialista — Dra. Viviana
+**Meta title:** Rehabilitación Oral en Bogotá
 **Meta description:** Especialista en Rehabilitación Oral en Bogotá. Recupera función y estética dental con tecnología de punta, cero dolor y un enfoque cálido. Agenda tu cita.
 
 **H1:** Rehabilitación Oral en Bogotá

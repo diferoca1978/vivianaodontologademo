@@ -18,9 +18,9 @@ Desde el 2026-10-16 el SEO del sitio viene de `@shine/seo-core` (`seo.pageHead()
 | Página (feature) | Decisiones | De la clienta (tabla de abajo) |
 | ---------------- | ---------- | ------------------------------ |
 | Todas — decidir **antes de construir la primera sección** | D4 | #6 og-image, #8 aviso legal (footer) |
-| Inicio (`page-home`) | D1 | #2 textos de las 8 tarjetas, #5 fotos |
+| Inicio (`page-home`) | — | #2 textos de las 8 tarjetas, #5 fotos |
 | Blanqueamiento (`page-blanqueamiento`) | — | #5 fotos |
-| Rehabilitación (`page-rehabilitacion`) | D1 | #4 frase de anestesia digital, #5 fotos |
+| Rehabilitación (`page-rehabilitacion`) | — | #4 frase de anestesia digital, #5 fotos |
 | Contacto (`page-contacto`) | — | — (confirmar el horario #1, pero no bloquea) |
 
 **Orden de construcción:** Contacto conviene primero. Los CTA finales de
@@ -28,27 +28,6 @@ Blanqueamiento y Rehabilitación enlazan a `/contacto/`, y las dos páginas de
 servicio se enlazan entre sí. El gate falla ante un enlace a una página que no
 existe (`url-resolves`), así que esos enlaces se pintan con `isBuilt()`
 (`src/utils/navigation.ts`) mientras su destino esté en `PENDING_PAGES`.
-
-### D1 — Títulos de página vs. `seo.pageHead()`
-
-- [ ] Decidido: ___
-- **Problema:** `seo.pageHead()` agrega `" | Dra. Viviana Rodríguez"` salvo
-  que el título ya contenga ese nombre. Con los títulos de textos-sitio.md:
-
-  | Página | Título en textos-sitio.md | Lo que sale |
-  | ------ | ------------------------- | ----------- |
-  | Inicio | Odontóloga en Bogotá — Especialista en Rehabilitación Oral (58) | … Oral \| Dra. Viviana Rodríguez (83: aviso `title-length`, no falla el build) |
-  | Blanqueamiento | Blanqueamiento Dental en Bogotá \| Dra. Viviana Rodríguez (56) | igual ✓ |
-  | Rehabilitación | Rehabilitación Oral en Bogotá \| Especialista — Dra. Viviana (59) | … Dra. Viviana \| Dra. Viviana Rodríguez (84, nombre doble) |
-  | Contacto | Contacto y Citas \| Dra. Viviana Rodríguez — Odontóloga Bogotá (61) | igual ✓ (61: aviso leve) |
-
-- **Opciones:**
-  - (a) Ajustar los títulos de Inicio y Rehabilitación para que contengan
-    «Dra. Viviana Rodríguez» o quepan con el sufijo. Es un cambio de
-    contenido, así que necesita el OK de la clienta.
-  - (b) Que una página pueda pasar su título completo sin sufijo. Es un cambio
-    de la API del paquete: una spec en `shine-seo-core` y una versión nueva.
-- **Bloquea:** `page-home` (solo el aviso) y `page-rehabilitacion`.
 
 ### D2 — Schema que el paquete no genera
 

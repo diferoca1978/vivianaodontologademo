@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* tall: viewports at least 900px high. Keeps the largest hero type off short laptop screens
+   (1280×720, 1366×768, 1280×800), where it pushes the hero CTA under the floating WhatsApp button */
+@custom-variant tall {
+  @media (min-height: 900px) {
+    @slot;
+  }
+}
+
 @layer base {
   /* Page scrollbar hidden on purpose (decided 2026-10-17); scrolling still works */
   html {
