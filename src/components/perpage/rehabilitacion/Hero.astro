@@ -14,19 +14,20 @@ import heroPhoto from "@/assets/images/rehabilitacion1.2.webp";
 // so its contrast never depends on the photo. No highlights: the source gives none.
 // Layout: the Blanqueamiento hero (perpage/blanqueamiento/Hero.astro) mirrored: photo on the left,
 // copy on the right. The breadcrumb and the copy share one right-hand column on the ivory side,
-// right-aligned on lg: every line ends flush at the container's right edge (the mirror of
-// Blanqueamiento's flush-left copy), and the intro's turquoise border moves to the right. Below lg
-// the copy stays left-aligned and the photo goes underneath it.
-// Photo (hero-rehabilitacion.webp, 4:3, the home's Rehabilitación photo at full resolution): a gloved
-// hand holding a transparent model with implants, the glove at ~17–75% of its width (the model
-// itself ~30–67%) and ~19–81% of its height, her smile at the top. On lg the photo bleeds off the
-// viewport's left edge (crisp, no fade there, the mirror of Blanqueamiento's right bleed) and runs
-// up to 1rem short of the copy column (max-w-md), its right edge fading into ivory. xl: the hero's
-// full height, centred crop; the glove stays clear of the left edge and the fade on every common
-// screen (it only touches them on tall ones like 1366×1024, where the model stays whole), no top fade
-// so the smile stays crisp, a short bottom fade into the next section. lg (1024–1279): full height
-// would crop the glove, so the box is a vertically centred square with top and bottom fades. Below
-// lg the photo is 4:3 under the copy, uncropped.
+// right-aligned on lg (the mirror of Blanqueamiento's flush-left copy); the intro sits 1.25rem in
+// from the right edge (lg:pr-5). Below lg the copy stays left-aligned and the photo goes underneath
+// it.
+// Photo (rehabilitacion1.2.webp, 4:3; a different take from the home's Rehabilitación photo, the
+// doctor cut out on white): a blue-gloved hand holding a transparent model with implants, the glove
+// at ~23–72% of its width (the model itself ~34–66%), glove and model together ~22–77% of its
+// height, her smile at the top. On lg the photo bleeds off the viewport's left edge (crisp, no fade
+// there, the mirror of Blanqueamiento's right bleed) and runs up to 1rem short of the copy column
+// (max-w-md), with a straight right edge (no fade). xl: the hero's full height, centred crop, no top
+// fade so the smile stays crisp, a short bottom fade into the next section. lg (1024–1279): full
+// height would crop the glove, so the box is a vertically centred square with top and bottom fades.
+// Below lg the photo is 4:3 under the copy, uncropped.
+// Motion: a load-in entrance in src/utils/scripts/animations/rehabilitacion-oral/hero.ts, the same
+// as the Blanqueamiento hero's.
 interface Props {
   crumbs: BreadcrumbItem[];
 }
@@ -37,7 +38,9 @@ const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal";
 
 // The H1 stays PAGES.rehabilitacion.h1; only its last two words ("en Bogotá") are set in italic,
-// the same accent as the Blanqueamiento hero.
+// the same accent as the Blanqueamiento hero. Its 7xl size is tall-only (xl:tall:text-7xl, the
+// `tall` variant in global.css): on short laptop screens it pushed the CTA under the floating
+// WhatsApp button (maintainer, 2026-10-24).
 const h1Words = PAGES.rehabilitacion.h1.split(" ");
 const h1Accent = h1Words.splice(-2).join(" ");
 const h1Lead = h1Words.join(" ");
@@ -49,7 +52,7 @@ const h1Lead = h1Words.join(" ");
 >
   <!-- Photo: below the copy on mobile; on lg it bleeds off the viewport's left edge (crisp, no fade
        there) and runs up to 1rem short of the copy column (30rem from the right on lg, 9rem right of
-       the viewport's centre on xl), its right edge fading into ivory. lg: a square, vertically
+       the viewport's centre on xl), with a straight right edge (no fade). lg: a square, vertically
        centred, with top and bottom fades. xl: the hero's full height, crisp at the top under the
        navbar, a short fade at the bottom into the next section -->
   <div
@@ -90,7 +93,7 @@ const h1Lead = h1Words.join(" ");
         <h1
           id="rehabilitacion-title"
           data-hero-item
-          class="text-5xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-6xl xl:text-7xl"
+          class="text-5xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-6xl xl:tall:text-7xl"
         >
           {h1Lead} <em class="block font-normal">{h1Accent}</em>
         </h1>
@@ -121,3 +124,7 @@ const h1Lead = h1Words.join(" ");
     </div>
   </div>
 </section>
+
+<script>
+  import "@/utils/scripts/animations/rehabilitacion-oral/hero";
+</script>

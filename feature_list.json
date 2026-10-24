@@ -326,16 +326,17 @@
     {
       "id": "rehabilitacion-hero",
       "description": "Rehabilitación Oral: hero",
-      "source": "textos-sitio.md §3 Rehabilitación Oral (H1, subtítulo, intro; the CTA final's 'Agenda tu valoración', also used as the hero button by the maintainer's decision of 2026-10-23) + arquitectura-informacion.md §3 Breadcrumbs, §5",
+      "source": "textos-sitio.md §3 Rehabilitación Oral (H1, subtítulo, intro; the CTA final's 'Agenda tu valoración', also used as the hero button by the maintainer's decision of 2026-10-23) + arquitectura-informacion.md §3 Breadcrumbs, §5 + the Blanqueamiento hero's entrance motion (specs/01-blanqueamiento-hero-beneficios-motion.md, Hero), requested for this hero by the maintainer on 2026-10-24",
       "acceptance": [
         "Visible breadcrumb 'Inicio > Rehabilitación Oral', with Inicio linking to /",
         "A WhatsApp button 'Agenda tu valoración' right under the intro, right-aligned on lg: href COMPANY.whatsapp, target _blank with rel 'noopener noreferrer', and a visually hidden '(se abre en una pestaña nueva)', the same as the Blanqueamiento hero's",
         "Exactly one <h1>: 'Rehabilitación Oral en Bogotá'",
         "Subtitle 'La especialidad de la Dra. Viviana Rodríguez.'",
         "Intro present verbatim: 'La rehabilitación oral recupera la función, la estética y la salud de tu boca cuando hay desgaste, pérdida de dientes o problemas articulares, combinando tratamientos según cada caso.'",
-        "The intro (the direct answer) falls within the first 100 words of the page's main content"
+        "The intro (the direct answer) falls within the first 100 words of the page's main content",
+        "Load-in GSAP entrance in src/utils/scripts/animations/rehabilitacion-oral/hero.ts, the same as the Blanqueamiento hero's: subtitle, h1 and intro rise in staggered, then the CTA; the photo settles from a slight zoom without a fade. Wrapped in gsap.matchMedia() with a prefers-reduced-motion: reduce branch that leaves everything in its final, visible state (autoAlpha 1), and nothing hidden by CSS, so the content stays visible without JS"
       ],
-      "status": "in_progress"
+      "status": "done"
     },
     {
       "id": "rehabilitacion-cuando",
