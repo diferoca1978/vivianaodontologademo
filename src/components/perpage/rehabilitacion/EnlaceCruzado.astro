@@ -1,0 +1,71 @@
+---
+// "Enlace cruzado" for Rehabilitación Oral (feature rehabilitacion-enlace-cruzado).
+// Copy: docs/brief/textos-sitio.md §3 Rehabilitación Oral › Enlace cruzado (verbatim). The link
+// comes from arquitectura-informacion.md §3 Enlazado interno (Blanqueamiento Dental and
+// Rehabilitación Oral link to each other). The brief writes the href as /blanqueamiento-dental; it
+// uses PAGES.blanqueamiento.path (canonical, trailing slash) instead, and renders the link only
+// once that page is built (isBuilt), so the gate's url-resolves rule passes. Until then
+// "Blanqueamiento Dental" stays as plain text and the sentence still reads whole.
+// Design: the same CTA panel as the cross-link in perpage/blanqueamiento/Contraindicaciones.astro
+// (ivory → turquoise-light gradient, decorative rings, the service name as a pill button), on the
+// ivory page background that continues from ComoSeHace. No visible heading: the section is named
+// by aria-label. The panel fades up once on scroll
+// (src/utils/scripts/animations/rehabilitacion-oral/enlace-cruzado.ts).
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import { PAGES } from "@/config/pages";
+import { isBuilt } from "@/utils/navigation";
+
+const blanqueamientoPath = PAGES.blanqueamiento.path;
+const showBlanqueamientoLink = isBuilt(blanqueamientoPath);
+---
+
+<section
+  id="enlace-cruzado"
+  aria-label="Otros servicios: Blanqueamiento Dental"
+  class="bg-ivory"
+>
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:py-28 xl:px-8">
+    <div
+      data-enlace-cruzado-cta
+      class="relative overflow-hidden rounded-4xl bg-linear-to-br from-ivory via-ivory/90 to-turquoise-light px-6 py-12 text-center shadow-lg shadow-turquoise-dark/10 sm:px-12 lg:px-20 lg:py-16"
+    >
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute -top-24 -left-20 size-72 rounded-full border-8 border-turquoise-light/50"
+      >
+      </div>
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute -right-20 -bottom-36 size-96 rounded-full border-8 border-turquoise-light/60"
+      >
+      </div>
+      <p
+        class="relative z-10 mx-auto max-w-3xl text-2xl leading-snug font-medium tracking-tight text-balance text-charcoal sm:text-3xl"
+      >
+        ¿Buscas solo aclarar el tono de tu esmalte? Conoce nuestro servicio de{" "}
+        {
+          showBlanqueamientoLink ? (
+            <a
+              href={blanqueamientoPath}
+              class="group mt-4 inline-flex items-center justify-center pl-1 text-base font-medium text-turquoise-dark underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-300 hover:decoration-current focus-visible:decoration-current focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise-dark motion-reduce:transition-none sm:text-3xl"
+            >
+              Blanqueamiento Dental
+              <span class="flex size-7 items-center justify-center">
+                <ArrowUpRight
+                  aria-hidden="true"
+                  class="size-4 transition-transform duration-300 group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+                />
+              </span>
+            </a>
+          ) : (
+            <span class="font-semibold text-turquoise-dark group:hover:scale-105 ">Blanqueamiento Dental</span>
+          )
+        }.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/rehabilitacion-oral/enlace-cruzado";
+</script>
