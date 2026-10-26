@@ -340,24 +340,28 @@
     },
     {
       "id": "rehabilitacion-cuando",
-      "description": "Rehabilitación Oral: when you need it",
-      "source": "textos-sitio.md §3 Rehabilitación Oral › Cuándo la necesitas",
+      "description": "Rehabilitación Oral: when you need it. Shares one pinned block with rehabilitacion-tratamientos (CuandoTratamientos.astro): same bubble layout, the pin swaps from this section to the next.",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Cuándo la necesitas · specs/05-rehabilitacion-cuando-tratamientos-swap.md",
       "acceptance": [
         "h2 'Cuándo la necesitas'",
-        "4 items verbatim: 'Desgaste dental visible', 'Pérdida de una o varias piezas', 'Bruxismo o dolor articular', 'Buscas recuperar función y estética a la vez'"
+        "4 items verbatim: 'Desgaste dental visible', 'Pérdida de una o varias piezas', 'Bruxismo o dolor articular', 'Buscas recuperar función y estética a la vez'",
+        "Items are bubbles (circle + pill) in the slots TL, TR, BL, BR around the centered h2, the same layout as the Tratamientos section",
+        "Each circle shows its photo from src/assets/images (worn-teeth, missing-tooth, teeth-hurt, solution, in item order) with <Image> and alt=\"\"; the brand placeholder (turquoise-light gradient + ToothOutline, aria-hidden) is only the fallback when an image is missing"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "rehabilitacion-tratamientos",
-      "description": "Rehabilitación Oral: included treatments",
-      "source": "textos-sitio.md §3 Rehabilitación Oral › Tratamientos incluidos",
+      "description": "Rehabilitación Oral: included treatments. Shares one pinned block with rehabilitacion-cuando (CuandoTratamientos.astro): the 4 corner bubbles stay and TC appears as the fifth.",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Tratamientos incluidos · specs/05-rehabilitacion-cuando-tratamientos-swap.md",
       "acceptance": [
         "h2 'Tratamientos incluidos'",
         "5 treatments in brief order: Coronas en Zirconio, Incrustaciones Dentales, Prótesis Removibles, Placas de Bruxismo, Implantes",
-        "No invented description text for the treatments"
+        "No invented description text for the treatments",
+        "Treatments are read from serviceCards by slug; each bubble has the title in the pill and the photo in the circle (<Image>, alt=\"\")",
+        "Slots TL, TC, TR, BL, BR, with the 4 corners in the same position as in Cuándo la necesitas"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "rehabilitacion-como-se-hace",

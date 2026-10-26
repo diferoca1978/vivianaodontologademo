@@ -1,0 +1,196 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { serviceCards } from "@/config/services";
+import ToothOutline from "@/assets/icons/tooth-outline.svg";
+import wornTeeth from "@/assets/images/worn-teeth.webp";
+import missingTooth from "@/assets/images/missing-tooth.webp";
+import teethHurt from "@/assets/images/teeth-hurt.webp";
+import solution from "@/assets/images/solution.webp";
+
+// Spec 05 (specs/05-rehabilitacion-cuando-tratamientos-swap.md).
+// Copy: docs/brief/textos-sitio.md §3 Rehabilitación Oral, "Cuándo la necesitas" (4 items) and
+// "Tratamientos incluidos" (5 items), verbatim and in the brief's order. The treatments are read
+// from serviceCards (src/config/services.ts) by slug: the title goes in the pill, the photo in the
+// circle (decorative next to the title, hence alt=""). No descriptions (client-gaps #2).
+// "Cuándo" photos: worn-teeth, missing-tooth, teeth-hurt and solution (src/assets/images), one per item.
+// A bubble without an image falls back to the brand placeholder from perpage/home/Servicios.astro.
+// Design: the maintainer's reference of 2026-10-26: a large centred h2 ringed by bubbles (circle +
+// pill label centred under the circle).
+// Layout: both sections always in the HTML, stacked. <768px: in flow, the bubbles in a compact
+// flex-wrap with an alternating vertical offset. ≥768px: the h2 centred, the bubbles absolute in
+// five shared slots (TL, TC, TR, BL, BR); the four corners are the same in both sections and TC
+// exists only in "Tratamientos". BR sits higher and further in than the other corners, clear of the
+// floating WhatsApp button (fixed right-4 bottom-4 sm:right-6 sm:bottom-6).
+// TC drops to top-16 on xl, clear of the navbar's centre tab (NavBar.astro, xl only, 3rem deep).
+// Stage mode (≥768px, with motion): the script sets data-stage on [data-rehab-swap-stage], the
+// group-data-stage/stage: classes overlay both sections, and the script pins and swaps them:
+// src/utils/scripts/animations/rehabilitacion-oral/cuando-tratamientos.ts.
+
+type SlotId = "TL" | "TC" | "TR" | "BL" | "BR";
+
+interface Slot {
+  id: SlotId;
+  /** Absolute position around the h2 (≥768px). */
+  position: string;
+  /** Inner alignment (≥768px). */
+  align: string;
+}
+
+interface Bubble {
+  text: string;
+  slot: SlotId;
+  image?: ImageMetadata;
+}
+
+interface Scene {
+  id: string;
+  title: string;
+  bubbles: Bubble[];
+}
+
+// Shared slots, defined once. Visual order (left to right, top to bottom) = the brief's order.
+const slots: Slot[] = [
+  {
+    id: "TL",
+    position: "md:top-12 md:left-24 lg:left-28 xl:left-44",
+    align: "md:items-start",
+  },
+  {
+    id: "TC",
+    position: "md:inset-x-0 md:top-10 md:mx-auto md:w-fit xl:top-20",
+    align: "md:items-center",
+  },
+  {
+    id: "TR",
+    position: "md:top-32 md:right-20 lg:top-28 lg:right-20 xl:right-28",
+    align: "md:items-end",
+  },
+  {
+    id: "BL",
+    position: "md:bottom-28 md:left-20 lg:left-36 xl:left-56",
+    align: "md:items-start",
+  },
+  {
+    id: "BR",
+    position: "md:right-32 md:bottom-36 lg:right-48 lg:bottom-28 xl:right-64 xl:bottom-28",
+    align: "md:items-end",
+  },
+];
+
+const slotById = (id: SlotId): Slot => {
+  const slot = slots.find((s) => s.id === id);
+  if (!slot) throw new Error(`CuandoTratamientos: unknown slot ${id}`);
+  return slot;
+};
+
+// "Cuándo la necesitas": textos-sitio.md §3, verbatim.
+const cuando: Bubble[] = [
+  { text: "Desgaste dental visible", slot: "TL", image: wornTeeth },
+  { text: "Pérdida de una o varias piezas", slot: "TR", image: missingTooth },
+  { text: "Bruxismo o dolor articular", slot: "BL", image: teethHurt },
+  { text: "Buscas recuperar función y estética a la vez", slot: "BR", image: solution },
+];
+
+// "Tratamientos incluidos": textos-sitio.md §3, in the brief's order; titles and photos from serviceCards.
+const tratamientosSlugs: { slug: string; slot: SlotId }[] = [
+  { slug: "coronas-en-zirconio", slot: "TL" },
+  { slug: "incrustaciones-dentales", slot: "TC" },
+  { slug: "protesis-removibles", slot: "TR" },
+  { slug: "placas-de-bruxismo", slot: "BL" },
+  { slug: "implantes", slot: "BR" },
+];
+
+const tratamientos: Bubble[] = tratamientosSlugs.map(({ slug, slot }) => {
+  const card = serviceCards.find((c) => c.slug === slug);
+  if (!card) throw new Error(`CuandoTratamientos: no serviceCard with slug ${slug}`);
+  return { text: card.title, slot, image: card.image };
+});
+
+const scenes: Scene[] = [
+  { id: "cuando", title: "Cuándo la necesitas", bubbles: cuando },
+  { id: "tratamientos", title: "Tratamientos incluidos", bubbles: tratamientos },
+];
+
+// The h2 keeps its verbatim text; only its last word is set in italic, the accent of the hero's H1.
+const splitTitle = (title: string) => {
+  const words = title.split(" ");
+  const accent = words.pop() ?? "";
+  return { lead: words.join(" "), accent };
+};
+---
+
+<div data-rehab-swap class="bg-ivory">
+  <div data-rehab-swap-stage class="group/stage relative data-stage:overflow-hidden">
+    {
+      scenes.map(({ id, title, bubbles }) => {
+        const titleId = `${id}-title`;
+        const { lead, accent } = splitTitle(title);
+
+        return (
+          <section
+            id={id}
+            aria-labelledby={titleId}
+            data-rehab-swap-scene={id}
+            class="relative py-16 sm:py-20 md:h-svh md:min-h-160 md:py-0 group-data-stage/stage:absolute group-data-stage/stage:inset-0 group-data-stage/stage:h-full group-data-stage/stage:min-h-0"
+          >
+            <div class="relative mx-auto h-full max-w-7xl px-4 md:flex md:items-center md:justify-center xl:px-8">
+              <h2
+                id={titleId}
+                data-rehab-swap-title
+                class="mx-auto max-w-sm text-center text-5xl leading-none font-medium tracking-tight text-balance text-charcoal md:mx-0 md:max-w-md md:text-6xl lg:max-w-lg lg:text-7xl xl:max-w-2xl xl:tall:text-8xl"
+              >
+                {lead} <em class="font-normal text-turquoise-dark">{accent}</em>
+              </h2>
+
+              <ul
+                role="list"
+                class="mt-12 flex flex-wrap items-start justify-center gap-x-4 gap-y-6 md:absolute md:inset-x-4 md:inset-y-0 md:mt-0 md:block xl:inset-x-8"
+              >
+                {bubbles.map(({ text, slot: slotId, image }) => {
+                  const slot = slotById(slotId);
+
+                  return (
+                    <li
+                      data-rehab-swap-bubble
+                      data-rehab-swap-slot={slotId}
+                      class:list={["w-40 even:mt-10 md:absolute md:w-auto md:even:mt-0", slot.position]}
+                    >
+                      <div class:list={["flex flex-col items-center", slot.align]}>
+                        <div class="relative size-24 shrink-0 overflow-hidden rounded-full bg-linear-to-br from-turquoise-light via-turquoise-light/60 to-turquoise-light/30 shadow-xl ring-4 shadow-turquoise-dark/15 ring-ivory md:size-28 lg:size-32 xl:size-36">
+                          {image ? (
+                            <Image
+                              src={image}
+                              alt=""
+                              widths={[144, 288, 432]}
+                              sizes="(min-width: 1280px) 9rem, (min-width: 1024px) 8rem, (min-width: 768px) 7rem, 6rem"
+                              class="size-full object-cover"
+                            />
+                          ) : (
+                            <div aria-hidden="true" class="flex size-full items-center justify-center">
+                              <ToothOutline class="size-10 text-turquoise/40 md:size-12 lg:size-14" />
+                            </div>
+                          )}
+                        </div>
+
+                        <span
+                          class="mt-3 max-w-full rounded-full bg-ivory px-4 py-2 text-center text-sm leading-snug font-medium text-charcoal shadow-lg ring-1 shadow-charcoal/10 ring-gray-light md:absolute md:top-full md:left-1/2 md:w-max md:max-w-none md:-translate-x-1/2 md:whitespace-nowrap lg:text-base"
+                        >
+                          {text}
+                        </span>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </section>
+        );
+      })
+    }
+  </div>
+</div>
+
+<script>
+  import "@/utils/scripts/animations/rehabilitacion-oral/cuando-tratamientos";
+</script>
