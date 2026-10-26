@@ -2,6 +2,7 @@
 import MainLayout from "@/layouts/MainLayout.astro";
 import Hero from "@/components/perpage/rehabilitacion/Hero.astro";
 import CuandoTratamientos from "@/components/perpage/rehabilitacion/CuandoTratamientos.astro";
+import ComoSeHace from "@/components/perpage/rehabilitacion/ComoSeHace.astro";
 import { PAGES } from "@/config/pages";
 import { seo } from "@/config/seo";
 
@@ -15,4 +16,5 @@ const crumbs = [
 <MainLayout head={head} schemas={[seo.businessRef(), seo.breadcrumbNode(crumbs)]}>
   <Hero crumbs={crumbs} />
   <CuandoTratamientos />
+  <ComoSeHace />
 </MainLayout>

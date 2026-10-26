@@ -100,4 +100,7 @@
 
   --font-cormorant: "Cormorant", serif; /* heading slot */
   --font-raleway: "Raleway", system-ui, sans-serif; /* body slot */
+
+  --text-watermark: 30rem; /* giant decorative ordinal behind the Rehabilitación "Cómo se hace" steps */
+  --text-watermark--line-height: 1;
 }
