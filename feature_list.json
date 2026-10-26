@@ -392,7 +392,7 @@
         "Each faq is a native <details>/<summary> collapsed by default, opening on click or keyboard; answers stay in the HTML (maintainer decision 2026-10-22, D5)",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "rehabilitacion-cta-final",
