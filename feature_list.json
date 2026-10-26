@@ -399,10 +399,10 @@
       "description": "Rehabilitación Oral: final CTA. textos-sitio gives only the heading; the target comes from arquitectura §3 ('Todas las páginas terminan con CTA a Contacto'). /contacto/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
       "source": "textos-sitio.md §3 Rehabilitación Oral › CTA final + arquitectura-informacion.md §3 Enlazado interno",
       "acceptance": [
-        "Final CTA 'Agenda tu valoración' is the last section of the page",
-        "The CTA links to /contacto/"
+        "Final CTA with the heading 'Agenda tu valoración y descubre qué tratamiento se adapta a ti.' is the last section of the page",
+        "The CTA is labeled 'Agendar por WhatsApp' and links to COMPANY.whatsapp"
       ],
-      "status": "pending"
+      "status": "in_progress"
     },
     {
       "id": "page-rehabilitacion",
