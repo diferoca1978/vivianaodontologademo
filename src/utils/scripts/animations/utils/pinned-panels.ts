@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { drawToothLogo } from "@/utils/scripts/animations/utils/draw-tooth-logo";
+import { navHeight, stageHeight } from "@/utils/scripts/animations/utils/sticky-nav";
 
 // Scroll motion for src/components/ui/sections/PinnedPanels.astro (specs 02 and 04).
 // Every `[data-pinned]` section on the page is initialized on its own: Astro bundles this module
@@ -30,13 +31,6 @@ import { drawToothLogo } from "@/utils/scripts/animations/utils/draw-tooth-logo"
 // Lenis (src/utils/scripts/lennis.js) drives the native window scroll, so ScrollTrigger reads it
 // from the regular scroll events; the numeric scrub smooths the playhead on top of it.
 gsap.registerPlugin(ScrollTrigger);
-
-// The site's only sticky header (src/components/global/NavBar.astro), shared by every instance.
-const nav = document.querySelector<HTMLElement>("header");
-
-// Read on every refresh (resize, orientation, font/image load), never cached.
-const navHeight = () => nav?.offsetHeight ?? 0;
-const stageHeight = () => window.innerHeight - navHeight();
 
 const initPinnedPanels = (section: HTMLElement) => {
   const stage = section.querySelector<HTMLElement>("[data-pinned-stage]");
