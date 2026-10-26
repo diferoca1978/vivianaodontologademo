@@ -406,7 +406,7 @@
     },
     {
       "id": "page-rehabilitacion",
-      "description": "Rehabilitación Oral page: SEO and assembly. Before closing it needs client item #4: an approved sentence mentioning anestesia digital (textos-sitio §3 never mentions it, brief §5 requires it).",
+      "description": "Rehabilitación Oral page: SEO and assembly. The anestesia digital sentence (brief §5) is not a blocker for done: it waits on client item #4 (client-gaps.md) and is added to the page once the client approves it.",
       "source": "textos-sitio.md §3 Rehabilitación Oral (Meta title, Meta description) + arquitectura-informacion.md §4, §5, §6",
       "acceptance": [
         "Route src/pages/rehabilitacion-oral.astro serves /rehabilitacion-oral/",
@@ -414,12 +414,12 @@
         "meta description is 'Especialista en Rehabilitación Oral en Bogotá. Recupera función y estética dental con tecnología de punta, cero dolor y un enfoque cálido. Agenda tu cita.'",
         "Exactly one <h1> on the page",
         "Sections in order: hero, Cuándo la necesitas, Tratamientos incluidos, Cómo se hace, enlace cruzado, Preguntas frecuentes, CTA final",
-        "Both 'anestesia digital' and the calm environment ('ambiente de calma') are mentioned on the page",
+        "The calm environment ('ambiente de calma') is mentioned on the page",
         "BreadcrumbList JSON-LD (Inicio → Rehabilitación Oral) passed through MainLayout's schemas, matching the visible breadcrumb",
-        "No business, WebSite, Person or Service node on this page",
+        "No full business, WebSite, Person or Service node on this page (only the seo.businessRef() Organization stub: @id, name, url)",
         "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "contacto-hero",
