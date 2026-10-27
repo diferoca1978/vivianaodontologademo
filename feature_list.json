@@ -470,7 +470,7 @@
         "No business, WebSite, Person or Service node on this page",
         "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "page-privacidad",

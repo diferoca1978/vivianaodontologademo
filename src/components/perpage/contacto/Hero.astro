@@ -5,7 +5,8 @@ import { PAGES } from "@/config/pages";
 import contactPhoto from "@/assets/images/contacthero.webp";
 
 // Copy: docs/brief/textos-sitio.md §4 Contacto (H1, intro), verbatim. The H1 comes from
-// PAGES.contacto.h1 and the intro from PAGES.contacto.description. No breadcrumb:
+// PAGES.contacto.h1; the intro is the brief's line under the H1, verbatim (it is not the meta
+// description, which lives in PAGES.contacto.description). No breadcrumb:
 // arquitectura-informacion.md (Breadcrumbs, BreadcrumbList) puts them only on the service pages.
 // No CTA: the brief gives this hero none (the floating WhatsApp button and contacto-datos cover
 // WhatsApp). The eyebrow is COMPANY.name.
@@ -20,7 +21,7 @@ import contactPhoto from "@/assets/images/contacthero.webp";
 const h1Words = PAGES.contacto.h1.split(" ");
 const h1Accent = h1Words.pop();
 const h1Lead = h1Words.join(" ");
-const description = PAGES.contacto.description;
+const description = "Consultorio en Bogotá. Resolvemos tus dudas antes de tu primera visita.";
 ---
 
 <section
