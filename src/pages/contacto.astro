@@ -1,6 +1,7 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import Hero from "@/components/perpage/contacto/Hero.astro";
+import Datos from "@/components/perpage/contacto/Datos.astro";
 import { PAGES } from "@/config/pages";
 import { seo } from "@/config/seo";
 
@@ -9,4 +10,5 @@ const head = seo.pageHead(PAGES.contacto);
 
 <MainLayout head={head}>
   <Hero />
+  <Datos />
 </MainLayout>

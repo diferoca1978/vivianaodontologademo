@@ -444,7 +444,7 @@
         "Opening hours rendered from COMPANY.business.hours, in Spanish, with no hand-written hours outside company.ts",
         "A map element that opens COMPANY.socialMedia.googleBusiness, with no hand-written map URL or coordinates outside company.ts"
       ],
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": "contacto-faq",
