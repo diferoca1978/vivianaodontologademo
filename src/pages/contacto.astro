@@ -9,7 +9,7 @@ import { seo } from "@/config/seo";
 const head = seo.pageHead(PAGES.contacto);
 ---
 
-<MainLayout head={head}>
+<MainLayout head={head} schemas={[seo.businessRef()]}>
   <Hero />
   <Datos />
   <Faq />
