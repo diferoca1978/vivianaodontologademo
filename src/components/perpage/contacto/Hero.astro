@@ -14,7 +14,7 @@ import contactPhoto from "@/assets/images/contacthero.webp";
 // full-height hero on lg, the photo filling the right half (object-top, the crop of the home hero),
 // the copy in the left column. Below lg the copy comes first and the photo stays hidden.
 // The map and the contact details belong to the next section (contacto-datos).
-// No animation here (front-end-astro builds the markup only).
+// The load-in lives in src/utils/scripts/animations/contacto/hero.ts (data-hero-* hooks).
 
 // The H1 stays PAGES.contacto.h1; only its last word is set in italic, the same accent as the
 // service-page heroes.
@@ -31,11 +31,12 @@ const description = "Consultorio en Bogotá. Resolvemos tus dudas antes de tu pr
   <!-- Photo: hidden below lg; on lg it fills the right half from the navbar's bottom edge, cropped
        from the top (object-top) like the home hero; the ivory fades on its left and bottom melt it
        into the page, so the crop at the feet is not noticed -->
-  <div class="relative hidden md:absolute md:inset-y-0 md:right-0 md:-z-10 md:block md:w-1/2">
+  <div class="relative hidden overflow-hidden md:absolute md:inset-y-0 md:right-0 md:-z-10 md:block md:w-1/2">
     <Image
       src={contactPhoto}
       alt="Dra. Viviana Rodríguez sentada en la sala de su consultorio, junto al letrero con su nombre"
       priority
+      data-hero-image
       widths={[640, 960, contactPhoto.width]}
       sizes="(min-width: 1024px) 50vw, 100vw"
       class="h-full w-full object-cover object-top"
@@ -56,14 +57,19 @@ const description = "Consultorio en Bogotá. Resolvemos tus dudas antes de tu pr
         
         <h1
           id="contacto-title"
+          data-hero-item
           class="text-6xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-7xl xl:text-8xl"
         >
           {h1Lead} <em class="block font-normal text-turquoise-dark">{h1Accent}</em>
         </h1>
-        <p class="max-w-md border-t border-gray-light pt-6 text-lg leading-relaxed text-charcoal sm:text-xl">
+        <p data-hero-item class="max-w-md border-t border-gray-light pt-6 text-lg leading-relaxed text-charcoal sm:text-xl">
           {description}
         </p>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  import "@/utils/scripts/animations/contacto/hero";
+</script>
