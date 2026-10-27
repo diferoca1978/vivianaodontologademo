@@ -11,7 +11,7 @@ Texto final que ven los pacientes, por página. Un `[PENDIENTE]` es información
 
 **H1:** Odontóloga en Bogotá, especialista en Rehabilitación Oral
 
-*Odontología de Calma Activa: cuidamos tu sonrisa y tu tranquilidad.*
+_Odontología de Calma Activa: cuidamos tu sonrisa y tu tranquilidad._
 
 No solo transformamos sonrisas: cuidamos la tranquilidad de las personas que hay detrás de ellas. Consultorio particular en Chicó, Bogotá, con tecnología sin dolor y atención personalizada.
 
@@ -92,13 +92,13 @@ Botón: **Escribir por WhatsApp**
 **Meta title:** Blanqueamiento Dental en Bogotá | Dra. Viviana Rodríguez
 **Meta description:** Blanqueamiento dental profesional en Bogotá (Chicó), en un consultorio pensado para tu calma. Resultados visibles, sin dolor y con seguimiento personalizado.
 
-**H1:** Blanqueamiento Dental en Bogotá *(según `textos-blanqueamiento.md`, 2026-10-19; reemplaza lo decidido el 2026-10-17, que lo dejaba sin "en Bogotá")*
+**H1:** Blanqueamiento Dental en Bogotá _(según `textos-blanqueamiento.md`, 2026-10-19; reemplaza lo decidido el 2026-10-17, que lo dejaba sin "en Bogotá")_
 
 ### Texto anterior (reemplazado el 2026-10-19, solo como historial)
 
 > **No usar.** Lo que sigue, hasta el apartado 3, es el texto de esta página antes del 2026-10-19. Se conserva como historial; el vigente está en `textos-blanqueamiento.md`.
 
-*Una sonrisa más blanca, sin ansiedad ni sorpresas.*
+_Una sonrisa más blanca, sin ansiedad ni sorpresas._
 
 El blanqueamiento (o aclaramiento) dental es uno de los tratamientos estéticos más solicitados en nuestro consultorio. Aclara el tono natural del esmalte de forma segura, con seguimiento personalizado y sin dolor.
 
@@ -144,7 +144,7 @@ La mayoría de personas con buena salud oral son candidatas; en la valoración r
 
 **H1:** Rehabilitación Oral en Bogotá
 
-*La especialidad de la Dra. Viviana Rodríguez.*
+_La especialidad de la Dra. Viviana Rodríguez._
 
 La rehabilitación oral recupera la función, la estética y la salud de tu boca cuando hay desgaste, pérdida de dientes o problemas articulares, combinando tratamientos según cada caso.
 
@@ -191,7 +191,7 @@ Depende de la complejidad del caso: desde unas pocas semanas hasta varios meses.
 
 **H1:** Agenda tu Cita
 
-Consultorio en Bogotá (Chicó). Resolvemos tus dudas antes de tu primera visita.
+Consultorio en Bogotá. Resolvemos tus dudas antes de tu primera visita.
 
 ### Datos de contacto
 
