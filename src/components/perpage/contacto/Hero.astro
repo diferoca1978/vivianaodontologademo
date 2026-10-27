@@ -1,39 +1,71 @@
 ---
+import { Image } from "astro:assets";
 import { COMPANY } from "@/config/company";
 import { PAGES } from "@/config/pages";
-import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import contactPhoto from "@/assets/images/contacthero.webp";
+
+// Copy: docs/brief/textos-sitio.md §4 Contacto (H1, intro), verbatim. The H1 comes from
+// PAGES.contacto.h1 and the intro from PAGES.contacto.description. No breadcrumb:
+// arquitectura-informacion.md (Breadcrumbs, BreadcrumbList) puts them only on the service pages.
+// No CTA: the brief gives this hero none (the floating WhatsApp button and contacto-datos cover
+// WhatsApp). The eyebrow is COMPANY.name.
+// Layout: the Blanqueamiento hero (perpage/blanqueamiento/Hero.astro) with the photo on the right: a
+// full-height hero on lg, the photo filling the right half (object-top, the crop of the home hero),
+// the copy in the left column. Below lg the copy comes first and the photo stays hidden.
+// The map and the contact details belong to the next section (contacto-datos).
+// No animation here (front-end-astro builds the markup only).
+
+// The H1 stays PAGES.contacto.h1; only its last word is set in italic, the same accent as the
+// service-page heroes.
+const h1Words = PAGES.contacto.h1.split(" ");
+const h1Accent = h1Words.pop();
+const h1Lead = h1Words.join(" ");
+const description = PAGES.contacto.description;
 ---
 
 <section
   aria-labelledby="contacto-title"
-  class="mx-auto flex min-h-screen max-w-7xl items-center px-4 py-20 sm:px-8"
+  class="relative isolate flex flex-col overflow-hidden bg-ivory md:min-h-[calc(100vh-4.5rem)] lg:h-screen"
 >
-  <div class="mx-auto flex w-full max-w-3xl flex-col items-center text-center">
-    <p class="mb-5 text-sm font-semibold tracking-widest text-turquoise-dark uppercase">
-      Dra. Viviana Rodríguez
-    </p>
-    <h1
-      id="contacto-title"
-      class="text-6xl leading-none font-medium tracking-tight text-charcoal sm:text-7xl lg:text-8xl"
-    >
-      {PAGES.contacto.h1}
-    </h1>
-    <p class="mt-8 max-w-xl text-lg leading-relaxed text-charcoal sm:text-xl">
-      Consultorio en Bogotá (Chicó). Resolvemos tus dudas antes de tu primera
-      visita.
-    </p>
-    <a
-      href={COMPANY.whatsapp}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="group mt-10 inline-flex items-center gap-3 rounded-full bg-turquoise-dark px-7 py-4 text-base font-semibold text-ivory transition-colors motion-reduce:transition-none hover:bg-charcoal focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal sm:text-lg"
-    >
-      Escribir por WhatsApp
-      <span class="sr-only">(se abre en una pestaña nueva)</span>
-      <ArrowUpRight
-        class="h-5 w-5 transition-transform motion-reduce:transition-none group-hover:rotate-45"
-        aria-hidden="true"
-      />
-    </a>
+  <!-- Photo: hidden below lg; on lg it fills the right half from the navbar's bottom edge, cropped
+       from the top (object-top) like the home hero; the ivory fades on its left and bottom melt it
+       into the page, so the crop at the feet is not noticed -->
+  <div class="relative hidden md:absolute md:inset-y-0 md:right-0 md:-z-10 md:block md:w-1/2">
+    <Image
+      src={contactPhoto}
+      alt="Dra. Viviana Rodríguez sentada en la sala de su consultorio, junto al letrero con su nombre"
+      priority
+      widths={[640, 960, contactPhoto.width]}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      class="h-full w-full object-cover object-top"
+    />
+    <div
+      aria-hidden="true"
+      class="absolute inset-y-0 left-0 hidden w-1/3 bg-linear-to-r from-ivory from-10% via-ivory/60 via-40% to-transparent md:block lg:w-1/2"
+    ></div>
+    <div
+      aria-hidden="true"
+      class="absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-ivory to-transparent"
+    ></div>
+  </div>
+
+  <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pt-16 pb-10 sm:pt-20 lg:relative lg:pt-28 lg:pb-16 xl:px-8">
+    <div class="mt-10 flex flex-col gap-8 lg:my-auto lg:pt-8">
+      <div class="flex max-w-sm flex-col gap-6 lg:ml-24 lg:max-w-lg">
+        <p class="flex items-center gap-4 text-sm font-semibold tracking-widest text-turquoise-dark uppercase">
+          <span aria-hidden="true" class="h-px w-10 bg-turquoise-dark"></span>
+          {COMPANY.name}
+        </p>
+        <h1
+          id="contacto-title"
+          class="text-6xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-7xl xl:text-8xl"
+        >
+          {h1Lead} <em class="block font-normal text-turquoise-dark">{h1Accent}</em>
+        </h1>
+        <p class="max-w-md border-t border-gray-light pt-6 text-lg leading-relaxed text-charcoal sm:text-xl">
+          {description}
+        </p>
+      </div>
+    </div>
   </div>
 </section>
