@@ -106,7 +106,7 @@ Both lanes converge on the same chain from step 3 onward:
   task list.
 
 The first spec in this repo is numbered `01-`. Specs drafted outside the repo
-(for example in `~/grillme-specs/vivianaodontologa/`) are moved here once they
+(for example in a scratch folder) are moved here once they
 are reviewed.
 
 The only overlap between the two lanes is "is this done?" (`status: done`
