@@ -23,6 +23,12 @@ export const faqs: FAQItem[] = [
   },
   {
     category: 'inicio',
+    question: '¿Qué es la anestesia digital?',
+    answer:
+      'Es un sistema computarizado que aplica la anestesia local de forma lenta, constante y controlada, en lugar de empujar el líquido a mano con una jeringa tradicional. Un microprocesador mide la resistencia del tejido y ajusta el flujo y la presión para que la inyección sea casi imperceptible. Por eso duele menos: adormece el trayecto de la aguja a medida que avanza y evita la distensión brusca que causa el dolor. Además, la pieza de mano parece un bolígrafo y no una jeringa, lo que reduce el miedo a las agujas. Y como permite anestesiar solo la pieza dental que se trata, en muchos casos no quedan dormidos los labios ni la lengua y puedes hablar y comer con normalidad al salir.',
+  },
+  {
+    category: 'inicio',
     question: '¿Atienden con EPS o seguros dentales?',
     answer:
       'No. El consultorio es de atención particular. Aceptamos pagos con tarjeta débito, crédito, datáfono o código QR.',

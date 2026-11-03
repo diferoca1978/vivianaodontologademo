@@ -69,6 +69,9 @@ Ejerzo la odontología desde 2014 y me especialicé en Rehabilitación Oral en 2
 **¿Qué diferencia a la Dra. Viviana de otros consultorios en Bogotá?**
 Su enfoque de Odontología de Calma Activa: aromaterapia, música relajante, audífonos de cancelación de ruido y anestesia digital, junto a más de 12 años de experiencia clínica.
 
+**¿Qué es la anestesia digital?**
+Es un sistema computarizado que aplica la anestesia local de forma lenta, constante y controlada, en lugar de empujar el líquido a mano con una jeringa tradicional. Un microprocesador mide la resistencia del tejido y ajusta el flujo y la presión para que la inyección sea casi imperceptible. Por eso duele menos: adormece el trayecto de la aguja a medida que avanza y evita la distensión brusca que causa el dolor. Además, la pieza de mano parece un bolígrafo y no una jeringa, lo que reduce el miedo a las agujas. Y como permite anestesiar solo la pieza dental que se trata, en muchos casos no quedan dormidos los labios ni la lengua y puedes hablar y comer con normalidad al salir.
+
 **¿Atienden con EPS o seguros dentales?**
 No. El consultorio es de atención particular. Aceptamos pagos con tarjeta débito, crédito, datáfono o código QR.
 
@@ -161,7 +164,7 @@ Coronas en Zirconio · Incrustaciones Dentales · Prótesis Removibles · Placas
 
 1. **Valoración y diagnóstico** — Evaluamos tu caso con calma y resolvemos tus dudas antes de empezar.
 2. **Plan de tratamiento claro** — Definimos contigo los tiempos y las etapas antes de empezar.
-3. **Tratamiento en ambiente de calma** — El mismo enfoque de Odontología de Calma Activa, aplicado a tratamientos más complejos.
+3. **Tratamiento en ambiente de calma** — Aromaterapia, música relajante, cancelación de ruido y anestesia digital.
 
 ### Enlace cruzado
 
@@ -190,6 +193,8 @@ Depende de la complejidad del caso: desde unas pocas semanas hasta varios meses.
 **H1:** Agenda tu Cita
 
 Consultorio en Bogotá. Resolvemos tus dudas antes de tu primera visita.
+
+Botón (hero, bajo el texto): **Agendar por WhatsApp**
 
 ### Datos de contacto
 
