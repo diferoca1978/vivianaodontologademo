@@ -13,14 +13,12 @@ import RemovableTooth from '@/assets/icons/removabletooth.svg';
 import blanqueamiento from '@/assets/images/blanqueamiento.webp';
 import rehabilitacion from '@/assets/images/rehabilitacion.webp';
 import protesisRemovibles from '@/assets/images/protesisremovible.webp';
-import disenoDeSonrisa from '@/assets/images/disenosonrisa.webp';
 import odontologiaGeneral from '@/assets/images/odontologiageneral.webp';
 import odontologiaEstetica from '@/assets/images/estetica.webp';
 import Bruxismo from '@/assets/images/bruxismo.webp';
 import implanteDental from '@/assets/images/implantedental.webp';
 import coronaZirconio from '@/assets/images/corona.webp';
 import incrustacionesDentales from '@/assets/images/incrustaciones.webp';
-import ToothXray from '@/assets/icons/toothxray.svg';
 import ToothVeneer from '@/assets/icons/toothveneer.svg';
 import ToothBrux from '@/assets/icons/toothbrux.svg';
 
@@ -82,5 +80,4 @@ export const serviceCards: ServiceCard[] = [
   { slug: 'incrustaciones-dentales', title: 'Incrustaciones Dentales', image: incrustacionesDentales, icon: ToothVeneer },
   { slug: 'placas-de-bruxismo', title: 'Placas de Bruxismo', image: Bruxismo, icon: ToothBrux },
   { slug: 'protesis-removibles', title: 'Prótesis Removibles', image: protesisRemovibles, icon: RemovableTooth },
-  { slug: 'diseno-de-sonrisa', title: 'Diseño de Sonrisa', image: disenoDeSonrisa, icon: ToothXray },
 ];

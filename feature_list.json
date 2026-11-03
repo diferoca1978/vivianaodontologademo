@@ -473,6 +473,28 @@
       "status": "done"
     },
     {
+      "id": "brief-changes-2026-11-03",
+      "description": "Maintainer content changes of 2026-11-03, applied to the code and to docs/brief/ together. (1) Intraoral scanner removed everywhere: the Calma Activa card on Home goes (4 cards remain, the last centred on lg), Rehabilitación's first 'Cómo se hace' step becomes 'Valoración y diagnóstico' (proposed text), and the credential reads 'Anestesia digital'. (2) 'Diseño de Sonrisa' removed from the 'También ofrecemos' list / serviceCards only; the home meta description and the brief's keyword mentions stay. (3) Contacto hero uses the Home hero photo. (4) 'pérdida de piezas' becomes 'pérdida de dientes'. (5) 'Reconocimiento al mejor trabajo de grado' removed. (6) Added 2026-11-03, before merge to dev: Rehabilitación 'Cómo se hace' step 3 text becomes the four Calma Activa items of the Home, as plain text (no cards). (7) Contacto hero gets the Home hero's 'Agendar por WhatsApp' button under its intro text (this reverses the 'no CTA' note in contacto/Hero.astro, so the brief's §4 and that comment are updated). (8) Added 2026-11-03: a new Home FAQ '¿Qué es la anestesia digital?' with a plain-language summary of the maintainer's pasted text (CCLAD definition, why it hurts less, patient advantages).",
+      "source": "Maintainer instruction, 2026-11-03 (conversation); brief updated in textos-sitio.md §1, §3, brand.md, arquitectura-informacion.md",
+      "acceptance": [
+        "Zero matches for 'escáner intraoral' and 'impresiones incómodas' in src/ and docs/brief/",
+        "Home Calma Activa renders 4 cards and no card is orphaned on lg (the 4th sits centred under the first three)",
+        "Rehabilitación 'Cómo se hace' step 1 is 'Valoración y diagnóstico — Evaluamos tu caso con calma y resolvemos tus dudas antes de empezar.'",
+        "serviceCards has 7 entries and none is 'Diseño de Sonrisa'; the home meta description is unchanged",
+        "src/components/perpage/contacto/Hero.astro imports Hero-home-reference-opt1.webp, the same as the Home hero",
+        "Zero matches for 'pérdida de piezas' and 'una o varias piezas' in src/ and docs/brief/",
+        "Zero matches for 'Reconocimiento al mejor trabajo' in src/ and docs/brief/",
+        "Rehabilitación 'Cómo se hace' step 3 keeps its title and its text is exactly 'Aromaterapia, música relajante, cancelación de ruido y anestesia digital.' (the four Home Calma Activa item names, plain text, no cards or icons; maintainer chose this wording on 2026-11-03); textos-sitio.md §3 is updated to match",
+        "Contacto hero shows a WhatsApp button 'Agendar por WhatsApp' (the Home hero button: same classes, WhatsApp icon, COMPANY.whatsapp, target=_blank rel='noopener noreferrer') directly under the intro text, still one <h1>",
+        "Home FAQ (src/config/faqs.ts, category 'inicio') has a new item with the question '¿Qué es la anestesia digital?', placed right after the first one ('¿Qué diferencia a la Dra. Viviana...?'); it renders in the Home FAQ section like the others",
+        "Its answer is exactly: 'Es un sistema computarizado que aplica la anestesia local de forma lenta, constante y controlada, en lugar de empujar el líquido a mano con una jeringa tradicional. Un microprocesador mide la resistencia del tejido y ajusta el flujo y la presión para que la inyección sea casi imperceptible. Por eso duele menos: adormece el trayecto de la aguja a medida que avanza y evita la distensión brusca que causa el dolor. Además, la pieza de mano parece un bolígrafo y no una jeringa, lo que reduce el miedo a las agujas. Y como permite anestesiar solo la pieza dental que se trata, en muchos casos no quedan dormidos los labios ni la lengua y puedes hablar y comer con normalidad al salir.'",
+        "textos-sitio.md §1 Preguntas frecuentes has the same question and answer, in the same position",
+        "The answer adds no claim beyond the maintainer's pasted text (summary only); the Home FAQ section emits no FAQPage JSON-LD (client-gaps.md D7)",
+        "pnpm build passes with the gate green and pnpm check is clean"
+      ],
+      "status": "done"
+    },
+    {
       "id": "page-privacidad",
       "description": "Privacy policy page. BLOCKED on client data: docs/source/politica-privacidad-estructura.md is a structure with [placeholders] (legal name, C.C./NIT, tarjeta profesional) and must be completed and approved by the client/legal before publishing. Never invent those values. Name, address, email and phone can come from COMPANY. The source describes a Google Calendar Appointment Schedule channel, but the brief's booking CTAs only use WhatsApp: confirm with the client whether that channel exists, otherwise remove §3.1. The route slug is not in the brief: /politica-de-privacidad/ is proposed, confirm. Wires the placeholder href='#' (TODO) in src/components/global/Footer.astro. Its PAGES entry is added once the slug is confirmed; if it stays indexable, it needs a keyword from the brief (ask).",
       "source": "docs/source/politica-privacidad-estructura.md (all sections, once completed with client data)",

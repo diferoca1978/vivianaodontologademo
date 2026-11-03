@@ -31,7 +31,6 @@ Rediseñamos la consulta odontológica tradicional para convertirla en una exper
 - **Música relajante** — Un entorno sonoro pensado para bajar el ritmo antes del tratamiento.
 - **Cancelación de ruido** — Audífonos que aíslan el sonido clínico durante el procedimiento.
 - **Anestesia digital** — Aplicación controlada y precisa para reducir el dolor y la ansiedad.
-- **Escáner intraoral** — Diseño de sonrisa digital, sin las impresiones incómodas de siempre.
 
 ### Bloque: Servicios
 
@@ -40,7 +39,7 @@ Rediseñamos la consulta odontológica tradicional para convertirla en una exper
 - **Blanqueamiento Dental** — Una sonrisa más blanca, sin ansiedad ni sorpresas. Uno de nuestros tratamientos más solicitados. Enlace: "Ver el servicio →" a `/blanqueamiento-dental`.
 - **Rehabilitación Oral** — La especialidad de la Dra. Viviana: recuperar función y estética a la vez, con un enfoque cálido. Enlace: "Ver el servicio →" a `/rehabilitacion-oral`.
 
-**También ofrecemos:** Odontología General · Odontología Estética · Implantes · Coronas en Zirconio · Incrustaciones Dentales · Placas de Bruxismo · Prótesis Removibles · Diseño de Sonrisa
+**También ofrecemos:** Odontología General · Odontología Estética · Implantes · Coronas en Zirconio · Incrustaciones Dentales · Placas de Bruxismo · Prótesis Removibles
 
 ### Bloque: Sobre la Dra. Viviana
 
@@ -49,8 +48,7 @@ Rediseñamos la consulta odontológica tradicional para convertirla en una exper
 Ejerzo la odontología desde 2014 y me especialicé en Rehabilitación Oral en 2019 porque me permite generar transformaciones que van mucho más allá de la estética: ver a un paciente recuperar su sonrisa, su autoestima y su tranquilidad es lo que le da sentido a mi trabajo.
 
 - Especialista en Rehabilitación Oral desde 2019
-- Reconocimiento al mejor trabajo de grado de su posgrado
-- Anestesia digital y escáner intraoral
+- Anestesia digital
 - Consultorio propio en Chicó desde 2023
 
 ### Bloque: Testimonios
@@ -70,6 +68,9 @@ Ejerzo la odontología desde 2014 y me especialicé en Rehabilitación Oral en 2
 
 **¿Qué diferencia a la Dra. Viviana de otros consultorios en Bogotá?**
 Su enfoque de Odontología de Calma Activa: aromaterapia, música relajante, audífonos de cancelación de ruido y anestesia digital, junto a más de 12 años de experiencia clínica.
+
+**¿Qué es la anestesia digital?**
+Es un sistema computarizado que aplica la anestesia local de forma lenta, constante y controlada, en lugar de empujar el líquido a mano con una jeringa tradicional. Un microprocesador mide la resistencia del tejido y ajusta el flujo y la presión para que la inyección sea casi imperceptible. Por eso duele menos: adormece el trayecto de la aguja a medida que avanza y evita la distensión brusca que causa el dolor. Además, la pieza de mano parece un bolígrafo y no una jeringa, lo que reduce el miedo a las agujas. Y como permite anestesiar solo la pieza dental que se trata, en muchos casos no quedan dormidos los labios ni la lengua y puedes hablar y comer con normalidad al salir.
 
 **¿Atienden con EPS o seguros dentales?**
 No. El consultorio es de atención particular. Aceptamos pagos con tarjeta débito, crédito, datáfono o código QR.
@@ -151,7 +152,7 @@ La rehabilitación oral recupera la función, la estética y la salud de tu boca
 ### Cuándo la necesitas
 
 - Desgaste dental visible
-- Pérdida de una o varias piezas
+- Pérdida de uno o varios dientes
 - Bruxismo o dolor articular
 - Buscas recuperar función y estética a la vez
 
@@ -161,9 +162,9 @@ Coronas en Zirconio · Incrustaciones Dentales · Prótesis Removibles · Placas
 
 ### Cómo se hace
 
-1. **Diagnóstico con escáner intraoral** — Evaluamos tu caso con tecnología digital, sin impresiones incómodas.
+1. **Valoración y diagnóstico** — Evaluamos tu caso con calma y resolvemos tus dudas antes de empezar.
 2. **Plan de tratamiento claro** — Definimos contigo los tiempos y las etapas antes de empezar.
-3. **Tratamiento en ambiente de calma** — El mismo enfoque de Odontología de Calma Activa, aplicado a tratamientos más complejos.
+3. **Tratamiento en ambiente de calma** — Aromaterapia, música relajante, cancelación de ruido y anestesia digital.
 
 ### Enlace cruzado
 
@@ -175,7 +176,7 @@ Coronas en Zirconio · Incrustaciones Dentales · Prótesis Removibles · Placas
 Es la especialidad que recupera la función, la estética y la salud de la boca combinando coronas, prótesis, implantes o placas de bruxismo según el diagnóstico de cada paciente.
 
 **¿Cuándo debo consultar a un especialista?**
-Cuando notas desgaste dental, dolor en la mandíbula, pérdida de piezas, o cuando tu odontólogo general te refiere para un tratamiento más integral.
+Cuando notas desgaste dental, dolor en la mandíbula, pérdida de dientes, o cuando tu odontólogo general te refiere para un tratamiento más integral.
 
 **¿Cuánto dura un tratamiento de rehabilitación oral?**
 Depende de la complejidad del caso: desde unas pocas semanas hasta varios meses. En la valoración inicial definimos un plan de tiempos claro.
@@ -192,6 +193,8 @@ Depende de la complejidad del caso: desde unas pocas semanas hasta varios meses.
 **H1:** Agenda tu Cita
 
 Consultorio en Bogotá. Resolvemos tus dudas antes de tu primera visita.
+
+Botón (hero, bajo el texto): **Agendar por WhatsApp**
 
 ### Datos de contacto
 

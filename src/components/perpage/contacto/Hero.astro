@@ -2,14 +2,15 @@
 import { Image } from "astro:assets";
 import { COMPANY } from "@/config/company";
 import { PAGES } from "@/config/pages";
-import contactPhoto from "@/assets/images/contacthero.webp";
+import contactPhoto from "@/assets/images/Hero-home-reference-opt1.webp";
+import WhatsappIcon from "@/assets/icons/whatsApp.svg";
 
 // Copy: docs/brief/textos-sitio.md §4 Contacto (H1, intro), verbatim. The H1 comes from
 // PAGES.contacto.h1; the intro is the brief's line under the H1, verbatim (it is not the meta
 // description, which lives in PAGES.contacto.description). No breadcrumb:
 // arquitectura-informacion.md (Breadcrumbs, BreadcrumbList) puts them only on the service pages.
-// No CTA: the brief gives this hero none (the floating WhatsApp button and contacto-datos cover
-// WhatsApp). The eyebrow is COMPANY.name.
+// CTA: one "Agendar por WhatsApp" button under the intro (maintainer instruction 2026-11-03), the
+// same button as the home hero. The eyebrow is COMPANY.name.
 // Layout: the Blanqueamiento hero (perpage/blanqueamiento/Hero.astro) with the photo on the right: a
 // full-height hero on lg, the photo filling the right half (object-top, the crop of the home hero),
 // the copy in the left column. Below lg the copy comes first and the photo stays hidden.
@@ -21,6 +22,8 @@ import contactPhoto from "@/assets/images/contacthero.webp";
 const h1Words = PAGES.contacto.h1.split(" ");
 const h1Accent = h1Words.pop();
 const h1Lead = h1Words.join(" ");
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal";
 const description = "Consultorio en Bogotá. Resolvemos tus dudas antes de tu primera visita.";
 ---
 
@@ -34,7 +37,7 @@ const description = "Consultorio en Bogotá. Resolvemos tus dudas antes de tu pr
   <div class="relative hidden overflow-hidden md:absolute md:inset-y-0 md:right-0 md:-z-10 md:block md:w-1/2">
     <Image
       src={contactPhoto}
-      alt="Dra. Viviana Rodríguez sentada en la sala de su consultorio, junto al letrero con su nombre"
+      alt={`${COMPANY.name}, odontóloga, sentada junto a la silla dental en un consultorio luminoso`}
       priority
       data-hero-image
       widths={[640, 960, contactPhoto.width]}
@@ -65,6 +68,21 @@ const description = "Consultorio en Bogotá. Resolvemos tus dudas antes de tu pr
         <p data-hero-item class="max-w-md border-t border-gray-light pt-6 text-lg leading-relaxed text-charcoal sm:text-xl">
           {description}
         </p>
+        <div data-hero-item class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <a
+            href={COMPANY.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            class:list={[
+              "inline-flex items-center justify-center gap-3 rounded-full whitespace-nowrap bg-turquoise px-7 py-4 font-medium text-ivory shadow-lg shadow-turquoise/20 transition-colors duration-300 hover:bg-turquoise-dark motion-reduce:transition-none",
+              focusRing,
+            ]}
+          >
+            <WhatsappIcon class="size-5" aria-hidden="true" />
+            Agendar por WhatsApp
+            <span class="sr-only">(se abre en una pestaña nueva)</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>

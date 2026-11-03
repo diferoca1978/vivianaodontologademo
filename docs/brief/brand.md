@@ -15,8 +15,7 @@ Cálido y humano, sobrio y minimalista. Comunicar la tecnología con calidez, no
 ## Credenciales (E-E-A-T)
 
 - Odontología general desde 2014 (+12 años); especialista en Rehabilitación Oral desde 2019 (+7 años).
-- Reconocimiento al mejor trabajo de grado en su posgrado.
-- Tecnología: anestesia digital y escáner intraoral para diseño de sonrisa.
+- Tecnología: anestesia digital.
 - Consultorio propio desde abril de 2023, Chicó, Bogotá.
 
 ## Paciente ideal

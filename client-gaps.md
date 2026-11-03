@@ -18,7 +18,7 @@ Desde el 2026-10-16 el SEO del sitio viene de `@shine/seo-core` (`seo.pageHead()
 | Página (feature) | Decisiones | De la clienta (tabla de abajo) |
 | ---------------- | ---------- | ------------------------------ |
 | Todas — decidir **antes de construir la primera sección** | D4 | #6 og-image, #8 aviso legal (footer) |
-| Inicio (`page-home`) | — | #2 textos de las 8 tarjetas, #5 fotos |
+| Inicio (`page-home`) | — | #2 textos de las 7 tarjetas, #5 fotos |
 | Blanqueamiento (`page-blanqueamiento`) | — | #5 fotos |
 | Rehabilitación (`page-rehabilitacion`) | — | #4 frase de anestesia digital, #5 fotos |
 | Contacto (`page-contacto`) | — | — (confirmar el horario #1, pero no bloquea) |
