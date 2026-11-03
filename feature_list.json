@@ -496,7 +496,7 @@
     },
     {
       "id": "page-privacidad",
-      "description": "Privacy policy page. BLOCKED on client data: docs/source/politica-privacidad-estructura.md is a structure with [placeholders] (legal name, C.C./NIT, tarjeta profesional) and must be completed and approved by the client/legal before publishing. Never invent those values. Name, address, email and phone can come from COMPANY. The source describes a Google Calendar Appointment Schedule channel, but the brief's booking CTAs only use WhatsApp: confirm with the client whether that channel exists, otherwise remove §3.1. The route slug is not in the brief: /politica-de-privacidad/ is proposed, confirm. Wires the placeholder href='#' (TODO) in src/components/global/Footer.astro. Its PAGES entry is added once the slug is confirmed; if it stays indexable, it needs a keyword from the brief (ask).",
+      "description": "Privacy policy page. BLOCKED on client data: docs/source/politica-privacidad-estructura.md is a structure with [placeholders] (legal name, C.C./NIT, tarjeta profesional) and must be completed and approved by the client/legal before publishing. Never invent those values. Name, address, email and phone can come from COMPANY. 2026-11-03: the page goes to dev (noindex, with a review notice RevisionAviso and the placeholders highlighted) so the client can approve it and give the missing data; it must not reach main until the placeholders are filled and RevisionAviso is removed. Decided 2026-11-03 (client): WhatsApp is the only data-capture channel for now, so the Google Calendar Appointment Schedule channel was removed from the source and the page. The route slug is not in the brief: /politica-de-privacidad/ is proposed, confirm. Wires the placeholder href='#' (TODO) in src/components/global/Footer.astro. Its PAGES entry is added once the slug is confirmed; if it stays indexable, it needs a keyword from the brief (ask).",
       "source": "docs/source/politica-privacidad-estructura.md (all sections, once completed with client data)",
       "acceptance": [
         "Route src/pages/politica-de-privacidad.astro serves /politica-de-privacidad/ (slug confirmed)",
@@ -506,7 +506,7 @@
         "Responsable data matches COMPANY where it overlaps (name, address 'Cra 15 # 104-30, Consultorio 302, Bogotá', email, phone), single NAP form",
         "External links (Google, WhatsApp privacy policies) open with target=_blank and rel='noopener noreferrer'",
         "The footer anchor 'Política de privacidad' in src/components/global/Footer.astro links to the page's route and the TODO comment is removed",
-        "<title> and meta description from seo.pageHead(PAGES.privacidad), and the page is in the sitemap",
+        "<title> and meta description from seo.pageHead(PAGES.privacidad), and the page is noindex (PAGES.privacidad.noindex: true) and out of the sitemap",
         "No business, WebSite or Person node on this page"
       ],
       "status": "pending"
