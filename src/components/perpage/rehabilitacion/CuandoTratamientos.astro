@@ -8,7 +8,10 @@ import missingTooth from "@/assets/images/missing-tooth.webp";
 import teethHurt from "@/assets/images/teeth-hurt.webp";
 import solution from "@/assets/images/solution.webp";
 
-// Spec 05 (specs/05-rehabilitacion-cuando-tratamientos-swap.md).
+// Spec 05 (specs/05-rehabilitacion-cuando-tratamientos-swap.md); spec 06
+// (specs/06-rehabilitacion-cuando-tratamientos-items-grandes.md) enlarges the items: circle size-28
+// (112px) <768, md:size-36 (144), lg:size-44 (176), xl:size-52 (208); pill text-base lg:text-lg;
+// fallback icon scaled with the circle; <Image> widths [208, 416, 624] and sizes 7/9/11/13rem.
 // Copy: docs/brief/textos-sitio.md §3 Rehabilitación Oral, "Cuándo la necesitas" (4 items) and
 // "Tratamientos incluidos" (5 items), verbatim and in the brief's order. The treatments are read
 // from serviceCards (src/config/services.ts) by slug: the title goes in the pill, the photo in the
@@ -20,9 +23,10 @@ import solution from "@/assets/images/solution.webp";
 // Layout: both sections always in the HTML, stacked. <768px: in flow, the bubbles in a compact
 // flex-wrap with an alternating vertical offset. ≥768px: the h2 centred, the bubbles absolute in
 // five shared slots (TL, TC, TR, BL, BR); the four corners are the same in both sections and TC
-// exists only in "Tratamientos". BR sits higher and further in than the other corners, clear of the
-// floating WhatsApp button (fixed right-4 bottom-4 sm:right-6 sm:bottom-6).
-// TC drops to top-16 on xl, clear of the navbar's centre tab (NavBar.astro, xl only, 3rem deep).
+// exists only in "Tratamientos". The stage is the viewport minus the sticky NavBar, so slots are tuned
+// to that height: on xl the h2 is pushed down (xl:mt-20) under TC, which clears the navbar's centre tab
+// (NavBar.astro, xl only, 3rem deep), and BL/BR sit beside the h2, not under it; BR also keeps its
+// pill clear of the floating WhatsApp button (fixed right-4 bottom-4 sm:right-6 sm:bottom-6).
 // Stage mode (≥768px, with motion): the script sets data-stage on [data-rehab-swap-stage], the
 // group-data-stage/stage: classes overlay both sections, and the script pins and swaps them:
 // src/utils/scripts/animations/rehabilitacion-oral/cuando-tratamientos.ts.
@@ -53,27 +57,27 @@ interface Scene {
 const slots: Slot[] = [
   {
     id: "TL",
-    position: "md:top-12 md:left-24 lg:left-28 xl:left-44",
+    position: "md:top-12 md:left-24 lg:left-28 xl:top-6 xl:left-20",
     align: "md:items-start",
   },
   {
     id: "TC",
-    position: "md:inset-x-0 md:top-10 md:mx-auto md:w-fit xl:top-20",
+    position: "md:inset-x-0 md:top-10 md:mx-auto md:w-fit lg:top-6 xl:top-12",
     align: "md:items-center",
   },
   {
     id: "TR",
-    position: "md:top-32 md:right-20 lg:top-28 lg:right-20 xl:right-28",
+    position: "md:top-32 md:right-20 lg:top-16 lg:right-20 xl:top-6 xl:right-20",
     align: "md:items-end",
   },
   {
     id: "BL",
-    position: "md:bottom-28 md:left-20 lg:left-36 xl:left-56",
+    position: "md:bottom-28 md:left-20 lg:bottom-16 lg:left-36 xl:bottom-36 xl:left-24 xl:tall:bottom-18",
     align: "md:items-start",
   },
   {
     id: "BR",
-    position: "md:right-32 md:bottom-36 lg:right-48 lg:bottom-28 xl:right-64 xl:bottom-28",
+    position: "md:right-32 md:bottom-36 lg:right-48 lg:bottom-16 xl:right-24 xl:bottom-36 xl:tall:bottom-18",
     align: "md:items-end",
   },
 ];
@@ -138,7 +142,7 @@ const splitTitle = (title: string) => {
               <h2
                 id={titleId}
                 data-rehab-swap-title
-                class="mx-auto max-w-sm text-center text-5xl leading-none font-medium tracking-tight text-balance text-charcoal md:mx-0 md:max-w-md md:text-6xl lg:max-w-lg lg:text-7xl xl:max-w-2xl xl:tall:text-8xl"
+                class="mx-auto max-w-sm text-center text-5xl leading-none font-medium tracking-tight text-balance text-charcoal md:mx-0 md:max-w-md md:text-6xl lg:max-w-lg lg:text-7xl xl:mt-20 xl:max-w-2xl xl:tall:text-8xl"
               >
                 {lead} <em class="font-normal text-turquoise-dark">{accent}</em>
               </h2>
@@ -157,24 +161,24 @@ const splitTitle = (title: string) => {
                       class:list={["w-40 even:mt-10 md:absolute md:w-auto md:even:mt-0", slot.position]}
                     >
                       <div class:list={["flex flex-col items-center", slot.align]}>
-                        <div class="relative size-24 shrink-0 overflow-hidden rounded-full bg-linear-to-br from-turquoise-light via-turquoise-light/60 to-turquoise-light/30 shadow-xl ring-4 shadow-turquoise-dark/15 ring-ivory md:size-28 lg:size-32 xl:size-36">
+                        <div class="relative size-28 shrink-0 overflow-hidden rounded-full bg-linear-to-br from-turquoise-light via-turquoise-light/60 to-turquoise-light/30 shadow-xl ring-4 shadow-turquoise-dark/15 ring-ivory md:size-36 lg:size-44 xl:size-52">
                           {image ? (
                             <Image
                               src={image}
                               alt=""
-                              widths={[144, 288, 432]}
-                              sizes="(min-width: 1280px) 9rem, (min-width: 1024px) 8rem, (min-width: 768px) 7rem, 6rem"
+                              widths={[208, 416, 624]}
+                              sizes="(min-width: 1280px) 13rem, (min-width: 1024px) 11rem, (min-width: 768px) 9rem, 7rem"
                               class="size-full object-cover"
                             />
                           ) : (
                             <div aria-hidden="true" class="flex size-full items-center justify-center">
-                              <ToothOutline class="size-10 text-turquoise/40 md:size-12 lg:size-14" />
+                              <ToothOutline class="size-12 text-turquoise/40 md:size-16 lg:size-20 xl:size-24" />
                             </div>
                           )}
                         </div>
 
                         <span
-                          class="mt-3 max-w-full rounded-full bg-ivory px-4 py-2 text-center text-sm leading-snug font-medium text-charcoal shadow-lg ring-1 shadow-charcoal/10 ring-gray-light md:absolute md:top-full md:left-1/2 md:w-max md:max-w-none md:-translate-x-1/2 md:whitespace-nowrap lg:text-base"
+                          class="mt-3 max-w-full rounded-full bg-ivory px-4 py-2 text-center text-base leading-snug font-medium text-charcoal shadow-lg ring-1 shadow-charcoal/10 ring-gray-light md:absolute md:top-full md:left-1/2 md:w-max md:max-w-none md:-translate-x-1/2 md:whitespace-nowrap lg:text-lg"
                         >
                           {text}
                         </span>
