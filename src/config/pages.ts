@@ -6,7 +6,8 @@ import type { PageSeo } from '@shine/seo-core';
 //
 // keyword: arquitectura-informacion.md §5. title, description and h1: textos-sitio.md, verbatim (Blanqueamiento h1: textos-blanqueamiento.md).
 // pageHead() adds " | Dra. Viviana Rodríguez" unless the title already holds the name.
-// The privacy page joins once its slug and text are confirmed (feature page-privacidad).
+// privacidad: h1 is the source's title; title and description are drawn from its content.
+// Its text still carries the client's placeholders (feature page-privacidad): do not publish yet.
 
 export const PAGES = {
   home: {
@@ -44,5 +45,15 @@ export const PAGES = {
       'Agenda tu cita con la Dra. Viviana Rodríguez en Bogotá. WhatsApp, dirección, mapa y horarios de atención. Resolvemos tus dudas antes de tu primera visita.',
     h1: 'Agenda tu Cita',
     source: 'textos-sitio.md §4',
+  },
+  privacidad: {
+    path: '/politica-de-privacidad/',
+    // Legal page: noindex (seo-guide-lines), so it has no keyword and stays out of the sitemap.
+    noindex: true,
+    title: 'Política de Privacidad',
+    description:
+      'Cómo se tratan los datos personales que compartes por los canales de contacto: finalidades, datos de salud, conservación y tus derechos de Habeas Data.',
+    h1: 'Política de Tratamiento de Datos Personales y Privacidad',
+    source: 'docs/source/politica-privacidad-estructura.md',
   },
 } satisfies Record<string, PageSeo>;

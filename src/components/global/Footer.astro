@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { COMPANY } from "@/config/company";
 import { MainNavigation } from "@/utils/navigation";
+import { PAGES } from "@/config/pages";
 import { formatOpeningHours } from "@/utils/openingHours";
 import logo from "@/assets/images/logonobg.png";
 import Phone from "@/assets/icons/phone.svg";
@@ -14,7 +15,7 @@ import ArrowUp from "@/assets/icons/arrow-up.svg";
 
 // Layout from references/footer-reference.png; content only from the brief (COMPANY).
 // Opening hours come from the Google Business Profile, still to be confirmed with the client
-// (client-gaps.md #1). The privacy policy link is a placeholder until page-privacidad exists.
+// (client-gaps.md #1). The privacy policy link reads its route from PAGES.privacidad.
 const { address } = COMPANY.business.kind === "local" ? COMPANY.business : { address: undefined };
 const openingHours = formatOpeningHours(COMPANY.business.hours ?? []);
 
@@ -186,8 +187,7 @@ const year = new Date().getFullYear();
 
     <div class="flex flex-col gap-4 py-8 pt-10 text-sm text-gray-light md:flex-row md:items-center md:justify-between">
       <p>© {year} {COMPANY.name}. Todos los derechos reservados.</p>
-      {/* TODO: href="#" is a placeholder. It must point to the privacy policy page (política de privacidad), which hasn't been created yet. */}
-      <a href="#" class="hover:text-turquoise-light">Política de Privacidad y Tratamiento de Datos </a>
+      <a href={PAGES.privacidad.path} class="hover:text-turquoise-light">Política de Privacidad y Tratamiento de Datos</a>
     </div>
   </div>
 </footer>

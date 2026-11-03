@@ -1,0 +1,41 @@
+---
+// Review notice for the client (feature page-privacidad). The page is on dev so the client can read
+// it, approve it and give the missing data. REMOVE this component, and its use in
+// src/pages/politica-de-privacidad.astro, once the client approves the text and fills the data in.
+// No animation here (front-end-astro builds the markup only).
+const missing = [
+  "Nombre completo de la odontóloga (o nombre comercial del consultorio)",
+  "Tipo y número de identificación (C.C. o NIT)",
+  "Número de tarjeta profesional / registro odontológico",
+];
+---
+
+<section aria-labelledby="revision-title" class="bg-ivory">
+  <div class="mx-auto max-w-7xl px-4 pt-10 xl:px-8">
+    <div class="max-w-4xl rounded-3xl border-2 border-turquoise-dark bg-turquoise-light/40 p-6 sm:p-8">
+      <h2
+        id="revision-title"
+        class="text-2xl leading-snug font-medium text-charcoal"
+      >
+        Borrador para revisión del cliente/a
+      </h2>
+      <div class="mt-4 flex flex-col gap-4 text-lg leading-relaxed text-pretty text-charcoal">
+        <p>
+          Esta política está pendiente de aprobación y todavía no es pública: la
+          página no aparece en buscadores. Los textos entre corchetes están
+          resaltados y faltan por completar. Para publicarla necesitamos:
+        </p>
+        <ul class="flex list-disc flex-col gap-2 pl-6 marker:text-turquoise-dark">
+          {missing.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+        <p>
+          Además, confirma que el texto describe bien cómo trabajas: WhatsApp es
+          el único canal por el que el sitio capta datos y por el que se agendan
+          las citas.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
