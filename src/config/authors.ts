@@ -19,8 +19,7 @@ export const AUTHORS: SiteAuthor[] = [
     bio: 'Ejerzo la odontología desde 2014 y me especialicé en Rehabilitación Oral en 2019 porque me permite generar transformaciones que van mucho más allá de la estética: ver a un paciente recuperar su sonrisa, su autoestima y su tranquilidad es lo que le da sentido a mi trabajo.',
     credentials: [
       'Especialista en Rehabilitación Oral desde 2019',
-      'Reconocimiento al mejor trabajo de grado de su posgrado',
-      'Anestesia digital y escáner intraoral',
+      'Anestesia digital',
       'Consultorio particular en Chicó, Bogotá',
     ],
   },

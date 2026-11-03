@@ -28,7 +28,7 @@ Ver [brand.md](./brand.md): propuesta de valor, tono, credenciales, paciente ide
 
 Páginas (slugs en minúscula): `/` Inicio, `/blanqueamiento-dental`, `/rehabilitacion-oral`, `/contacto`. No hay blog.
 
-Los demás servicios no tienen página propia: van como tarjetas cortas (1-2 líneas) dentro de Inicio, cada una con ancla propia (ej. `/#implantes`): Odontología General, Odontología Estética, Implantes, Coronas en Zirconio, Incrustaciones Dentales, Placas de Bruxismo, Prótesis Removibles, Diseño de Sonrisa.
+Los demás servicios no tienen página propia: van como tarjetas cortas (1-2 líneas) dentro de Inicio, cada una con ancla propia (ej. `/#implantes`): Odontología General, Odontología Estética, Implantes, Coronas en Zirconio, Incrustaciones Dentales, Placas de Bruxismo, Prótesis Removibles.
 
 **Navegación:**
 
@@ -90,6 +90,6 @@ El texto literal de cada página y servicio (metas, H1, subtítulos, bloques, FA
 Además de lo de [brand.md](./brand.md) (logo vectorial, fotos):
 
 - Horario de atención.
-- Descripción de 1-2 líneas para cada tarjeta de servicio de Inicio sin página propia (Odontología General, Odontología Estética, Implantes, Coronas en Zirconio, Incrustaciones Dentales, Placas de Bruxismo, Prótesis Removibles, Diseño de Sonrisa).
+- Descripción de 1-2 líneas para cada tarjeta de servicio de Inicio sin página propia (Odontología General, Odontología Estética, Implantes, Coronas en Zirconio, Incrustaciones Dentales, Placas de Bruxismo, Prótesis Removibles).
 - 3-5 testimonios reales de pacientes.
 - Cita textual sobre por qué le apasiona la Rehabilitación Oral (opcional).

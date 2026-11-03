@@ -3,14 +3,13 @@ import Aroma from "@/assets/icons/aroma.svg";
 import Music from "@/assets/icons/music.svg";
 import Headphones from "@/assets/icons/headphones.svg";
 import Syringe from "@/assets/icons/syringe.svg";
-import Tooth from "@/assets/icons/tooth.svg";
 import ToothLogo from "@/assets/icons/tooth-logo.svg";
 
 // Copy: docs/brief/textos-sitio.md §1 Inicio › Bloque: Odontología de Calma Activa (verbatim).
 // Layout (references/calma-activa-reference.png): rounded cards with a wavy turquoise header,
 // a circular icon badge straddling its lower edge, then title and text centred.
-// 1 column on mobile, 2 on tablet, and on lg a 6-col grid where the five cards span 2 each so
-// the second row (2 cards) sits centred under the first (3).
+// 1 column on mobile, 2 on tablet, and on lg a 6-col grid where the four cards span 2 each so
+// the second row (1 card) sits centred under the first (3).
 // Motion lives in src/utils/scripts/animations/home/calma-activa.ts (data-calma-* hooks).
 
 interface Item {
@@ -39,11 +38,6 @@ const items: Item[] = [
     title: "Anestesia digital",
     text: "Aplicación controlada y precisa para reducir el dolor y la ansiedad.",
     icon: Syringe,
-  },
-  {
-    title: "Escáner intraoral",
-    text: "Diseño de sonrisa digital, sin las impresiones incómodas de siempre.",
-    icon: Tooth,
   },
 ];
 ---
@@ -75,8 +69,7 @@ const items: Item[] = [
             data-calma-item
             class:list={[
               "flex flex-col rounded-3xl bg-ivory pb-8 shadow-lg shadow-turquoise-dark/30 lg:col-span-2",
-              i === 3 && "lg:col-start-2",
-              i === 4 && "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:mx-0 lg:w-auto",
+              i === 3 && "lg:col-start-3",
             ]}
           >
             <div class="relative z-10 -mt-8 flex size-16 items-center justify-center self-center rounded-full border-2 border-turquoise bg-ivory text-turquoise-dark">

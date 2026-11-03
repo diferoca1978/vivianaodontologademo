@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import { COMPANY } from "@/config/company";
 import { PAGES } from "@/config/pages";
-import contactPhoto from "@/assets/images/contacthero.webp";
+import contactPhoto from "@/assets/images/Hero-home-reference-opt1.webp";
 
 // Copy: docs/brief/textos-sitio.md §4 Contacto (H1, intro), verbatim. The H1 comes from
 // PAGES.contacto.h1; the intro is the brief's line under the H1, verbatim (it is not the meta
@@ -34,7 +34,7 @@ const description = "Consultorio en Bogotá. Resolvemos tus dudas antes de tu pr
   <div class="relative hidden overflow-hidden md:absolute md:inset-y-0 md:right-0 md:-z-10 md:block md:w-1/2">
     <Image
       src={contactPhoto}
-      alt="Dra. Viviana Rodríguez sentada en la sala de su consultorio, junto al letrero con su nombre"
+      alt={`${COMPANY.name}, odontóloga, sentada junto a la silla dental en un consultorio luminoso`}
       priority
       data-hero-image
       widths={[640, 960, contactPhoto.width]}

@@ -77,7 +77,7 @@ export const faqs: FAQItem[] = [
     category: 'rehabilitacion-oral',
     question: '¿Cuándo debo consultar a un especialista?',
     answer:
-      'Cuando notas desgaste dental, dolor en la mandíbula, pérdida de piezas, o cuando tu odontólogo general te refiere para un tratamiento más integral.',
+      'Cuando notas desgaste dental, dolor en la mandíbula, pérdida de dientes, o cuando tu odontólogo general te refiere para un tratamiento más integral.',
   },
   {
     category: 'rehabilitacion-oral',
