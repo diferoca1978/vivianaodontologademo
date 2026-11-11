@@ -12,6 +12,8 @@ import solution from "@/assets/images/solution.webp";
 // (specs/06-rehabilitacion-cuando-tratamientos-items-grandes.md) enlarges the items: circle size-28
 // (112px) <768, md:size-36 (144), lg:size-44 (176), xl:size-52 (208); pill text-base lg:text-lg;
 // fallback icon scaled with the circle; <Image> widths [208, 416, 624] and sizes 7/9/11/13rem.
+// The photos are landscape, so every variant is cropped square at build (width/height 624 +
+// fit="cover"); otherwise the 208w variant of a 2.2:1 photo is 208x96 and the circle upscales it.
 // Copy: docs/brief/textos-sitio.md §3 Rehabilitación Oral, "Cuándo la necesitas" (4 items) and
 // "Tratamientos incluidos" (5 items), verbatim and in the brief's order. The treatments are read
 // from serviceCards (src/config/services.ts) by slug: the title goes in the pill, the photo in the
@@ -166,6 +168,10 @@ const splitTitle = (title: string) => {
                             <Image
                               src={image}
                               alt=""
+                              width={624}
+                              height={624}
+                              fit="cover"
+                              position="center"
                               widths={[208, 416, 624]}
                               sizes="(min-width: 1280px) 13rem, (min-width: 1024px) 11rem, (min-width: 768px) 9rem, 7rem"
                               class="size-full object-cover"
