@@ -250,6 +250,19 @@
       "status": "done"
     },
     {
+      "id": "blanqueamiento-antes-despues",
+      "description": "Blanqueamiento Dental: before/after comparison right after Modalidades and before Seguridad. Design and motion are defined by specs/07-blanqueamiento-antes-despues-scroll.md (full lane, Approved). The generic ui/sections/BeforeAfter.astro (props, data-before-after* hooks, script in animations/utils/before-after.ts) is fed by perpage/blanqueamiento/AntesDespues.astro with beforewhitening.webp / afterwithening.webp. On scroll the 'after' layer is revealed left to right with a clip-path wipe and a divider line: pinned from 768px, scrub without pin below it, and the two photos stacked with reduced motion or without JS. Photos of a real patient with consent, confirmed by the maintainer on 2026-11-11. No h2 and no notice: the only visible copy is the 'Antes' / 'Después' labels.",
+      "source": "specs/07-blanqueamiento-antes-despues-scroll.md (Approved; content per § Source of the content)",
+      "acceptance": [
+        "AntesDespues is mounted in src/pages/blanqueamiento-dental.astro right after Modalidades and before Seguridad",
+        "The section is a <section> with aria-label 'Antes y después del blanqueamiento dental' and no h2; the page keeps exactly one <h1>",
+        "Both photos use astro:assets (beforewhitening.webp, afterwithening.webp) with alt 'Sonrisa antes del blanqueamiento dental' and 'La misma sonrisa después del blanqueamiento dental'",
+        "The only visible text is the labels 'Antes' and 'Después'",
+        "Every acceptance criterion in specs/07-blanqueamiento-antes-despues-scroll.md holds"
+      ],
+      "status": "done"
+    },
+    {
       "id": "blanqueamiento-seguridad",
       "description": "Blanqueamiento Dental: is it harmful? Short answer block (direct answer, AEO). Good fit for a plain text block.",
       "source": "textos-blanqueamiento.md › ¿El blanqueamiento dental daña los dientes?",
@@ -309,7 +322,7 @@
     },
     {
       "id": "page-blanqueamiento",
-      "description": "Blanqueamiento Dental page: SEO and assembly. REWRITTEN 2026-10-19 for the new brief (textos-blanqueamiento.md). Meta title and description are not in the new brief: they stay as in textos-sitio.md §2 (note: its 'sin dolor' sits next to the new FAQ on temporary sensitivity; raise it with the client, do not change it here). Service JSON-LD removed from this page by maintainer decision 2026-10-22 (D2). Its title already holds the company name, so seo.pageHead() adds no suffix. The page currently renders Hero + Intro + Modalidades (Beneficios was unmounted on 2026-10-19 and kept in the repo; Pasos became ui/sections/PinnedPanels.astro and Modalidades replaced it, spec 04).",
+      "description": "Blanqueamiento Dental page: SEO and assembly. REWRITTEN 2026-10-19 for the new brief (textos-blanqueamiento.md). Meta title and description are not in the new brief: they stay as in textos-sitio.md §2 (note: its 'sin dolor' sits next to the new FAQ on temporary sensitivity; raise it with the client, do not change it here). Service JSON-LD removed from this page by maintainer decision 2026-10-22 (D2). Its title already holds the company name, so seo.pageHead() adds no suffix. The page renders Hero + Intro + Modalidades + Antes y después + Seguridad + Contraindicaciones + Cuidados + FAQ + CTA final (Beneficios was unmounted on 2026-10-19 and kept in the repo; Pasos became ui/sections/PinnedPanels.astro and Modalidades replaced it, spec 04; Antes y después was added after Modalidades on 2026-11-11, spec 07).",
       "source": "textos-sitio.md §2 Blanqueamiento Dental (Meta title, Meta description) + textos-blanqueamiento.md (sections and order) + arquitectura-informacion.md §4, §5, §6",
       "acceptance": [
         "Route src/pages/blanqueamiento-dental.astro serves /blanqueamiento-dental/",
