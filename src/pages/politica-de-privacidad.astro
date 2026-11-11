@@ -1,20 +1,17 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import Hero from "@/components/perpage/privacidad/Hero.astro";
-import RevisionAviso from "@/components/perpage/privacidad/RevisionAviso.astro";
 import Contenido from "@/components/perpage/privacidad/Contenido.astro";
 import { PAGES } from "@/config/pages";
 import { seo } from "@/config/seo";
 
 // Legal page: no JSON-LD (no business, WebSite or Person node, per the feature's acceptance).
-// TODO(client): the policy still shows the source's placeholders (legal name, C.C./NIT, tarjeta
-// profesional). It goes to dev only so the client can review it (RevisionAviso explains this on the
-// page); it must not reach main until the client fills them in and RevisionAviso is removed.
+// Client data (legal name, ID, registry) filled in from docs/source/politica-privacidad-estructura.md.
+// noindex stays on until the client approves publication.
 const head = seo.pageHead(PAGES.privacidad);
 ---
 
 <MainLayout head={head}>
   <Hero />
-  <RevisionAviso />
   <Contenido />
 </MainLayout>

@@ -1,17 +1,17 @@
 # Política de Tratamiento de Datos Personales y Privacidad
 
-**Última actualización:** Septiembre 2026
+**Última actualización:** Noviembre 2026
 
 ---
 
 ## 1. Responsable del Tratamiento de Datos
 
-- **Profesional / Razón Social:** Dra. [Nombre Completo de la Odontóloga] (o [Nombre Comercial del Consultorio])
-- **Identificación Legal / Tributaria:** [C.C. / NIT / DNI] Nº [Número]
-- **Registro Profesional:** [Número de Tarjeta Profesional / Registro Odontológico]
-- **Domicilio / Consultorio:** [Dirección física del consultorio, Ciudad, País]
-- **Correo electrónico de contacto:** [correo@tudominio.com]
-- **Teléfono de atención:** [+XX XXXXXXXXXX]
+- **Profesional / Razón Social:** Dra. Viviana Rodríguez (Rehabilitación oral)
+- **Identificación Legal / Tributaria:** 1.053.810.835
+- **Registro Profesional:** 1.053.810.835
+- **Domicilio / Consultorio:** Cra 15 # 104-30, Consultorio 302, Bogotá
+- **Correo electrónico de contacto:** vivianarodriguezod@gmail.com
+- **Teléfono de atención:** +57 302 544 5760
 
 ---
 
@@ -83,7 +83,7 @@ El titular de los datos personales tiene derecho a:
 
 Para ejercer cualquiera de estos derechos, envíe una comunicación escrita a:
 
-- **Correo electrónico:** [correo@tudominio.com]
+- **Correo electrónico:** vivianarodriguezod@gmail.com
 - **Asunto:** Solicitud de Protección de Datos Personales
 - **Información requerida:** Nombre completo, número de contacto, documento de identificación y descripción clara de la solicitud (actualización, corrección o eliminación).
 
