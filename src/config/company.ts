@@ -29,7 +29,7 @@ interface SiteCompany extends Company {
 // NAP: always "Cra 15 # 104-30, Consultorio 302" (never "Carrera"), per brief §1, even though
 // the profile writes "Ak 15".
 // business.hours still need the client's confirmation (client-gaps.md #1).
-// Pending (client-gaps.md): postal code, og-image, vector logo.
+// Pending (client-gaps.md): postal code, vector logo.
 
 export const COMPANY: SiteCompany = {
   name: 'Dra. Viviana Rodríguez',
@@ -56,7 +56,7 @@ export const COMPANY: SiteCompany = {
     ],
   },
   logo: '/images/logo.png',
-  image: '/images/og-image.png',
+  image: '/images/og-image.jpg',
   foundingDate: '2023-04',
   founders: ['viviana-rodriguez'],
   socialMedia: {
