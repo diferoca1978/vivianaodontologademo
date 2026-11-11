@@ -387,6 +387,19 @@
       "status": "done"
     },
     {
+      "id": "rehabilitacion-antes-despues",
+      "description": "Rehabilitación Oral: before/after comparison right after ComoSeHace and before EnlaceCruzado. Design and motion are defined by specs/08-rehabilitacion-antes-despues-scroll.md (full lane, Approved), which reuses specs/07's generic ui/sections/BeforeAfter.astro and animations/utils/before-after.ts unchanged. perpage/rehabilitacion/AntesDespues.astro feeds it with whitouttooth.webp (before) / whithtooth.webp (after). On scroll the 'after' layer is revealed left to right with a clip-path wipe and a divider line: pinned from 768px, scrub without pin below it, and the two photos stacked with reduced motion or without JS. Photos of a real patient with consent, confirmed by the maintainer on 2026-11-11. No h2 and no notice: the only visible copy is the 'Antes' / 'Después' labels.",
+      "source": "specs/08-rehabilitacion-antes-despues-scroll.md (Approved; content per § Source of the content)",
+      "acceptance": [
+        "AntesDespues is mounted in src/pages/rehabilitacion-oral.astro right after ComoSeHace and before EnlaceCruzado",
+        "The section is a <section> with aria-label 'Antes y después de la rehabilitación oral' and no h2; the page keeps exactly one <h1>",
+        "Both photos use astro:assets (whitouttooth.webp, whithtooth.webp) with alt 'Sonrisa con un diente ausente antes de la rehabilitación oral' and 'La misma sonrisa después de la rehabilitación oral'",
+        "The only visible text is the labels 'Antes' and 'Después'",
+        "Every acceptance criterion in specs/08-rehabilitacion-antes-despues-scroll.md holds"
+      ],
+      "status": "done"
+    },
+    {
       "id": "rehabilitacion-enlace-cruzado",
       "description": "Rehabilitación Oral: cross-link to Blanqueamiento Dental. /blanqueamiento-dental/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
       "source": "textos-sitio.md §3 Rehabilitación Oral › Enlace cruzado + arquitectura-informacion.md §3 Enlazado interno",
