@@ -7,22 +7,15 @@ import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
 // COMPANY, in the site's single NAP form ("street, city", as in the footer and contacto-datos).
 // WhatsApp is the only data-capture channel for now (client, 2026-11-03): the Google Calendar
 // channel was removed from the source and from here; if it returns, re-add it to both.
-// The bracketed values below are the source's own placeholders: only the client can give them,
-// so they stay visible and this page must not be published until they are filled in.
 // No animation here (front-end-astro builds the markup only).
 
 const { address } = COMPANY.business;
 const fullAddress = `${address.street}, ${address.city}`;
 const phoneHref = `tel:${COMPANY.phone.replace(/\s/g, "")}`;
 
-// TODO(client): legal name of the doctor, or the practice's commercial name.
-const legalName =
-  "Dra. [Nombre Completo de la Odontóloga] (o [Nombre Comercial del Consultorio])";
-// TODO(client): ID type (C.C. / NIT) and its number.
-const legalId = "[C.C. / NIT / DNI] Nº [Número]";
-// TODO(client): tarjeta profesional / registro odontológico number.
-const professionalRegistry =
-  "[Número de Tarjeta Profesional / Registro Odontológico]";
+const legalName = "Dra. Viviana Rodríguez (Rehabilitación oral)";
+const legalId = "1.053.810.835";
+const professionalRegistry = "1.053.810.835";
 
 const sections = [
   { id: "responsable", title: "1. Responsable del Tratamiento de Datos" },
@@ -56,8 +49,6 @@ const bodyClass =
 const ulClass = "flex list-disc flex-col gap-3 pl-6 marker:text-turquoise-dark";
 const olClass =
   "flex list-decimal flex-col gap-2 pl-6 marker:font-semibold marker:text-turquoise-dark";
-// Placeholders still to be given by the client: highlighted so the reviewer sees what is missing.
-const pending = "rounded bg-turquoise-light px-1.5 py-0.5";
 const newTab = "(se abre en una pestaña nueva)";
 ---
 
@@ -106,7 +97,7 @@ const newTab = "(se abre en una pestaña nueva)";
               Profesional / Razón Social:
             </dt>
             <dd>
-              <mark class={pending}>{legalName}</mark>
+              {legalName}
             </dd>
           </div>
           <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
@@ -114,7 +105,7 @@ const newTab = "(se abre en una pestaña nueva)";
               Identificación Legal / Tributaria:
             </dt>
             <dd>
-              <mark class={pending}>{legalId}</mark>
+              {legalId}
             </dd>
           </div>
           <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
@@ -122,7 +113,7 @@ const newTab = "(se abre en una pestaña nueva)";
               Registro Profesional:
             </dt>
             <dd>
-              <mark class={pending}>{professionalRegistry}</mark>
+              {professionalRegistry}
             </dd>
           </div>
           <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">

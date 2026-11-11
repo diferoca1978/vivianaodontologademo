@@ -7,7 +7,6 @@ import type { PageSeo } from '@shine/seo-core';
 // keyword: arquitectura-informacion.md §5. title, description and h1: textos-sitio.md, verbatim (Blanqueamiento h1: textos-blanqueamiento.md).
 // pageHead() adds " | Dra. Viviana Rodríguez" unless the title already holds the name.
 // privacidad: h1 is the source's title; title and description are drawn from its content.
-// Its text still carries the client's placeholders (feature page-privacidad): do not publish yet.
 
 export const PAGES = {
   home: {
