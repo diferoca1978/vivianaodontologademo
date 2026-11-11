@@ -1,0 +1,20 @@
+---
+// "Antes y después" of the oral rehabilitation (spec 08). Data only: the photos, alt texts and labels
+// come from specs/08-rehabilitacion-antes-despues-scroll.md; the layout and the scroll motion live in
+// the generic ui/sections/BeforeAfter. The section has no heading on purpose (the only visible text is
+// the two labels), so it is named through aria-label.
+import BeforeAfter from "@/components/ui/sections/BeforeAfter.astro";
+import beforePhoto from "@/assets/images/whitouttooth.webp";
+import afterPhoto from "@/assets/images/whithtooth.webp";
+---
+
+<BeforeAfter
+  id="antes-y-despues"
+  ariaLabel="Antes y después de la rehabilitación oral"
+  before={beforePhoto}
+  after={afterPhoto}
+  beforeAlt="Sonrisa con un diente ausente antes de la rehabilitación oral"
+  afterAlt="La misma sonrisa después de la rehabilitación oral"
+  beforeLabel="Antes"
+  afterLabel="Después"
+/>
