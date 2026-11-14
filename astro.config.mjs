@@ -14,7 +14,7 @@ import { PAGES } from './src/config/pages.ts';
 // https://astro.build/config
 export default defineConfig({
   // The client's domain. Every absolute URL comes from it through siteUrl() (src/utils/url.ts).
-  site: 'https://vivianaodontologa.com',
+  site: 'https://odontologavivianarodriguez.com',
 
   // Every page URL ends in '/'; siteUrl() in src/utils/url.ts builds them the same way.
   trailingSlash: 'always',

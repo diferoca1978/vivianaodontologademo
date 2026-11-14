@@ -5,7 +5,7 @@ item depends on the ones above it.
 
 ## 1. Real domain in the project
 
-- [ ] `astro.config.mjs` → `site` is the real domain (`https://vivianaodontologa.com`), not
+- [x] `astro.config.mjs` → `site` is the real domain (`https://odontologavivianarodriguez.com`), not
       `https://example.com` and not a preview URL (`*.netlify.app`, `*.workers.dev`,
       `*.pages.dev`).
 
@@ -26,11 +26,11 @@ item depends on the ones above it.
 
 ## 4. The gate, with the real domain
 
-- [ ] `pnpm build` passes with the real `site`. No `[CLIENTE]` or other placeholder is
+- [x] `pnpm build` passes with the real `site`. No `[CLIENTE]` or other placeholder is
       left: once `site` is the real domain, `placeholder-text` is an error.
 - [ ] The favicon, the logo and the `og-image` in `public/` are the client's, not the
       placeholders (the gate cannot see what an image shows).
-- [ ] Every entry in `shineSeo({ ignore })` still has a valid reason.
+- [x] Every entry in `shineSeo({ ignore })` still has a valid reason.
 
 ## 5. AI bot policies (only on Cloudflare)
 
@@ -39,7 +39,7 @@ item depends on the ones above it.
       never block it without an explicit decision.
 - [ ] With *Bot Preference Sync* on, Cloudflare adds its own directives in front of the
       site's `robots.txt`. Check the robots.txt the site **serves**
-      (`https://vivianaodontologa.com/robots.txt`), not the one in the repo. Search Console may
+      (`https://odontologavivianarodriguez.com/robots.txt`), not the one in the repo. Search Console may
       flag `Content-signal` as "Syntax not understood"; according to Cloudflare, it does
       not affect crawling.
 - [ ] If the zone is the agency's (`"cloudflare": "own"` in harness-tools'
@@ -50,7 +50,7 @@ item depends on the ones above it.
 ## 6. Search Console
 
 - [ ] A domain property, verified through DNS.
-- [ ] The sitemap is submitted (`https://vivianaodontologa.com/sitemap-index.xml`).
+- [ ] The sitemap is submitted (`https://odontologavivianarodriguez.com/sitemap-index.xml`).
 - [ ] URL Inspection on the home page and the key pages: indexable, and the canonical
       Google chose is the page's own URL.
 - [ ] Settings → Search generative AI is on "Include" or "Inherit" (the default; check
@@ -70,7 +70,7 @@ item depends on the ones above it.
 
 ## 10. Delivered
 
-- [ ] `pnpm exec check-seo --url https://vivianaodontologa.com` is clean on the real domain.
+- [ ] `pnpm exec check-seo --url https://odontologavivianarodriguez.com` is clean on the real domain.
 - [ ] The client is in harness-tools' `clients.json` with `"launched": true` and the real
       `domain`. One manual run of `seo-watch` confirms it (Actions → seo-watch → Run
       workflow, with `client` = its `id`); `"watch": true` adds it to the weekly run.

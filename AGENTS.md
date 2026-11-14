@@ -8,8 +8,8 @@ here.
 The website of **Dra. Viviana Rodríguez** (dentist, Rehabilitación Oral, Bogotá): an Astro
 site whose SEO core comes from the `@shine/seo-core` package (absolute URLs, head tags,
 JSON-LD, robots.txt and a build gate). Host: **Netlify**. Domain:
-**vivianaodontologa.com**, already in `astro.config.mjs` but not registered yet (see
-`client-gaps.md`).
+**odontologavivianarodriguez.com** (bought on Shine's Cloudflare account on 2026-11-14),
+already in `astro.config.mjs`.
 
 The package's README (`node_modules/@shine/seo-core/README.md`) documents its API and
 every rule the gate checks, for the exact version this site installs.
@@ -21,7 +21,7 @@ pnpm dev                                              # dev server at localhost:
 pnpm build                                            # build + the SEO gate: fails on any SEO error
 pnpm check                                            # astro check (types and .astro diagnostics)
 pnpm preview                                          # preview the build
-pnpm exec check-seo --url https://vivianaodontologa.com   # the gate's rules against the live site
+pnpm exec check-seo --url https://odontologavivianarodriguez.com   # the gate's rules against the live site
 pnpm prettier --write .                               # formatting (no eslint)
 ```
 
@@ -107,7 +107,7 @@ Fix the cause in the page, `pages.ts` or the config. Do not work around a rule.
 - **Done:** `pnpm build` passes with the gate green, `pnpm check` is clean and the
   feature's `acceptance` is met. Set its `status` to `done` in `feature_list.json`.
 - **Delivered:** the change is on `main`, deployed, and
-  `pnpm exec check-seo --url https://vivianaodontologa.com` is clean on the real domain.
+  `pnpm exec check-seo --url https://odontologavivianarodriguez.com` is clean on the real domain.
   Only then set `status` to `delivered`. This applies to the launch and to every later
   change to the live site.
 - Each feature carries `id`, `description`, `source` (the brief section its content comes

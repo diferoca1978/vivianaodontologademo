@@ -113,11 +113,11 @@ existe (`url-resolves`), así que esos enlaces se pintan con `isBuilt()`
 
 ## Antes del lanzamiento (Shine)
 
-- [ ] **Comprar el dominio.** `vivianaodontologa.com` está en `site` y en
-  `clients.json`, pero el 2026-10-16 no estaba registrado (NXDOMAIN en el
-  registro .com). Se compra en la cuenta de Cloudflare de Shine, con el DNS
-  apuntando a Netlify. Después, en `clients.json` va `"cloudflare": "own"`, y
-  hace falta la regla WAF de `seo-watch` (`CHECKPOINTS.md` §5).
+- [x] **Comprar el dominio.** Comprado el 2026-11-14 en la cuenta de Cloudflare
+  de Shine: `odontologavivianarodriguez.com` (reemplaza a `vivianaodontologa.com`,
+  que era el provisional). Ya está en `site`. Falta: DNS apuntando a Netlify, y en
+  `clients.json` el `domain` nuevo con `"cloudflare": "own"`, más la regla WAF de
+  `seo-watch` (`CHECKPOINTS.md` §5).
 
 ## Pending from the client
 
