@@ -51,7 +51,7 @@ Añadir a `/rehabilitacion-oral/`, justo después de ComoSeHace, la misma compar
 - **Elegido (mantenedor):** paciente real con consentimiento, así que no lleva aviso de "imagen ilustrativa".
 - **Elegido (agente, pendiente de revisión al aprobar):** `alt` neutros que describen lo visible (un diente ausente) sin nombrar el tratamiento aplicado. **Descartado:** "…con el diente restaurado con una corona", porque es una afirmación clínica que no está confirmada por la clienta.
 - **Convivencia de pins:** ComoSeHace se fija con su propio script (`rehabilitacion-oral/como-se-hace.ts`) y está antes en el DOM, así que su ScrollTrigger se crea antes que el de `before-after.ts` (Astro emite los scripts en orden de DOM; mismo caso verificado en la 07 con PinnedPanels). Se verifica en el navegador; `refresh` o `refreshPriority` solo si aparece un salto.
-- **Elegido (mantenedor, 2026-11-11, durante la implementación):** en CuandoTratamientos, el ítem "Pérdida de uno o varios dientes" usa `whitouttooth.webp` en lugar de `missing-tooth.webp`. Es una excepción explícita a la exclusión de Scope "Out" sobre el resto de secciones de la página. `missing-tooth.webp` deja de usarse, pero el archivo se queda en `src/assets/images/`.
+- **Elegido (mantenedor, 2026-11-11, durante la implementación):** en CuandoTratamientos, el ítem "Pérdida de uno o varios dientes" usa `whitouttooth.webp` en lugar de `missing-tooth.webp`. Es una excepción explícita a la exclusión de Scope "Out" sobre el resto de secciones de la página. `missing-tooth.webp` dejó de usarse y se borró de `src/assets/images/` el 2026-11-14 (limpieza del repo).
 
 ## Acceptance criteria
 
