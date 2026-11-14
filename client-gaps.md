@@ -115,9 +115,10 @@ existe (`url-resolves`), así que esos enlaces se pintan con `isBuilt()`
 
 - [x] **Comprar el dominio.** Comprado el 2026-11-14 en la cuenta de Cloudflare
   de Shine: `odontologavivianarodriguez.com` (reemplaza a `vivianaodontologa.com`,
-  que era el provisional). Ya está en `site`. Falta: DNS apuntando a Netlify, y en
-  `clients.json` el `domain` nuevo con `"cloudflare": "own"`, más la regla WAF de
-  `seo-watch` (`CHECKPOINTS.md` §5).
+  que era el provisional). Ya está en `site`, y el DNS apunta a Netlify con
+  HTTPS activo (2026-11-14). Los registros quedan en **DNS only**, sin proxy de
+  Cloudflare, así que no hace falta la regla WAF de `seo-watch` (`CHECKPOINTS.md` §5
+  no aplica). Falta: en `clients.json` el `domain` nuevo con `"cloudflare": "own"`.
 
 ## Pending from the client
 
