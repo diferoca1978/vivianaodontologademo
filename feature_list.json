@@ -237,7 +237,7 @@
     },
     {
       "id": "blanqueamiento-modalidades",
-      "description": "Blanqueamiento Dental: the 3 modalities (consultorio, casero, mixto). Replaces the old Beneficios and Cómo se hace sections (they do not coexist). Design and motion are defined by specs/04-blanqueamiento-modalidades-pinned.md (full lane, Approved): Pasos.astro becomes the generic ui/sections/PinnedPanels.astro (props, data-pinned* hooks, script in animations/utils/pinned-panels.ts), fed by perpage/blanqueamiento/Modalidades.astro. Each panel shows a compact 'Incluye' list under the paragraph; the big 01-03 number stays as decoration; existing photos for now (firstcheck2, calmenvironment, postservice), to be swapped later by the maintainer. Beneficios.astro stays in the repo, unmounted.",
+      "description": "Blanqueamiento Dental: the 3 modalities (consultorio, casero, mixto). Replaces the old Beneficios and Cómo se hace sections (they do not coexist). Design and motion are defined by specs/04-blanqueamiento-modalidades-pinned.md (full lane, Approved): Pasos.astro becomes the generic ui/sections/PinnedPanels.astro (props, data-pinned* hooks, script in animations/utils/pinned-panels.ts), fed by perpage/blanqueamiento/Modalidades.astro. Each panel shows a compact 'Incluye' list under the paragraph; the big 01-03 number stays as decoration; existing photos for now (firstcheck2, calmenvironment, postservice), to be swapped later by the maintainer. Beneficios.astro stayed in the repo unmounted until 2026-11-14, when it was deleted with its icons (repo cleanup).",
       "source": "textos-blanqueamiento.md › ¿Qué tipo de blanqueamiento dental es ideal para ti? (intro + 3 modalidades)",
       "acceptance": [
         "h2 '¿Qué tipo de blanqueamiento dental es ideal para ti?'",
@@ -274,7 +274,7 @@
     },
     {
       "id": "blanqueamiento-contraindicaciones",
-      "description": "Blanqueamiento Dental: who should not get it, with the cross-link to Rehabilitación Oral (replaces the old blanqueamiento-enlace-cruzado). /rehabilitacion-oral/ must exist before the link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts. The brief writes the href without the trailing slash (/rehabilitacion-oral); use PAGES.rehabilitacion.path (/rehabilitacion-oral/). Beneficios.astro (icon grid of 4) does not fit 5 items as is; it stays in the repo as a layout reference.",
+      "description": "Blanqueamiento Dental: who should not get it, with the cross-link to Rehabilitación Oral (replaces the old blanqueamiento-enlace-cruzado). /rehabilitacion-oral/ must exist before the link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts. The brief writes the href without the trailing slash (/rehabilitacion-oral); use PAGES.rehabilitacion.path (/rehabilitacion-oral/). Beneficios.astro (icon grid of 4) did not fit 5 items as is; it was kept as a layout reference and deleted on 2026-11-14 (repo cleanup).",
       "source": "textos-blanqueamiento.md › ¿Quién no debe hacerse un blanqueamiento dental? + arquitectura-informacion.md §3 Enlazado interno",
       "acceptance": [
         "h2 '¿Quién no debe hacerse un blanqueamiento dental?'",
@@ -359,7 +359,7 @@
         "h2 'Cuándo la necesitas'",
         "4 items verbatim: 'Desgaste dental visible', 'Pérdida de una o varias piezas', 'Bruxismo o dolor articular', 'Buscas recuperar función y estética a la vez'",
         "Items are bubbles (circle + pill) in the slots TL, TR, BL, BR around the centered h2, the same layout as the Tratamientos section",
-        "Each circle shows its photo from src/assets/images (worn-teeth, missing-tooth, teeth-hurt, solution, in item order) with <Image> and alt=\"\"; the brand placeholder (turquoise-light gradient + ToothOutline, aria-hidden) is only the fallback when an image is missing"
+        "Each circle shows its photo from src/assets/images (worn-teeth, whitouttooth, teeth-hurt, solution, in item order; whitouttooth replaced missing-tooth in spec 08) with <Image> and alt=\"\"; the brand placeholder (turquoise-light gradient + ToothOutline, aria-hidden) is only the fallback when an image is missing"
       ],
       "status": "done"
     },
