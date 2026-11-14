@@ -62,29 +62,44 @@ item depends on the ones above it.
 
 ## 6. Search Console
 
-- [ ] A domain property, verified through DNS.
-- [ ] The sitemap is submitted (`https://odontologavivianarodriguez.com/sitemap-index.xml`).
-- [ ] URL Inspection on the home page and the key pages: indexable, and the canonical
-      Google chose is the page's own URL.
-- [ ] Settings → Search generative AI is on "Include" or "Inherit" (the default; check
+- [x] A domain property, verified through DNS (2026-11-14, `google-site-verification`
+      TXT record on Cloudflare).
+- [x] The sitemap is submitted (`https://odontologavivianarodriguez.com/sitemap-index.xml`)
+      (2026-11-14).
+- [x] Indexing requested in URL Inspection for the 4 sitemap pages (2026-11-14). Live
+      check: all 200, `index, follow`, self-referencing canonical.
+- [ ] Once Google has crawled them (a few days): URL Inspection shows each page indexed,
+      and the canonical Google chose is the page's own URL.
+- [x] Settings → Search generative AI is on "Include" or "Inherit" (Inherit, 2026-11-14) (the default; check
       that nobody set it to "Exclude").
 
 ## 7. Google Business Profile (only for a local business)
 
-- [ ] The name, address and phone match `src/config/company.ts` exactly.
+- [x] The name, address and phone match `src/config/company.ts` exactly. Phone, geo and
+      hours match. Name and address differ on purpose ("Consultorio Viviana Rodriguez",
+      "Ak 15 #104-30"): decided on 2026-10-02 (`client-gaps.md`), name covered by
+      `alternateName`, same place by geo.
+- [x] Website `https://odontologavivianarodriguez.com/` added to the profile (2026-11-14).
+- [ ] Google has published the website change on the profile (it is under review).
 
 ## 8. Bing Webmaster Tools
 
-- [ ] The site is imported from Search Console.
+- [x] The site is imported from Search Console (2026-11-14).
+- [x] The sitemap shows in Bing's Sitemaps report (`sitemap-index.xml`), submitted by hand
+      on 2026-11-14 (the GSC import did not bring it).
 
 ## 9. Rich Results Test
 
-- [ ] The home page and one inner page pass with no errors.
+- [x] The home page and one inner page pass with no errors (2026-11-14: `/` and
+      `/blanqueamiento-dental/`).
+      PageSpeed Insights, desktop, same day: Performance 100, Accessibility 97, Best
+      Practices 100, SEO 100, agent navigation 3/3.
 
 ## 10. Delivered
 
-- [ ] `pnpm exec check-seo --url https://odontologavivianarodriguez.com` is clean on the real domain.
-- [ ] The client is in harness-tools' `clients.json` with `"launched": true` and the real
+- [x] `pnpm exec check-seo --url https://odontologavivianarodriguez.com` is clean on the real domain
+      (2026-11-14: 4 pages, 0 errors; 2 title-length warnings on `/` and `/contacto/`).
+- [x] The client is in harness-tools' `clients.json` with `"launched": true` and the real
       `domain`. One manual run of `seo-watch` confirms it (Actions → seo-watch → Run
       workflow, with `client` = its `id`); `"watch": true` adds it to the weekly run.
-- [ ] `feature_list.json`: every launched feature has `"status": "delivered"`.
+- [x] `feature_list.json`: every launched feature has `"status": "delivered"` (37, 2026-11-14).

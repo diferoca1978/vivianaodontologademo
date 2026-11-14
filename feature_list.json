@@ -15,7 +15,7 @@
         "All 4 links and the CTA are reachable at mobile width (≤ 375px) and by keyboard",
         "Colors only via global.css tokens; no inline style, no arbitrary values"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "global-footer",
@@ -30,7 +30,7 @@
         "A 'Política de privacidad' link is rendered in the footer bottom bar (its real target is wired in the page-privacidad feature)",
         "The scaffold 'Footer' stub is gone (harness/lint-customization.sh reports no Footer stub)"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "global-whatsapp-float",
@@ -43,7 +43,7 @@
         "Button uses WhatsApp green (green-500/green-600) with white icon; the ring and tooltip use global.css tokens (ivory, turquoise); no amber/stone Tailwind palette",
         "The icon is imported from @/assets/icons/whatsApp.svg, no inline <svg>"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "global-address-link",
@@ -57,7 +57,7 @@
         "The other two hero highlights render no link, and data-hero-highlight stays on each <li> (the GSAP entrance is unchanged)",
         "Every address link shows a visible focus style (focus-visible outline)"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "home-hero",
@@ -73,7 +73,7 @@
         "Any animation lives in src/utils/scripts/animations/ and uses gsap.matchMedia() with a reduced-motion branch that leaves content visible (autoAlpha: 1)",
         "The scaffold text 'Nueva web app' is gone"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "home-calma-activa",
@@ -94,7 +94,7 @@
         "Tooth logo is drawn with GSAP DrawSVGPlugin (data-calma-logo hook, paths stroke-drawn then fills fade in) once when it enters the viewport; in the reduced-motion branch it is left untouched and fully visible",
         "Section is less tall on desktop (lg:py-16) while mobile and tablet spacing is unchanged"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "home-servicios",
@@ -115,7 +115,7 @@
         "Icons are imported from @/assets/icons/, aria-hidden, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only",
         "GSAP lives in src/utils/scripts/animations/: home/servicios.ts (reveal), home/servicios-tabs.ts (service switch) and utils/marquee.ts (marquee loop), each with a gsap.matchMedia() reduced-motion branch that lands everything visible (autoAlpha: 1) and never loops or hides content for those users. The headings and the marquee row fade in from the bottom via ScrollTrigger.batch, once. The service switch fades the current panel out and staggers the next one in"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "home-sobre",
@@ -138,7 +138,7 @@
         "The h2 is split by words with GSAP SplitText (type 'words'), and each word fades in from below with a stagger, once, when the text column enters the viewport. The bio, credentials and CTA fade in from below right after. The h2 is outside the block that fades as a whole, so the two animations don't overlap. The two-weight spans and the turquoise full stop survive the split, and screen readers still read the full heading. With reduced motion the h2 is not split and is fully visible",
         "The tooth logo gets the same draw animation as in CalmaActiva: DrawSVGPlugin strokes its paths in, then the fills fade in and the stroke goes back to its authored width. It plays once when the logo enters the viewport, and with reduced motion the logo is left untouched and fully visible. The draw logic moves to a shared helper in src/utils/scripts/animations/utils/ (e.g. draw-tooth-logo.ts), called by both calma-activa.ts and sobre.ts, so it is not duplicated. CalmaActiva's logo animation behaves exactly as before"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "home-testimonios",
@@ -160,7 +160,7 @@
         "Icons imported from @/assets/icons/, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only (no hardcoded colors)",
         "Animation lives in src/utils/scripts/animations/home/testimonios.ts (data-testimonios-* hooks) with a gsap.matchMedia() reduced-motion branch that sets everything visible (autoAlpha: 1). The cards fade in from the bottom via ScrollTrigger.batch as they enter the viewport, once, as in CalmaActiva"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "home-cta-final",
@@ -178,7 +178,7 @@
         "Colors use only global.css brand tokens; no inline styles or arbitrary Tailwind values",
         "Any animation lives in src/utils/scripts/animations/home/cta-final.ts and respects prefers-reduced-motion"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "home-faq",
@@ -190,7 +190,7 @@
         "The '¿Dónde queda el consultorio?' answer reads 'En la Cra 15 # 104-30, Consultorio 302, zona de Chicó, al norte de Bogotá.'",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "page-home",
@@ -207,7 +207,7 @@
         "The scaffold title 'Home - My Website' is gone",
         "pnpm build passes with the SEO gate green and pnpm check reports 0 errors"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "blanqueamiento-hero",
@@ -221,7 +221,7 @@
         "CTA labeled 'Agenda tu valoración' links to COMPANY.whatsapp, opens in a new tab and has the sr-only new-tab note",
         "The hero no longer contains the intro paragraph (it lives in blanqueamiento-intro)"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "blanqueamiento-intro",
@@ -233,7 +233,7 @@
         "No <blockquote> and no heading in the section; the text is visible at every breakpoint",
         "The intro falls within the first 100 words of the page's main content"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "blanqueamiento-modalidades",
@@ -247,7 +247,7 @@
         "Built with the generic PinnedPanels component per specs/04-blanqueamiento-modalidades-pinned.md: the 'Incluye' list sits under each paragraph in a compact layout, the big 01-03 number is kept (aria-hidden), no 'Cómo se hace' section remains on the page",
         "The section is readable without JavaScript and respects prefers-reduced-motion if it keeps the pinned stage"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "blanqueamiento-antes-despues",
@@ -260,7 +260,7 @@
         "The only visible text is the labels 'Antes' and 'Después'",
         "Every acceptance criterion in specs/07-blanqueamiento-antes-despues-scroll.md holds"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "blanqueamiento-seguridad",
@@ -270,7 +270,7 @@
         "h2 '¿El blanqueamiento dental daña los dientes?'",
         "Answer paragraph verbatim, starting 'No, cuando está bien indicado.' and ending '…Por eso siempre empezamos con una valoración.'"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "blanqueamiento-contraindicaciones",
@@ -283,7 +283,7 @@
         "Text '¿Tienes desgaste o restauraciones que corregir? Conoce nuestro servicio de Rehabilitación Oral.' present",
         "'Rehabilitación Oral' is a descriptive-anchor link to PAGES.rehabilitacion.path (/rehabilitacion-oral/), rendered only when the page is built (isBuilt)"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "blanqueamiento-cuidados",
@@ -295,7 +295,7 @@
         "Each card has a decorative icon badge (coffee, smoke, citrus, dentalcream, asking, in that order) and a short editorial h3 title (not from the brief)",
         "Card design matches home/CalmaActiva: 1 col mobile, 2 tablet, 3 + 2 centred on lg; the only animation is the tooth logo above the h2, drawn in on scroll with the shared drawToothLogo (blanqueamiento-dental/cuidados.ts), skipped under reduced motion"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "blanqueamiento-faq",
@@ -308,7 +308,7 @@
         "Each faq is a native <details>/<summary> (collapsed by default) with a smooth open/close animation (GSAP, in src/utils/scripts/animations/blanqueamiento-dental/, reduced-motion respected); answers stay in the HTML (maintainer decision 2026-10-20, replaces 'always visible')",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "blanqueamiento-cta-final",
@@ -318,7 +318,7 @@
         "Heading 'Agenda tu valoración y descubre qué blanqueamiento se adapta a tu sonrisa.' present; the CTA section is the last section of the page",
         "Button labeled 'Agendar por WhatsApp' links to COMPANY.whatsapp, opens in a new tab and has the sr-only new-tab note"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "page-blanqueamiento",
@@ -334,7 +334,7 @@
         "No business, WebSite, Person or Service node on this page",
         "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "rehabilitacion-hero",
@@ -349,7 +349,7 @@
         "The intro (the direct answer) falls within the first 100 words of the page's main content",
         "Load-in GSAP entrance in src/utils/scripts/animations/rehabilitacion-oral/hero.ts, the same as the Blanqueamiento hero's: subtitle, h1 and intro rise in staggered, then the CTA; the photo settles from a slight zoom without a fade. Wrapped in gsap.matchMedia() with a prefers-reduced-motion: reduce branch that leaves everything in its final, visible state (autoAlpha 1), and nothing hidden by CSS, so the content stays visible without JS"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "rehabilitacion-cuando",
@@ -361,7 +361,7 @@
         "Items are bubbles (circle + pill) in the slots TL, TR, BL, BR around the centered h2, the same layout as the Tratamientos section",
         "Each circle shows its photo from src/assets/images (worn-teeth, whitouttooth, teeth-hurt, solution, in item order; whitouttooth replaced missing-tooth in spec 08) with <Image> and alt=\"\"; the brand placeholder (turquoise-light gradient + ToothOutline, aria-hidden) is only the fallback when an image is missing"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "rehabilitacion-tratamientos",
@@ -374,7 +374,7 @@
         "Treatments are read from serviceCards by slug; each bubble has the title in the pill and the photo in the circle (<Image>, alt=\"\")",
         "Slots TL, TC, TR, BL, BR, with the 4 corners in the same position as in Cuándo la necesitas"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "rehabilitacion-como-se-hace",
@@ -384,7 +384,7 @@
         "h2 'Cómo se hace'",
         "Ordered list (<ol>) of 3 steps, each title + text verbatim: Diagnóstico con escáner intraoral, Plan de tratamiento claro, Tratamiento en ambiente de calma"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "rehabilitacion-antes-despues",
@@ -397,7 +397,7 @@
         "The only visible text is the labels 'Antes' and 'Después'",
         "Every acceptance criterion in specs/08-rehabilitacion-antes-despues-scroll.md holds"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "rehabilitacion-enlace-cruzado",
@@ -407,7 +407,7 @@
         "Text '¿Buscas solo aclarar el tono de tu esmalte? Conoce nuestro servicio de Blanqueamiento Dental.' present",
         "'Blanqueamiento Dental' is a descriptive-anchor link to /blanqueamiento-dental/"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "rehabilitacion-faq",
@@ -418,7 +418,7 @@
         "Each faq is a native <details>/<summary> collapsed by default, opening on click or keyboard; answers stay in the HTML (maintainer decision 2026-10-22, D5)",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "rehabilitacion-cta-final",
@@ -428,7 +428,7 @@
         "Final CTA with the heading 'Agenda tu valoración y descubre qué tratamiento se adapta a ti.' is the last section of the page",
         "The CTA is labeled 'Agendar por WhatsApp' and links to COMPANY.whatsapp"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "page-rehabilitacion",
@@ -445,7 +445,7 @@
         "No full business, WebSite, Person or Service node on this page (only the seo.businessRef() Organization stub: @id, name, url)",
         "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "contacto-hero",
@@ -455,7 +455,7 @@
         "Exactly one <h1>: 'Agenda tu Cita'",
         "Intro 'Consultorio en Bogotá (Chicó). Resolvemos tus dudas antes de tu primera visita.' present"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "contacto-datos",
@@ -470,7 +470,7 @@
         "Opening hours rendered from COMPANY.business.hours, in Spanish, with no hand-written hours outside company.ts",
         "A map element that opens COMPANY.socialMedia.googleBusiness, with no hand-written map URL or coordinates outside company.ts"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "contacto-faq",
@@ -481,7 +481,7 @@
         "Each faq is a native <details>/<summary> collapsed by default, opening on click or keyboard; answers stay in the HTML (maintainer decision 2026-10-22, D5)",
         "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "page-contacto",
@@ -496,7 +496,7 @@
         "No business, WebSite, Person or Service node on this page",
         "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "brief-changes-2026-11-03",
@@ -518,7 +518,7 @@
         "The answer adds no claim beyond the maintainer's pasted text (summary only); the Home FAQ section emits no FAQPage JSON-LD (client-gaps.md D7)",
         "pnpm build passes with the gate green and pnpm check is clean"
       ],
-      "status": "done"
+      "status": "delivered"
     },
     {
       "id": "page-privacidad",
@@ -535,7 +535,7 @@
         "<title> and meta description from seo.pageHead(PAGES.privacidad), and the page is noindex (PAGES.privacidad.noindex: true) and out of the sitemap",
         "No business, WebSite or Person node on this page"
       ],
-      "status": "done"
+      "status": "delivered"
     }
   ]
 }

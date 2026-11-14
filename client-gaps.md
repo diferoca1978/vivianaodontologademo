@@ -154,8 +154,9 @@ en 9 reseñas. El enlace está en `COMPANY.socialMedia.googleBusiness`.
   - [ ] Agregar «Dentista» como categoría secundaria. Ayuda más con búsquedas
     como «odontólogo Chicó» o «blanqueamiento Bogotá» que alinear el nombre o
     la dirección.
-  - [ ] Agregar el sitio web cuando esté publicado. Hoy la ficha no tiene
-    ninguno.
+  - [x] Agregar el sitio web cuando esté publicado. Agregado el 2026-11-14
+    (`https://odontologavivianarodriguez.com/`); Google lo está revisando antes
+    de mostrarlo en la ficha.
 
 ## Decided on 2026-10-19 (new Blanqueamiento brief)
 
