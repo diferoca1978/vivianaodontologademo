@@ -11,10 +11,13 @@ item depends on the ones above it.
 
 ## 2. Domain on the host
 
-- [ ] The domain is added to the site on Netlify, and its DNS records point there.
-- [ ] DNS has propagated, and the host shows the domain as verified.
-- [ ] HTTPS is active on the domain, with and without `www`, and one of the two
-      redirects to the other.
+- [x] The domain is added to the site on Netlify (2026-11-14).
+- [x] Its DNS records point there (apex A `75.2.60.5`, `www` CNAME
+      `vivianaodontologa.netlify.app`, both DNS only on Cloudflare).
+- [x] DNS has propagated (1.1.1.1 and 8.8.8.8), and Netlify serves the domain over HTTP.
+- [x] HTTPS is active on the domain, with and without `www`, and one of the two
+      redirects to the other (Let's Encrypt cert for both names, valid until
+      2027-02-12; `www` and `http` 301 to `https://odontologavivianarodriguez.com/`, HSTS on).
 
 ## 3. Email for the contact form (only if the site has a form)
 
