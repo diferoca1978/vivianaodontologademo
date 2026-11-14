@@ -2,3 +2,6 @@ allowBuilds:
   '@parcel/watcher': true
   esbuild: true
   sharp: true
+update:
+  ignoreDeps:
+    - typescript

@@ -1,8 +1,0 @@
-{
-  "agentDir": ".opencode/agent",
-  "tiers": {
-    "fast": "opencode-go/glm-5.3-flash",
-    "standard": "opencode-go/gpt-5.6-luna",
-    "deep": "opencode-go/glm-5.2"
-  }
-}

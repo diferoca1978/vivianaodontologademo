@@ -1,0 +1,77 @@
+---
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import ToothLogo from "@/assets/icons/tooth-logo.svg";
+import { COMPANY } from "@/config/company";
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal";
+---
+
+<section
+  id="cta-final"
+  aria-labelledby="cta-final-title"
+  class="relative isolate overflow-hidden px-4 py-16 sm:px-8 sm:py-20"
+>
+  <div
+    class="relative mx-auto max-w-7xl overflow-hidden rounded-4xl bg-linear-to-br from-turquoise-light via-turquoise-light/80 to-ivory px-6 py-8 shadow-lg shadow-turquoise-dark/10 sm:px-12 lg:px-20"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-24 -left-20 size-72 rounded-full border-8 border-ivory/30"
+    ></div>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -right-20 -bottom-36 size-96 rounded-full border-8 border-ivory/35"
+    ></div>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute top-1/2 -right-12 size-40 -translate-y-1/2 rounded-full bg-ivory/30 blur-2xl"
+    ></div>
+
+    <div
+      class="relative z-10 mx-auto flex max-w-3xl flex-col items-center justify-center text-center"
+    >
+      <ToothLogo
+        data-cta-final-logo
+        aria-hidden="true"
+        class="mb-5 size-16 text-turquoise-dark sm:size-32"
+      />
+      <h2
+        id="cta-final-title"
+        data-cta-final-head
+        class="max-w-xl text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl"
+      >
+        Agenda tu valoración y empieza tu tratamiento con calma.
+      </h2>
+      <p
+        data-cta-final-head
+        class="mt-3 max-w-lg text-base leading-relaxed text-charcoal/80 sm:text-lg"
+      >
+        En nuestro consultorio particular en Bogotá cuidamos tu sonrisa y tu tranquilidad con atención personalizada y tecnología sin dolor.
+      </p>
+      <a
+        data-cta-final-head
+        href={COMPANY.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class:list={[
+          "group mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-turquoise-dark px-7 py-4 font-medium text-ivory transition-colors duration-300 hover:bg-turquoise hover:text-charcoal motion-reduce:transition-none",
+          focusRing,
+        ]}
+      >
+        Escribir por WhatsApp
+        <span class="sr-only">(se abre en una pestaña nueva)</span>
+        <span class="flex size-7 items-center justify-center rounded-full bg-ivory/20">
+          <ArrowUpRight
+            aria-hidden="true"
+            class="size-4 transition-transform duration-300 group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+          />
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/home/cta-final";
+</script>

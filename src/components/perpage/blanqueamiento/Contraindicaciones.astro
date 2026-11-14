@@ -1,0 +1,137 @@
+---
+// Copy: docs/brief/textos-blanqueamiento.md › ¿Quién no debe hacerse un blanqueamiento dental?
+// (verbatim). The cross-link comes from arquitectura-informacion.md §3 Enlazado interno
+// (Blanqueamiento Dental and Rehabilitación Oral link to each other). The brief writes the href as
+// /rehabilitacion-oral; it uses PAGES.rehabilitacion.path (canonical, trailing slash) instead, and
+// renders the link only once that page is built (isBuilt), so the gate's url-resolves rule passes.
+// Until then "Rehabilitación Oral" stays as plain text and the sentence still reads whole.
+// Design: an editorial two-column list on a soft turquoise band, right after Seguridad (ivory).
+// The question and lead-in sit on the left (sticky on lg); the five cases on the right, each with a
+// decorative Cormorant index and a hairline divider; stacked below lg. Below the grid, a full-width
+// CTA panel (same look as home/CtaFinal) holds the closing sentence, with the Rehabilitación Oral
+// link as a pill button. The heading, the five cases and the CTA panel each fade up once on scroll
+// (src/utils/scripts/animations/blanqueamiento-dental/contraindicaciones.ts); the sticky wrapper
+// itself is never transformed.
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import { PAGES } from "@/config/pages";
+import { isBuilt } from "@/utils/navigation";
+
+interface Contraindication {
+  lead: string;
+  text: string;
+}
+
+const items: Contraindication[] = [
+  {
+    lead: "Hipersensibilidad dental:",
+    text: "primero hay que identificar y controlar su causa.",
+  },
+  {
+    lead: "Embarazo y lactancia:",
+    text: "se pospone por precaución, al ser un procedimiento electivo.",
+  },
+  {
+    lead: "Caries activas o restauraciones defectuosas:",
+    text: "deben tratarse antes.",
+  },
+  {
+    lead: "Enfermedad de las encías:",
+    text: "es necesario controlar la inflamación primero.",
+  },
+  {
+    lead: "Fisuras o desgaste dental:",
+    text: "requieren valoración para evitar molestias.",
+  },
+];
+
+const rehabPath = PAGES.rehabilitacion.path;
+const showRehabLink = isBuilt(rehabPath);
+---
+
+<section
+  id="contraindicaciones"
+  aria-labelledby="contraindicaciones-title"
+  class="bg-charcoal"
+>
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:py-28 xl:px-8">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-5">
+        <div class="lg:sticky lg:top-32">
+          <h2
+            id="contraindicaciones-title"
+            data-contraindicaciones-head
+            class="text-4xl leading-tight font-medium tracking-tight text-balance text-ivory sm:text-5xl"
+          >
+            ¿Quién no debe hacerse un blanqueamiento dental?
+          </h2>
+          <p data-contraindicaciones-head class="mt-6 max-w-md text-lg leading-relaxed text-pretty text-ivory sm:text-xl">
+            El tratamiento debe posponerse o requiere una valoración especial en casos de:
+          </p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <ul class="divide-y divide-ivory/10 border-y border-ivory/10" role="list">
+          {
+            items.map(({ lead, text }, index) => (
+              <li data-contraindicaciones-item class="flex gap-5 py-6 sm:gap-8 sm:py-7">
+                <span
+                  aria-hidden="true"
+                  class="w-10 shrink-0 font-cormorant text-3xl leading-none font-medium text-turquoise-dark select-none sm:w-12 sm:text-4xl"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p class="text-base leading-relaxed text-pretty text-ivory sm:text-lg">
+                  <strong class="font-semibold">{lead}</strong> {text}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      data-contraindicaciones-cta
+      class="relative mt-16 overflow-hidden rounded-4xl bg-linear-to-br from-ivory via-ivory/90 to-turquoise-light px-6 py-12 text-center shadow-lg shadow-turquoise-dark/10 sm:px-12 lg:mt-20 lg:px-20 lg:py-16"
+    >
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute -top-24 -left-20 size-72 rounded-full border-8 border-turquoise-light/50"
+      >
+      </div>
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute -right-20 -bottom-36 size-96 rounded-full border-8 border-turquoise-light/60"
+      >
+      </div>
+      <p
+        class="relative z-10 mx-auto max-w-3xl text-2xl leading-snug font-medium tracking-tight text-balance text-charcoal sm:text-3xl"
+      >
+        ¿Tienes desgaste o restauraciones que corregir? Conoce nuestro servicio de{" "}
+        {
+          showRehabLink ? (
+            <a
+              href={rehabPath}
+              class="group mt-4 inline-flex items-center justify-center pl-1 text-base font-medium text-turquoise-dark underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-300 hover:decoration-current focus-visible:decoration-current focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise-dark motion-reduce:transition-none sm:text-3xl"
+            >
+              Rehabilitación Oral
+              <span class="flex size-7 items-center justify-center">
+                <ArrowUpRight
+                  aria-hidden="true"
+                  class="size-4 transition-transform duration-300 group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+                />
+              </span>
+            </a>
+          ) : (
+            <span class="font-semibold text-turquoise-dark group:hover:scale-105 ">Rehabilitación Oral</span>
+          )
+        }.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/blanqueamiento-dental/contraindicaciones";
+</script>

@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+import { COMPANY } from "@/config/company";
+import { PAGES } from "@/config/pages";
+import contactPhoto from "@/assets/images/Hero-home-reference-opt1.webp";
+import WhatsappIcon from "@/assets/icons/whatsApp.svg";
+
+// Copy: docs/brief/textos-sitio.md §4 Contacto (H1, intro), verbatim. The H1 comes from
+// PAGES.contacto.h1; the intro is the brief's line under the H1, verbatim (it is not the meta
+// description, which lives in PAGES.contacto.description). No breadcrumb:
+// arquitectura-informacion.md (Breadcrumbs, BreadcrumbList) puts them only on the service pages.
+// CTA: one "Agendar por WhatsApp" button under the intro (maintainer instruction 2026-11-03), the
+// same button as the home hero. The eyebrow is COMPANY.name.
+// Layout: the Blanqueamiento hero (perpage/blanqueamiento/Hero.astro) with the photo on the right: a
+// full-height hero on lg, the photo filling the right half (object-top, the crop of the home hero),
+// the copy in the left column. Below lg the copy comes first and the photo stays hidden.
+// The map and the contact details belong to the next section (contacto-datos).
+// The load-in lives in src/utils/scripts/animations/contacto/hero.ts (data-hero-* hooks).
+
+// The H1 stays PAGES.contacto.h1; only its last word is set in italic, the same accent as the
+// service-page heroes.
+const h1Words = PAGES.contacto.h1.split(" ");
+const h1Accent = h1Words.pop();
+const h1Lead = h1Words.join(" ");
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal";
+const description = "Consultorio en Bogotá. Resolvemos tus dudas antes de tu primera visita.";
+---
+
+<section
+  aria-labelledby="contacto-title"
+  class="relative isolate flex flex-col overflow-hidden bg-ivory md:min-h-[calc(100vh-4.5rem)] lg:h-screen"
+>
+  <!-- Photo: hidden below lg; on lg it fills the right half from the navbar's bottom edge, cropped
+       from the top (object-top) like the home hero; the ivory fades on its left and bottom melt it
+       into the page, so the crop at the feet is not noticed -->
+  <div class="relative hidden overflow-hidden md:absolute md:inset-y-0 md:right-0 md:-z-10 md:block md:w-1/2">
+    <Image
+      src={contactPhoto}
+      alt={`${COMPANY.name}, odontóloga, sentada junto a la silla dental en un consultorio luminoso`}
+      priority
+      data-hero-image
+      widths={[640, 960, contactPhoto.width]}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      class="h-full w-full object-cover object-top"
+    />
+    <div
+      aria-hidden="true"
+      class="absolute inset-y-0 left-0 hidden w-1/3 bg-linear-to-r from-ivory from-10% via-ivory/60 via-40% to-transparent md:block lg:w-1/2"
+    ></div>
+    <div
+      aria-hidden="true"
+      class="absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-ivory to-transparent"
+    ></div>
+  </div>
+
+  <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pt-16 pb-10 sm:pt-20 lg:relative lg:pt-28 lg:pb-16 xl:px-8">
+    <div class="mt-10 flex flex-col gap-8 lg:my-auto lg:pt-8">
+      <div class="flex max-w-sm flex-col gap-6 lg:ml-24 lg:max-w-lg">
+        
+        <h1
+          id="contacto-title"
+          data-hero-item
+          class="text-6xl leading-none font-medium tracking-tight text-balance text-charcoal sm:text-7xl xl:text-8xl"
+        >
+          {h1Lead} <em class="block font-normal text-turquoise-dark">{h1Accent}</em>
+        </h1>
+        <p data-hero-item class="max-w-md border-t border-gray-light pt-6 text-lg leading-relaxed text-charcoal sm:text-xl">
+          {description}
+        </p>
+        <div data-hero-item class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <a
+            href={COMPANY.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            class:list={[
+              "inline-flex items-center justify-center gap-3 rounded-full whitespace-nowrap bg-turquoise px-7 py-4 font-medium text-ivory shadow-lg shadow-turquoise/20 transition-colors duration-300 hover:bg-turquoise-dark motion-reduce:transition-none",
+              focusRing,
+            ]}
+          >
+            <WhatsappIcon class="size-5" aria-hidden="true" />
+            Agendar por WhatsApp
+            <span class="sr-only">(se abre en una pestaña nueva)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/contacto/hero";
+</script>

@@ -1,0 +1,28 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import Hero from "@/components/perpage/rehabilitacion/Hero.astro";
+import CuandoTratamientos from "@/components/perpage/rehabilitacion/CuandoTratamientos.astro";
+import ComoSeHace from "@/components/perpage/rehabilitacion/ComoSeHace.astro";
+import AntesDespues from "@/components/perpage/rehabilitacion/AntesDespues.astro";
+import EnlaceCruzado from "@/components/perpage/rehabilitacion/EnlaceCruzado.astro";
+import Faq from "@/components/perpage/rehabilitacion/Faq.astro";
+import CtaFinal from "@/components/perpage/rehabilitacion/CtaFinal.astro";
+import { PAGES } from "@/config/pages";
+import { seo } from "@/config/seo";
+
+const head = seo.pageHead(PAGES.rehabilitacion);
+const crumbs = [
+  { name: "Inicio", path: "/" },
+  { name: "Rehabilitación Oral", path: PAGES.rehabilitacion.path },
+];
+---
+
+<MainLayout head={head} schemas={[seo.businessRef(), seo.breadcrumbNode(crumbs)]}>
+  <Hero crumbs={crumbs} />
+  <CuandoTratamientos />
+  <ComoSeHace />
+  <AntesDespues />
+  <EnlaceCruzado />
+  <Faq />
+  <CtaFinal />
+</MainLayout>

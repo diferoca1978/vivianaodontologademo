@@ -1,0 +1,32 @@
+---
+import { PAGES } from "@/config/pages";
+
+// Copy: docs/source/politica-privacidad-estructura.md (title and "Última actualización"),
+// verbatim. The H1 comes from PAGES.privacidad.h1. No breadcrumb (arquitectura-informacion.md
+// puts them only on the service pages). No animation here (front-end-astro builds the markup only).
+const lastUpdated = "Noviembre 2026";
+---
+
+<section
+  aria-labelledby="privacidad-title"
+  class="border-b border-gray-light bg-ivory"
+>
+  <div class="mx-auto max-w-7xl px-4 pt-16 pb-12 sm:pt-20 lg:pt-24 lg:pb-16 xl:px-8">
+    <div class="flex max-w-4xl flex-col gap-6">
+      <span
+        aria-hidden="true"
+        class="block h-1 w-12 rounded-full bg-turquoise"
+      ></span>
+      <h1
+        id="privacidad-title"
+        class="text-5xl leading-tight font-medium tracking-tight text-balance text-charcoal sm:text-6xl"
+      >
+        {PAGES.privacidad.h1}
+      </h1>
+      <p class="border-t border-gray-light pt-6 text-base text-charcoal sm:text-lg">
+        <strong class="font-semibold">Última actualización:</strong>
+        {lastUpdated}
+      </p>
+    </div>
+  </div>
+</section>

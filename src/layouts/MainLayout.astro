@@ -1,43 +1,41 @@
 ---
-import { generateHomeSchemas, type JSONLDSchema } from "@/config/seo";
-import { LOCALE } from "@/config/companyInfo";
-import type { SEOProps } from "astro-seo";
+import SeoHead from "@shine/seo-core/components/SeoHead.astro";
+import type { HeadData, JsonLdNode } from "@shine/seo-core";
+import { LOCALE } from "@/config/company";
 import { Font } from "astro:assets";
 import "@/styles/global.css";
 
-import SeoHead from "@/components/SeoHead.astro";
 import Navbar from "@/components/global/NavBar.astro";
 import Footer from "@/components/global/Footer.astro";
+import WhatsApp from "@/components/ui/WhatsApp.astro";
 
+// head: seo.pageHead(PAGES.x) or seo.notFoundHead(). schemas: the page's JSON-LD nodes
+// (seo.homeNodes() on '/'), emitted as one @graph. SeoHead emits none on a noindex page.
 interface Props {
-  seoProps: SEOProps;
-  schemas?: JSONLDSchema[];
+  head: HeadData;
+  schemas?: JsonLdNode[];
 }
 
-const { seoProps, schemas = [] } = Astro.props;
-
-// A noindex page gets no JSON-LD at all. Otherwise: the page's own schemas, plus the
-// home schemas (the business, the WebSite and the founders) on '/' only.
-const allSchemas = seoProps.noindex
-  ? []
-  : [...schemas, ...(Astro.url.pathname === "/" ? generateHomeSchemas() : [])];
+const { head, schemas } = Astro.props;
 ---
 
 <!doctype html>
-<html lang={LOCALE} class="scrollbar-hide overflow-x-hidden">
+<html lang={LOCALE} class="overflow-x-hidden">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <!-- SEO Head -->
-    <SeoHead seoProps={seoProps} schemas={allSchemas} />
+    <SeoHead head={head} schemas={schemas} />
 
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <!-- Fonts -->
-    <Font cssVariable="--font-jakarta" />
-    <Font cssVariable="--font-nunito" />
+    <Font cssVariable="--font-cormorant" />
+    <Font cssVariable="--font-raleway" />
 
     <!-- SiteMap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -56,23 +54,6 @@ const allSchemas = seoProps.noindex
       <slot />
     </main>
     <Footer />
+    <WhatsApp />
   </body>
 </html>
-
-<style>
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>

@@ -1,32 +1,31 @@
 import type { APIRoute } from "astro";
-import { COMPANY_INFO } from "@/config/companyInfo";
+import { llms } from "@shine/seo-core";
+import { COMPANY } from "@/config/company";
 import { faqs } from "@/config/faqs";
 import { services } from "@/config/services";
 import { siteUrl } from "@/utils/url";
-import { header, linkList, llmsTxt, EXTRA_SECTIONS } from "@/utils/llms";
 
 export const GET: APIRoute = () => {
   const sections = [
-    linkList("Sitio", [
+    llms.linkList("Sitio", [
       {
-        title: COMPANY_INFO.name,
+        title: COMPANY.name,
         url: siteUrl("/"),
-        notes: COMPANY_INFO.description,
+        notes: COMPANY.description,
       },
     ]),
-    linkList(
+    llms.linkList(
       "Servicios",
       services.map((s) => ({ title: s.title, notes: s.seoDescription })),
     ),
-    linkList(
+    llms.linkList(
       "Preguntas frecuentes",
       faqs.map((f) => ({ title: f.question, notes: f.answer })),
     ),
-    ...EXTRA_SECTIONS,
   ];
 
-  const body = llmsTxt(
-    header(COMPANY_INFO.name, COMPANY_INFO.description),
+  const body = llms.llmsTxt(
+    llms.header(COMPANY.name, COMPANY.description),
     sections,
   );
 

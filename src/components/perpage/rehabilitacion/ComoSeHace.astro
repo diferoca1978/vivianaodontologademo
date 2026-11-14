@@ -1,0 +1,130 @@
+---
+// "Cómo se hace" for Rehabilitación Oral (feature rehabilitacion-como-se-hace).
+// Copy: docs/brief/textos-sitio.md §3 Rehabilitación Oral › Cómo se hace, 3 steps, titles and texts
+// verbatim and in the brief's order. The numbers 01–03 are the list's ordinals, not new copy, and
+// are aria-hidden (the <ol> already conveys the order).
+// Design (maintainer, approved): no photos. Typography-led panels, all on the ivory page background
+// (the project's white), a giant ordinal and the title and text, adapted from the Shine project's ProcessSteps. The h2 lives in an ivory header above the
+// stage, visible in every state; its last word in italic, the accent of the page's other headings.
+// Contrast: charcoal text on ivory; the giant numbers are decorative.
+// Layout: the base CSS is the stacked list (one panel after another), visible without JS. ≥768px
+// with motion, src/utils/scripts/animations/rehabilitacion-oral/como-se-hace.ts sets data-stage on
+// the <ol> (the group-data-stage/stage: classes overlay the panels on it), sizes it to the viewport
+// minus the sticky NavBar and pins it while each panel slides in over the previous one.
+interface Step {
+  title: string;
+  text: string;
+  /** Panel background and text colors (brand tokens). */
+  surface: string;
+  /** Giant watermark ordinal color. */
+  number: string;
+  /** Left bar color. */
+  accent: string;
+  /** "Paso NN" eyebrow color. */
+  label: string;
+  /** Body text color. */
+  body: string;
+  /** Rule under the title. */
+  rule: string;
+}
+
+const steps: Step[] = [
+  {
+    title: "Valoración y diagnóstico",
+    text: "Evaluamos tu caso con calma y resolvemos tus dudas antes de empezar.",
+    surface: "bg-ivory text-charcoal",
+    number: "text-turquoise-dark/10",
+    accent: "border-l-turquoise-dark",
+    label: "text-turquoise-dark",
+    body: "text-charcoal/85",
+    rule: "bg-turquoise-dark",
+  },
+  {
+    title: "Plan de tratamiento claro",
+    text: "Definimos contigo los tiempos y las etapas antes de empezar.",
+    surface: "bg-ivory text-charcoal",
+    number: "text-turquoise/20",
+    accent: "border-l-turquoise",
+    label: "text-turquoise-dark",
+    body: "text-charcoal/85",
+    rule: "bg-turquoise",
+  },
+  {
+    title: "Tratamiento en ambiente de calma",
+    text: "Aromaterapia, música relajante, cancelación de ruido y anestesia digital.",
+    surface: "bg-ivory text-charcoal",
+    number: "text-turquoise/40",
+    accent: "border-l-charcoal",
+    label: "text-turquoise-dark",
+    body: "text-charcoal/85",
+    rule: "bg-charcoal",
+  },
+];
+
+const id = "como-se-hace";
+const titleId = `${id}-title`;
+---
+
+<section id={id} aria-labelledby={titleId} class="bg-ivory" data-rehab-steps>
+  <div class="relative z-10 mx-auto max-w-7xl px-4 pt-20 pb-12 sm:pt-24 md:pb-0 xl:px-8">
+    <h2
+      id={titleId}
+      class="text-5xl leading-none font-medium tracking-tight text-charcoal md:text-6xl lg:text-7xl"
+    >
+      Cómo se <em class="font-normal text-turquoise-dark">hace?</em>
+    </h2>
+  </div>
+
+  <ol role="list" class="group/stage relative md:-mt-40 data-stage:overflow-hidden" data-rehab-steps-stage>
+    {
+      steps.map((step, index) => (
+        <li
+          class:list={[
+            "relative flex items-center overflow-hidden md:h-svh md:min-h-160 group-data-stage/stage:absolute group-data-stage/stage:inset-0 group-data-stage/stage:h-full group-data-stage/stage:min-h-0",
+            step.surface,
+          ]}
+          data-rehab-steps-panel
+        >
+          <div class="relative mx-auto w-full max-w-5xl px-4 py-16 sm:py-20 md:px-8 lg:px-16">
+            <span
+              aria-hidden="true"
+              class:list={[
+                "pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 font-cormorant text-9xl leading-none font-bold tracking-tighter select-none md:text-watermark",
+                step.number,
+              ]}
+              data-rehab-steps-number
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <div class:list={["relative border-l-4 pl-6 lg:pl-10", step.accent]}>
+              <p
+                class:list={["mb-4 text-xs font-semibold tracking-widest uppercase", step.label]}
+                data-rehab-steps-label
+              >
+                Paso {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3
+                class="text-4xl leading-tight font-medium tracking-tight sm:text-5xl lg:text-6xl"
+                data-rehab-steps-title
+              >
+                {step.title}
+              </h3>
+              <p
+                class:list={["mt-6 max-w-2xl text-base leading-relaxed text-pretty lg:text-lg", step.body]}
+                data-rehab-steps-text
+              >
+                {step.text}
+              </p>
+              <div aria-hidden="true" class:list={["mt-8 h-px w-24 lg:w-32", step.rule]} data-rehab-steps-rule />
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/rehabilitacion-oral/como-se-hace";
+</script>

@@ -1,6 +1,6 @@
 # specs/ — spec-driven design gate
 
-All work in this repo — from building a section to a scaffold-level chore —
+All work in this repo — from building a section to an infrastructure chore —
 goes through spec-driven design (SDD). It has **two lanes** that share the
 same implementation and verification chain and differ only in the input
 artifact:
@@ -10,7 +10,7 @@ artifact:
 - **Light lane** (`feature_list.json`) — when the answer is already
   written in an approved document (a brief, client-supplied content), an
   entry there with `source` + `acceptance` carries the same weight without
-  the ceremony of a spec file. See `AGENTS.md` § `feature_list.json`.
+  the ceremony of a spec file. See `AGENTS.md` § "Done and delivered".
 
 ## Routing rule
 
@@ -30,13 +30,12 @@ client content document)?**
 | Client-supplied copy (FAQs, approved text) that needs to land on a page | Yes | Light — `source` cites the document, `acceptance` verifies the exact text landed |
 | Redesigning a legacy project's UI | No | Full — a decision, not execution |
 | A hero section straight from the brief | Yes | Light |
-| A scaffold-level change — see `AGENTS.md` § "Evolving the scaffold" and its "If you change X → update Y" table (server Actions + email service, animation strategy swap, config file add/rename, folder convention change) | No | Full |
+| An infrastructure change — see `AGENTS.md` § "Spec-first: two lanes" (a dependency or the adapter, server Actions + email service, config file add/rename, folder convention change) | No | Full |
 
 This is not ceremony for its own sake: both lanes exist because content
-and infrastructure changes have shipped in this scaffold's client repos
-with nothing tying them back to a source, and separately, scaffold-level
-prose has gone stale after a change with no document forcing a review (see
-`AGENTS.md` § "Evolving the scaffold" for that history). `source` +
+and infrastructure changes have shipped in client repos with nothing tying
+them back to a source, and separately, `AGENTS.md` has gone stale after a
+change with no document forcing a review. `source` +
 `acceptance` (light lane) and a mandatory spec (full lane) are the two
 narrow fixes for those two failure shapes — nothing broader.
 
@@ -89,10 +88,10 @@ Both lanes converge on the same chain from step 3 onward:
 
 ## What this is not
 
-- **Not a build-state tracker.** See `AGENTS.md` § "Where state & memory
-  live" for the three stores that already do that job: `feature_list.json`
-  (in-progress queue — and, now, the light lane's own artifact), git
-  history (completion log), Engram (cross-session narrative/decisions).
+- **Not a build-state tracker.** Three stores already do that job:
+  `feature_list.json` (the queue and its status, see `AGENTS.md` § "Done
+  and delivered" — and the light lane's own artifact), git history
+  (completion log), Engram (cross-session narrative/decisions).
   This folder holds only the full lane's pre-change sign-off artifact —
   it does not duplicate any of the three.
 - **Not required for work an approved document already answers.** That's
@@ -106,9 +105,9 @@ Both lanes converge on the same chain from step 3 onward:
   lane, not here — that split is what keeps this folder from becoming a
   task list.
 
-> This folder ships with only `TEMPLATE.md` in the scaffold — the first
-> real spec is written the first time someone needs the full lane: a
-> change with no document already answering it.
+The first spec in this repo is numbered `01-`. Specs drafted outside the repo
+(for example in a scratch folder) are moved here once they
+are reviewed.
 
 The only overlap between the two lanes is "is this done?" (`status: done`
 vs. `- [x]`), and never over the same object — a feature carries no spec,

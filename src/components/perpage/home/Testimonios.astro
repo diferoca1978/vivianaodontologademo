@@ -1,0 +1,151 @@
+---
+import { COMPANY } from "@/config/company";
+import Quote from "@/assets/icons/quote.svg";
+import Star from "@/assets/icons/star.svg";
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import ToothLogo from "@/assets/icons/tooth-logo.svg";
+
+// Copy: docs/brief/textos-sitio.md §1 Inicio › Bloque: Testimonios (the h2, verbatim) and
+// docs/source/resenas-google.md › "Las 5 reseñas" (the reviews, in that order, and their
+// signatures). The review text is literal, spelling and emojis included: nothing is corrected
+// or trimmed without the client's OK. The "…" at the end of #2 is the author's own.
+// No Review / AggregateRating JSON-LD: Google ignores reviews a business marks up about itself.
+// Card (references/testimonial-card-reference.png): larger top-left radius, big turquoise quote
+// marks straddling the top edge (top-left) and the bottom edge (bottom-right), 5 stars, the
+// review, a short divider, then the signature. The marks stay inside the card's width, so they
+// never reach the page gutter; the grid's row gap and the card's vertical padding leave room for
+// the part that sticks out, so they cover neither the text nor the next card.
+// No avatar: the signature is the name with "Reseña de Google" below it. Surface as CalmaActiva.
+// Layout as CalmaActiva: 1 column on mobile, 2 on tablet (the fifth card centred at half width),
+// and on lg a 6-col grid where each card spans 2, so the second row (2 cards) sits centred.
+// Motion lives in src/utils/scripts/animations/home/testimonios.ts (data-testimonios-* hooks).
+
+interface Review {
+  text: string;
+  signature: string;
+}
+
+const reviews: Review[] = [
+  {
+    text: "Excelente profesional, muy bien atendido, el consultorio es muy agradable y limpio, buen sector, muy contento",
+    signature: "Uriel R.",
+  },
+  {
+    text: "Me ha gustado mucho la experiencia de ser tratada por la doctora Vivi me ayudado mucho en mi proceso dental y a sentirme más segura por su profesionalismo cuidado y buena energía gracias 🪬🫶🏻✨…",
+    signature: "Sentir es sagrado",
+  },
+  {
+    text: "Siempre confío la salud oral mía y de mi hija a nuestra doctora favorita, excelente atención servicio y calidad",
+    signature: "Diana G.",
+  },
+  {
+    text: "La odontóloga Viviana Rodríguez brinda una atención excelente, combinando calidez y profesionalismo. Por eso es mi doc de confianza. Siempre demuestra preocupación por sus pacientes, explica cada paso con claridad y hace que uno se sienta cómodo y seguro durante la consulta. Su trato amable y su paciencia hacen que ir al odontologo tanto para niños y adultos sea una experiencia agradable en cada visita.",
+    signature: "Diana M.",
+  },
+  {
+    text: "La doctora és muy amable, respetuosa y profesional, tuve una muy buena experiencia",
+    signature: "Camilo R.",
+  },
+];
+
+// All five are 5-star reviews on Google.
+const stars = Array.from({ length: 5 });
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal";
+---
+
+<section
+  id="testimonios"
+  aria-labelledby="testimonios-title"
+  class="relative isolate overflow-hidden"
+>
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:py-24 xl:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2
+        id="testimonios-title"
+        data-testimonios-head
+        class="text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl"
+      >
+        Pacientes que ya sintieron la diferencia
+      </h2>
+    </div>
+
+    <ul
+      role="list"
+      class="mt-20 grid gap-x-6 gap-y-20 sm:grid-cols-2 lg:grid-cols-6"
+    >
+      {
+        reviews.slice(0, 3).map(({ text, signature }, i) => (
+          <li
+            data-testimonios-item
+            class:list={[
+              "flex lg:col-span-2",
+              i === 3 && "lg:col-start-2",
+              i === 4 && "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:mx-0 lg:w-auto",
+            ]}
+           >
+            <figure class="relative flex w-full flex-col rounded-tl-4xl rounded-tr-testimonial rounded-br-4xl rounded-bl-testimonial bg-ivory px-7 pt-14 pb-12 shadow-lg shadow-turquoise-dark/30 sm:px-8">
+              <ToothLogo
+                aria-hidden="true"
+                class="pointer-events-none absolute top-1/2 left-1/2 z-0 size-48 -translate-x-1/2 -translate-y-1/2 text-turquoise opacity-10"
+              />
+
+              <Quote
+                aria-hidden="true"
+                class="absolute -top-9 left-6 z-10 size-18 text-turquoise sm:left-7"
+              />
+
+              <div class="relative z-10 flex flex-1 flex-col">
+                <p class="flex items-center gap-1 text-turquoise">
+                  {stars.map(() => (
+                    <Star aria-hidden="true" class="size-5" />
+                  ))}
+                  <span class="sr-only">5 de 5 estrellas</span>
+                </p>
+
+                <blockquote class="mt-5 flex-1">
+                  <p class="text-base leading-relaxed text-charcoal/80">{text}</p>
+                </blockquote>
+
+                <div aria-hidden="true" class="mt-8 h-px w-20 bg-gray-neutral/50" />
+
+                <figcaption class="mt-5">
+                  <span class="block text-lg leading-snug font-semibold">
+                    {signature}
+                  </span>
+                  <span class="mt-0.5 block text-sm text-charcoal/70">
+                    Reseña de Google
+                  </span>
+                </figcaption>
+              </div>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-20 text-center">
+      <a
+        href={COMPANY.socialMedia.googleBusiness}
+        target="_blank"
+        rel="noopener noreferrer"
+        class:list={[
+          "group inline-flex items-center justify-center gap-3 rounded-full border border-turquoise-dark px-7 py-4 font-medium text-turquoise-dark transition-colors duration-300 hover:bg-turquoise-light/50 motion-reduce:transition-none",
+          focusRing,
+        ]}
+      >
+        Ver todas las reseñas en Google
+        <span class="sr-only">(se abre en una pestaña nueva)</span>
+        <ArrowUpRight
+          aria-hidden="true"
+          class="size-4 shrink-0 transition-transform duration-300 group-hover:rotate-45 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
+        />
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/home/testimonios";
+</script>

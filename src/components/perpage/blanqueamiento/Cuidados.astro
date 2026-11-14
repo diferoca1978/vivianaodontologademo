@@ -1,0 +1,87 @@
+---
+// Copy: docs/brief/textos-blanqueamiento.md › Cuidados después del blanqueamiento dental
+// (verbatim, in the brief's order).
+// Card titles (h3): editorial labels written for the layout; they do NOT come from the brief.
+// Design: same card pattern as home/CalmaActiva (rounded ivory card with a turquoise shadow, a
+// circular icon badge straddling the top edge, serif h3 and small centred text). 1 col on mobile,
+// 2 on tablet, and on lg a 6-col grid where the five cards span 2 each so the second row (2 cards)
+// sits centred under the first (3). Soft turquoise band so the page keeps alternating tones after
+// Contraindicaciones. The tooth logo sits above the h2 as in home/CalmaActiva and is drawn in on
+// scroll (src/utils/scripts/animations/blanqueamiento-dental/cuidados.ts); the rest is static.
+import ToothLogo from "@/assets/icons/tooth-logo.svg";
+import Coffee from "@/assets/icons/coffee.svg";
+import Smoke from "@/assets/icons/smoke.svg";
+import Citrus from "@/assets/icons/citrus.svg";
+import DentalCream from "@/assets/icons/dentalcream.svg";
+import Asking from "@/assets/icons/asking.svg";
+
+interface Item {
+  title: string;
+  text: string;
+  icon: typeof Coffee;
+}
+
+const items: Item[] = [
+  {
+    title: "Café y té",
+    text: "Modera el café, el té, el vino tinto y los alimentos pigmentantes los primeros días.",
+    icon: Coffee,
+  },
+  {
+    title: "Evita fumar",
+    text: "Evita fumar: favorece las manchas.",
+    icon: Smoke,
+  },
+  {
+    title: "Cítricos",
+    text: "Limita los alimentos ácidos, como los cítricos, si tienes sensibilidad.",
+    icon: Citrus,
+  },
+  {
+    title: "Higiene oral",
+    text: "Usa crema dental con flúor y mantén una buena higiene oral.",
+    icon: DentalCream,
+  },
+  {
+    title: "Sensibilidad",
+    text: "Consúltanos si la sensibilidad es intensa o persistente.",
+    icon: Asking,
+  },
+];
+---
+
+<section id="cuidados" aria-labelledby="cuidados-title" class="">
+  <div class="mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:py-16 xl:px-8">
+    <ToothLogo data-cuidados-logo aria-hidden="true" class="mx-auto mb-4 size-16 sm:size-20" />
+    <h2
+      id="cuidados-title"
+      class="mx-auto max-w-3xl text-center text-4xl leading-tight font-medium tracking-tight text-balance sm:text-5xl"
+    >
+      Cuidados después del blanqueamiento dental
+    </h2>
+
+    <ol class="mt-14 grid gap-x-6 gap-y-16 sm:grid-cols-2 lg:mt-16 lg:grid-cols-6 lg:gap-y-14" role="list">
+      {
+        items.map(({ title, text, icon: Icon }, i) => (
+          <li
+            class:list={[
+              "flex flex-col rounded-3xl bg-ivory pb-8 shadow-lg shadow-turquoise-dark/30 lg:col-span-2",
+              i === 3 && "lg:col-start-2",
+              i === 4 && "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:mx-0 lg:w-auto",
+            ]}
+          >
+            <div class="relative z-10 -mt-8 flex size-16 items-center justify-center self-center rounded-full border-2 border-turquoise bg-ivory text-turquoise-dark">
+              <Icon class="size-8" aria-hidden="true" />
+            </div>
+            <h3 class="mt-5 px-6 text-center text-2xl font-medium tracking-wide">{title}</h3>
+            <p class="mx-auto mt-3 max-w-xs px-6 text-center text-base leading-relaxed text-charcoal/80">{text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/blanqueamiento-dental/cuidados";
+</script>

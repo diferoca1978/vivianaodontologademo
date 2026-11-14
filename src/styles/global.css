@@ -1,25 +1,43 @@
 @import "tailwindcss";
 
+/* tall: viewports at least 900px high. Keeps the largest hero type off short laptop screens
+   (1280×720, 1366×768, 1280×800), where it pushes the hero CTA under the floating WhatsApp button */
+@custom-variant tall {
+  @media (min-height: 900px) {
+    @slot;
+  }
+}
+
 @layer base {
+  /* Page scrollbar hidden on purpose (decided 2026-10-17); scrolling still works */
+  html {
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
   body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    background-color: var(--color-soft-bg);
+    background-color: var(--color-ivory);
+    color: var(--color-charcoal);
   }
 
   h1,
   h2,
-  h3 {
-    font-family: var(--font-jakarta);
+  h3,
+  h4 {
+    font-family: var(--font-cormorant);
   }
 
   p,
   button,
   a,
   li {
-    font-family: var(--font-nunito);
+    font-family: var(--font-raleway);
   }
 
   /* Prevent browser autofill from overriding custom styles */
@@ -40,8 +58,8 @@
     box-shadow: 0 0 0 1000px transparent inset !important;
 
     /* Force light text color for dark forms */
-    -webkit-text-fill-color: var(--color-purple-accent) !important;
-    color: var(--color-purple-accent) !important;
+    -webkit-text-fill-color: var(--color-charcoal) !important;
+    color: var(--color-charcoal) !important;
 
     /* Prevent background color transition (effectively disables browser styling) */
     transition:
@@ -49,7 +67,7 @@
       color 5000s ease-in-out 0s !important;
 
     /* Preserve borders and other properties */
-    border-color: var(--color-soft-bg) !important;
+    border-color: var(--color-ivory) !important;
     background-color: transparent !important;
   }
 
@@ -58,21 +76,31 @@
   textarea:-moz-autofill,
   select:-moz-autofill {
     background-color: transparent !important;
-    color: var(--color-purple-accent) !important;
-    border-color: var(--color-purple-accent) !important;
+    color: var(--color-charcoal) !important;
+    border-color: var(--color-charcoal) !important;
     filter: none !important;
   }
 }
 
 @theme inline {
-  --color-soft-bg: oklch(1 0 0);
-  --color-soft-beige: oklch(0.9655 0.0119 101.48);
-  --color-purple-accent: oklch(46.2% 0.066 315);
-  --color-purple-dark: oklch(36.9% 0.051 316);
-  --color-gray-lavender: oklch(67.3% 0.061 316);
-  --color-blue-mist: oklch(83.2% 0.035 255);
-  --color-olive: oklch(83.8% 0.075 111);
+  /* Brand palette — docs/brief/brand.md § Paleta (from the logo) */
+  --color-turquoise: oklch(0.6554 0.1111 190.19); /* Turquesa Principal: CTAs, links, icons, header accents */
+  --color-turquoise-light: oklch(0.8967 0.056 197.59); /* Turquesa Claro: soft section backgrounds, hover, service cards */
+  --color-turquoise-dark: oklch(0.52 0.1055 190.19); /* Turquesa Oscuro: same hue, ≈4.9:1 on ivory and ≈5.2:1 with white text (passes WCAG AA) */
+  --color-gray-neutral: oklch(0.6434 0 0); /* Gris Neutro: secondary text, supporting icons, dividers */
+  --color-gray-light: oklch(0.8853 0 0); /* Gris Claro: alternate backgrounds, subtle borders */
+  --color-ivory: oklch(0.9771 0.0074 80.72); /* Marfil: page background (instead of pure white) */
+  --color-charcoal: oklch(0.2264 0 0); /* Carbón: body text and headings (instead of pure black) */
 
-  --font-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-nunito: "Nunito", system-ui, sans-serif;
+  /* Testimonial cards use the reference's asymmetric, soft-cornered silhouette. */
+  --radius-testimonial: 5rem;
+
+  /* Contrast on ivory (WCAG): charcoal passes; gray-neutral ≈3.1:1 (large text only);
+     turquoise ≈2.8:1 (fails even for large text). On a turquoise fill use charcoal text (≈5.7:1), not white (≈3.0:1). */
+
+  --font-cormorant: "Cormorant", serif; /* heading slot */
+  --font-raleway: "Raleway", system-ui, sans-serif; /* body slot */
+
+  --text-watermark: 30rem; /* giant decorative ordinal behind the Rehabilitación "Cómo se hace" steps */
+  --text-watermark--line-height: 1;
 }

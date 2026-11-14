@@ -1,0 +1,17 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import Hero from "@/components/perpage/privacidad/Hero.astro";
+import Contenido from "@/components/perpage/privacidad/Contenido.astro";
+import { PAGES } from "@/config/pages";
+import { seo } from "@/config/seo";
+
+// Legal page: no JSON-LD (no business, WebSite or Person node, per the feature's acceptance).
+// Client data (legal name, ID, registry) filled in from docs/source/politica-privacidad-estructura.md.
+// noindex stays on until the client approves publication.
+const head = seo.pageHead(PAGES.privacidad);
+---
+
+<MainLayout head={head}>
+  <Hero />
+  <Contenido />
+</MainLayout>

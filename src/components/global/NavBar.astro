@@ -1,15 +1,115 @@
 ---
+import { Image } from "astro:assets";
+import { COMPANY } from "@/config/company";
 import { MainNavigation } from "@/utils/navigation";
+import logo from "@/assets/images/logonobg.png";
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+import Menu from "@/assets/icons/menu.svg";
+import Close from "@/assets/icons/close.svg";
+import NotchCorner from "@/assets/icons/notch-corner.svg";
+
+// Desktop: links split around the centered logo (references/Navbar-reference.png).
+
+// Inicio + both service links on the left; Contacto on the right, next to the CTA.
+const leftLinks = MainNavigation.filter((l) => l.path !== "/contacto/");
+const rightLinks = MainNavigation.filter((l) => l.path === "/contacto/");
+const current = Astro.url.pathname;
+
+// Active page: turquoise bar under the link. Hover/focus: turquoise underline.
+const linkClass =
+  "relative whitespace-nowrap text-charcoal underline-offset-8 decoration-turquoise decoration-2 hover:underline focus-visible:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal aria-[current=page]:no-underline aria-[current=page]:after:absolute aria-[current=page]:after:-bottom-5 aria-[current=page]:after:left-0 aria-[current=page]:after:h-1 aria-[current=page]:after:w-full aria-[current=page]:after:bg-turquoise";
 ---
 
-<nav>
-<ul>
-    {
-        MainNavigation.map(l => (
-            <li>
-                <a href={l.path}>{l.name}</a>
-            </li>
+<header class="sticky top-0 z-50 border-b border-turquoise-light bg-ivory xl:border-b-0 xl:drop-shadow-sm">
+  <nav
+    aria-label="Principal"
+    class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 xl:gap-10 xl:px-8"
+  >
+    <a
+      href="/"
+      class="relative z-10 shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-charcoal xl:order-2 xl:-mb-8"
+    >
+      <Image src={logo} alt="Dra. Viviana Rodríguez — Odontóloga" class="h-12 w-auto xl:h-20" priority />
+    </a>
+
+    <ul class="hidden items-center gap-6 xl:order-1 xl:flex xl:flex-1">
+      {
+        leftLinks.map((l) => (
+          <li>
+            <a href={l.path} class={linkClass} aria-current={current === l.path ? "page" : undefined}>
+              {l.name}
+            </a>
+          </li>
         ))
-    }
-</ul>
-</nav>
+      }
+    </ul>
+
+    <div class="flex items-center justify-end gap-6 xl:order-3 xl:flex-1">
+      <ul class="hidden items-center gap-6 xl:flex">
+        {
+          rightLinks.map((l) => (
+            <li>
+              <a href={l.path} class={linkClass} aria-current={current === l.path ? "page" : undefined}>
+                {l.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a
+        href={COMPANY.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group flex items-center gap-2 rounded-full bg-turquoise py-1.5 pr-4 pl-4 sm:pr-1.5 text-sm text-ivory transition-colors hover:bg-turquoise-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal xl:text-base"
+      >
+        Agendar Cita
+        <span class="sr-only">(se abre en una pestaña nueva)</span>
+        <span class="h-7 w-7 items-center justify-center rounded-full bg-ivory xl:h-8 xl:w-8 hidden sm:flex ">
+          <ArrowUpRight class="h-4 w-4 text-charcoal transition-transform duration-300 lg:group-hover:rotate-45 " aria-hidden="true" />
+        </span>
+      </a>
+
+      <button
+        type="button"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="nav-panel"
+        class="flex h-11 w-11 items-center justify-center rounded-full text-charcoal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal xl:hidden"
+      >
+        <span class="sr-only">Menú</span>
+        <Menu data-icon-open class="h-6 w-6" aria-hidden="true" />
+        <Close data-icon-close class="hidden h-6 w-6" aria-hidden="true" />
+      </button>
+    </div>
+  </nav>
+
+  <!-- Desktop: the bar dips below the logo as a tab with concave corners (reference). No shadow of its own: the header's drop-shadow outlines bar and tab as one shape -->
+  <div aria-hidden="true" class="pointer-events-none absolute top-full left-1/2 hidden -translate-x-1/2 items-start xl:flex">
+    <NotchCorner class="h-4 w-4 text-ivory" />
+    <div class="h-12 w-72 rounded-b-3xl bg-ivory"></div>
+    <NotchCorner class="h-4 w-4 -scale-x-100 text-ivory" />
+  </div>
+
+  <div id="nav-panel" data-nav-panel class="hidden overflow-hidden border-t border-gray-light bg-ivory xl:hidden">
+    <ul class="mx-auto flex max-w-7xl flex-col px-4 py-2">
+      {
+        MainNavigation.map((l) => (
+          <li data-nav-item>
+            <a
+              href={l.path}
+              class="relative inline-block py-3 text-lg text-charcoal aria-[current=page]:after:absolute aria-[current=page]:after:bottom-1 aria-[current=page]:after:left-0 aria-[current=page]:after:h-1 aria-[current=page]:after:w-full aria-[current=page]:after:bg-turquoise focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal"
+              aria-current={current === l.path ? "page" : undefined}
+            >
+              {l.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</header>
+
+<script>
+  import "@/utils/scripts/animations/global/navbar-menu";
+</script>

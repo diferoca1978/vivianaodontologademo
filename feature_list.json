@@ -1,9 +1,541 @@
 {
-  "_doc": "Generated per client during brief ingestion. Each entry: { id, status, builders, nota, source, acceptance }. This is the light lane of spec-driven design (SDD) — see AGENTS.md § Spec-first and specs/README.md.",
-  "_status": "pending | in_progress | done — only ONE feature may be in_progress at a time. A feature cannot move to in_progress without both source and acceptance filled in.",
-  "_builders": "subset of [front-end-astro, seo-guide-lines]. Sections -> front-end-astro; close each page with seo-guide-lines.",
-  "_source": "REQUIRED. The brief section (or other approved document) this feature's content comes from, e.g. \"arquitectura-informacion.md §2.1\". No document → this isn't light-lane work, write a full spec with /spec instead.",
-  "_acceptance": "REQUIRED. Boolean checklist derived from _source plus any CHECKPOINTS.md items that apply, e.g. [\"h1 matches the copy in §2.1\", \"CTA links to /contacto\"]. Verified for real by spec-verifier, same as a spec's Acceptance criteria.",
-  "client": null,
-  "features": []
+  "_doc": "One feature per page or section, generated from the brief. status: pending → in_progress (set by /spec-impl, one at a time) → done (pnpm build passes with the gate green, pnpm check is clean and every acceptance item holds) → delivered (on main, deployed, and check-seo --url clean on the real domain). See AGENTS.md § Done and delivered.",
+  "_source": "Required: the brief section the feature's content comes from, e.g. \"textos-sitio.md §2\". No source in the brief means the feature is not ready to build: ask first.",
+  "_acceptance": "Required: a checklist of verifiable statements from the source, e.g. [\"the h1 is PAGES.blanqueamiento.h1\", \"the CTA links to /contacto/\"].",
+  "client": "Dra. Viviana Rodríguez — Odontóloga, especialista en Rehabilitación Oral (Bogotá)",
+  "features": [
+    {
+      "id": "global-navbar",
+      "description": "Navbar (every page). Resolve D4 (turquoise contrast, client-gaps.md § Decisiones pendientes) before building: it applies to every section with links or turquoise text. Replaces the scaffold stub in src/components/global/NavBar.astro. Logos: src/assets/images/logonobg.png / logobgwhite.png (brand.md § Activos). Since 2026-10-16 the links to pages not built yet are hidden through PENDING_PAGES (src/utils/navigation.ts), so the SEO gate's url-resolves passes; each page feature brings its links back.",
+      "source": "arquitectura-informacion.md §3 Navegación (Header)",
+      "acceptance": [
+        "Header links, in this order, rendered from MainNavigation in src/utils/navigation.ts: Inicio (/), Blanqueamiento Dental (/blanqueamiento-dental/), Rehabilitación Oral (/rehabilitacion-oral/), Contacto (/contacto/)",
+        "A CTA labeled exactly 'Agendar Cita' links to COMPANY.whatsapp and stays visible while scrolling (fixed/sticky header)",
+        "Logo rendered with <Image> from astro:assets, non-empty alt, linking to /",
+        "All 4 links and the CTA are reachable at mobile width (≤ 375px) and by keyboard",
+        "Colors only via global.css tokens; no inline style, no arbitrary values"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "global-footer",
+      "description": "Footer (every page). Reopened on 2026-10-02 to add the opening hours: the user chose to publish the ones on the Google Business Profile (COMPANY.business.hours) and confirm them with the client later. Everything else was already built. The 'Política de privacidad' link ships as a placeholder (href='#' + TODO); its page is the page-privacidad feature, so the footer is no longer blocked on it. Since 2026-10-16 the links to pages not built yet are hidden through PENDING_PAGES (src/utils/navigation.ts), so the SEO gate's url-resolves passes; each page feature brings its links back.",
+      "source": "arquitectura-informacion.md §3 Estructura del sitio › Navegación › Footer + §1 Datos del negocio + client-gaps.md #1 (hours from the Google Business Profile, 2026-10-02)",
+      "acceptance": [
+        "Address rendered from COMPANY.business.address, reading exactly 'Cra 15 # 104-30, Consultorio 302' + Bogotá (single NAP form, brief §1)",
+        "Phone/WhatsApp from COMPANY.phone linking to COMPANY.whatsapp; email from COMPANY.email as a mailto: link",
+        "Instagram and TikTok links from COMPANY.socialMedia",
+        "A link to /contacto/",
+        "Opening hours rendered from COMPANY.business.hours, in Spanish, with no hand-written hours outside company.ts",
+        "A 'Política de privacidad' link is rendered in the footer bottom bar (its real target is wired in the page-privacidad feature)",
+        "The scaffold 'Footer' stub is gone (harness/lint-customization.sh reports no Footer stub)"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "global-whatsapp-float",
+      "description": "Floating WhatsApp button (every page). src/components/ui/WhatsApp.astro uses the owner-approved Uiverse design: WhatsApp-green button with a hover tooltip '¿Necesitas ayuda?'. These are deliberate deviations from the brief (owner decision), reflected in the acceptance below. The scaffold tooltip '¿Necesitas asesoría profesional?' and its amber/stone colors are gone.",
+      "source": "arquitectura-informacion.md §3 Navegación (Botón flotante de WhatsApp en todas las páginas)",
+      "acceptance": [
+        "A floating WhatsApp button renders on every page, linking to COMPANY.whatsapp with target=_blank and rel='noopener noreferrer'",
+        "The button has an accessible name (aria-label 'Chat de WhatsApp'); decorative icon is aria-hidden",
+        "The only visible text is the hover tooltip '¿Necesitas ayuda?'; the scaffold tooltip '¿Necesitas asesoría profesional?' is gone and there is no notification badge",
+        "Button uses WhatsApp green (green-500/green-600) with white icon; the ring and tooltip use global.css tokens (ivory, turquoise); no amber/stone Tailwind palette",
+        "The icon is imported from @/assets/icons/whatsApp.svg, no inline <svg>"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "global-address-link",
+      "description": "The address links to the Google Business Profile wherever it is shown (user request, 2026-10-16): the home hero highlight, the footer (every page) and the home FAQ answer '¿Dónde queda el consultorio?'. FAQ.astro wraps COMPANY.business.address.street in the link inside any answer that contains it, so src/config/faqs.ts stays plain text and later FAQs that mention the address get the link too.",
+      "source": "client-gaps.md #7 (Google Business Profile URL in COMPANY.socialMedia.googleBusiness, 2026-10-02) + arquitectura-informacion.md §1 (single NAP form) + the maintainer's request on 2026-10-16",
+      "acceptance": [
+        "The home hero address highlight, the footer <address> and the home FAQ answer '¿Dónde queda el consultorio?' each link to COMPANY.socialMedia.googleBusiness (https://www.google.com/maps?cid=13310363482939215067); no component writes that URL by hand",
+        "Each address link has target=_blank, rel='noopener noreferrer' and an sr-only '(ver en Google Maps, se abre en una pestaña nueva)'",
+        "The linked text is the single NAP form 'Cra 15 # 104-30, Consultorio 302' (brief §1), read from COMPANY.business.address",
+        "In the FAQ only the street is a link, and the answer still reads 'En la Cra 15 # 104-30, Consultorio 302, zona de Chicó, al norte de Bogotá.'",
+        "The other two hero highlights render no link, and data-hero-highlight stays on each <li> (the GSAP entrance is unchanged)",
+        "Every address link shows a visible focus style (focus-visible outline)"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "home-hero",
+      "description": "Home: hero. Visual reference: references/Hero-home-reference.png. Real photos are /src/assets/images/Hero-home-reference.webp. Replaces the scaffold stub 'Nueva web app'.",
+      "source": "textos-sitio.md §1 Inicio › Hero",
+      "acceptance": [
+        "Exactly one <h1> on /, reading 'Odontóloga en Bogotá, especialista en Rehabilitación Oral'",
+        "Tagline 'Odontología de Calma Activa: cuidamos tu sonrisa y tu tranquilidad.' present",
+        "Paragraph present verbatim: 'No solo transformamos sonrisas: cuidamos la tranquilidad de las personas que hay detrás de ellas. Consultorio particular en Chicó, Bogotá, con tecnología sin dolor y atención personalizada.'",
+        "Button 'Agendar por WhatsApp' links to COMPANY.whatsapp",
+        "Button 'Conocer servicios' links to the Servicios block on / (#servicios)",
+        "Three highlights present: '+12 años en odontología', 'Especialista en Rehabilitación Oral desde 2019', 'Consultorio propio en Chicó, norte de Bogotá'",
+        "Any animation lives in src/utils/scripts/animations/ and uses gsap.matchMedia() with a reduced-motion branch that leaves content visible (autoAlpha: 1)",
+        "The scaffold text 'Nueva web app' is gone"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "home-calma-activa",
+      "description": "Home: Odontología de Calma Activa",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Odontología de Calma Activa",
+      "acceptance": [
+        "h2 'Odontología de Calma Activa'",
+        "Intro present verbatim: 'Rediseñamos la consulta odontológica tradicional para convertirla en una experiencia de bienestar, sin sacrificar excelencia clínica.'",
+        "Section is src/components/perpage/home/CalmaActiva.astro, rendered on / right after the Hero, with id='calma-activa' and aria-labelledby pointing at the h2",
+        "Decorative tooth logo (@/assets/icons/tooth-logo.svg, aria-hidden) sits centred above the h2",
+        "Five items in an <ol>, each title + text verbatim from the brief: Aromaterapia, Música relajante, Cancelación de ruido, Anestesia digital, Escáner intraoral; each is a rounded card with a circular icon badge, a heading (h3) and centred text (reference: references/calma-activa-reference.png)",
+        "Responsive grid: 1 column on mobile, 2 on tablet, 6-col grid on lg with cards spanning 2 so the last two sit centred on the second row",
+        "No SVG/image background on the section (radiant-gradient.svg is not used); no photos or 'Read More' links invented — the brief has neither",
+        "Icons imported from @/assets/icons/ (aroma, music, headphones, syringe, tooth, tooth-logo), no inline <svg>, no raw <img>",
+        "No inline style=\"\", no arbitrary Tailwind values, brand tokens only (no hardcoded colors)",
+        "Animation lives in src/utils/scripts/animations/home/calma-activa.ts (data-calma-head / data-calma-item hooks) with a gsap.matchMedia() reduced-motion branch that sets elements visible (autoAlpha: 1)",
+        "Each of the five cards fades in from the bottom (autoAlpha + y) via ScrollTrigger.batch as it enters the viewport, once; in the reduced-motion branch the cards are never hidden and land visible",
+        "Tooth logo is drawn with GSAP DrawSVGPlugin (data-calma-logo hook, paths stroke-drawn then fills fade in) once when it enters the viewport; in the reduced-motion branch it is left untouched and fully visible",
+        "Section is less tall on desktop (lg:py-16) while mobile and tablet spacing is unchanged"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "home-servicios",
+      "description": "Home: services. Design references: references/our-serviceshome-reference.png (main services: left tab list, right detail with image, title, text and two buttons) and references/otherservices-home-reference.png (other services: row of tall rounded cards, icon badge top-left, title bottom). The 8 short cards show the title only (no description); image areas render a brand-token placeholder when an entry has no photo. The 2 featured services come from services, and the 8 names and anchors from serviceCards (src/config/services.ts). Since 2026-10-16 the links to pages not built yet are hidden through PENDING_PAGES (src/utils/navigation.ts), so the SEO gate's url-resolves passes; each page feature brings its links back.",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Servicios + arquitectura-informacion.md §3 (tarjetas con ancla propia)",
+      "acceptance": [
+        "Section is src/components/perpage/home/Servicios.astro, rendered on / after CalmaActiva, with id='servicios' and aria-labelledby pointing at the h2",
+        "h2 'Tratamientos pensados para tu salud y tu confianza' with the two-weight treatment and a turquoise full stop. The reference's eyebrow and intro paragraph are not built",
+        "Desktop (lg+) is two columns: the left has the h2 and a list of the 2 services titles as tabs, active one in dark text with a bottom rule, inactive one light grey",
+        "The tab list is an ARIA tablist: role=tab/tabpanel, aria-selected, aria-controls, roving tabindex and arrow-key/Home/End navigation. A service is selected on mouse hover, click or keyboard. The first tab is selected by default. Without JS the first panel is visible",
+        "The right column shows the active service's detail: image area, h3 title, the approved text, and two buttons. Both panels render from services, not hardcoded. Blanqueamiento uses 'Una sonrisa más blanca, sin ansiedad ni sorpresas. Uno de nuestros tratamientos más solicitados.'; Rehabilitación uses 'La especialidad de la Dra. Viviana: recuperar función y estética a la vez, con un enfoque cálido.'",
+        "Primary button 'Ver el servicio' (with the small arrow-up-right icon) links to /blanqueamiento-dental/ or /rehabilitacion-oral/. Outline button 'Agendar por WhatsApp' links to COMPANY.whatsapp. No other CTA is invented",
+        "The image area renders <Image> from service.image (imported in src/config/services.ts). When an entry has no image it renders a brand-token placeholder (turquoise gradient with a tooth-outline watermark). No stock or invented photo",
+        "On mobile the tabs become a horizontal list above a single panel, and the layout is single-column",
+        "'También ofrecemos' renders the 8 serviceCards in brief order as tall rounded cards. Each has its anchor id (e.g. id='implantes') on the first copy only, a circular icon badge top-left from @/assets/icons/, and the title only (no description) at the bottom over a dark brand-token overlay. The card shows <Image> from serviceCard.image, or a placeholder background when absent",
+        "The cards run in an infinite GSAP marquee (src/components/ui/utils/Marquee.astro), paused on hover and focus. The clones are aria-hidden, inert and have no ids. With reduced motion or without JS nothing moves and the row is a keyboard-focusable, labelled, horizontally scrollable region",
+        "The reference's eyebrow, left intro paragraph and 'Book Appointment' wording are not copied. Only brief copy appears",
+        "Icons are imported from @/assets/icons/, aria-hidden, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only",
+        "GSAP lives in src/utils/scripts/animations/: home/servicios.ts (reveal), home/servicios-tabs.ts (service switch) and utils/marquee.ts (marquee loop), each with a gsap.matchMedia() reduced-motion branch that lands everything visible (autoAlpha: 1) and never loops or hides content for those users. The headings and the marquee row fade in from the bottom via ScrollTrigger.batch, once. The service switch fades the current panel out and staggers the next one in"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "home-sobre",
+      "description": "Home: about Dra. Viviana. Design reference: references/aboutme-home-reference.png (left: two-photo collage with a turquoise offset block; the reference's circular badge is not built, dropped at review on 2026-10-02, and the tooth logo goes above the h2 as in CalmaActiva instead; right: two-weight h2, body copy, checklist, CTA). Photos (client-supplied, both 1024×1536 portraits): src/assets/images/aboutme-home2.webp (the doctor at work at the dental unit) is the large back photo, like the reference's clinical scene; src/assets/images/aboutme-home.webp (the doctor smiling in an armchair) is the smaller front photo, like the reference's portrait. Copy is rendered from AUTHORS in src/config/authors.ts. The optional quote about Rehabilitación Oral (client-gaps.md #10) is not built until the client sends it.",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Sobre la Dra. Viviana",
+      "acceptance": [
+        "Section is src/components/perpage/home/Sobre.astro, rendered on / right after Servicios, with id='sobre' and aria-labelledby pointing at the h2",
+        "h2 'Más de una década cuidando sonrisas en Bogotá' with the two-weight treatment and a turquoise full stop, as in Servicios ('Más de una década' semibold, the rest normal)",
+        "The 'Ejerzo la odontología desde 2014…' paragraph is rendered verbatim from AUTHORS[0].bio, not hardcoded",
+        "The 4 credentials are rendered verbatim from AUTHORS[0].credentials as a <ul> checklist. Each item has a circular turquoise check icon (aria-hidden) imported from @/assets/icons/",
+        "Desktop (lg+) has two columns, the photo collage on the left and the text on the right (reference: references/aboutme-home-reference.png). On mobile it is one column, with the collage above the text, its overlap kept and scaled down, and no horizontal scroll at 375px",
+        "Two-photo collage, as in the reference. The large photo, aboutme-home2.webp, sits at the top-left. The smaller photo, aboutme-home.webp, sits at the bottom-right and overlaps it. Both are rendered with <Image> from astro:assets in rounded frames (object-cover). Each has a distinct descriptive alt naming Dra. Viviana Rodríguez with no invented facts, plus responsive widths/sizes and lazy loading (they are below the fold). No other photo, and no stock or invented image",
+        "A turquoise brand-token rounded block sits offset behind the large photo's lower-left corner, as in the reference",
+        "The reference's circular badge is not built: no badge disc or ring, and nothing in the collage besides the two photos and the turquoise block",
+        "The tooth logo from @/assets/icons/tooth-logo.svg sits above the h2 as in CalmaActiva: same classes (mb-4 size-16 sm:size-20), aria-hidden, left-aligned with the heading, and outside the text block that fades in",
+        "One CTA, 'Agendar por WhatsApp', as a pill button with the arrow-up-right icon in a circle (the reference's 'Schedule Appointment' style). It links to COMPANY.whatsapp, opens in a new tab and says so for screen readers",
+        "Elements in the reference with no copy in the brief are not built: the script eyebrow, the '25+ Year Of Experiences' stat, the second paragraph and the 'Call Us Now' phone block. Only brief copy appears",
+        "Icons are imported from @/assets/icons/, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only (no hardcoded colors)",
+        "Animation lives in src/utils/scripts/animations/home/sobre.ts (data-sobre-* hooks) with a gsap.matchMedia() reduced-motion branch that sets everything visible (autoAlpha: 1). The two photos and the text column fade in from the bottom via ScrollTrigger, once, with the small photo slightly after the large one",
+        "The h2 is split by words with GSAP SplitText (type 'words'), and each word fades in from below with a stagger, once, when the text column enters the viewport. The bio, credentials and CTA fade in from below right after. The h2 is outside the block that fades as a whole, so the two animations don't overlap. The two-weight spans and the turquoise full stop survive the split, and screen readers still read the full heading. With reduced motion the h2 is not split and is fully visible",
+        "The tooth logo gets the same draw animation as in CalmaActiva: DrawSVGPlugin strokes its paths in, then the fills fade in and the stroke goes back to its authored width. It plays once when the logo enters the viewport, and with reduced motion the logo is left untouched and fully visible. The draw logic moves to a shared helper in src/utils/scripts/animations/utils/ (e.g. draw-tooth-logo.ts), called by both calma-activa.ts and sobre.ts, so it is not duplicated. CalmaActiva's logo animation behaves exactly as before"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "home-testimonios",
+      "description": "Home: testimonials. Unblocked on 2026-10-02. The user chose 5 real Google reviews and the signature rule; both are in docs/source/resenas-google.md and still need the client's confirmation. Card design reference: references/testimonial-card-reference.png (big quote marks overlapping the card's top-left and bottom-right edges, 5 stars, the review, a short divider, then the name with a subtitle). The user dropped the reference's avatar: the signature is the name only, with 'Reseña de Google' as the subtitle where the reference has 'Customer – Dubai'. The reference's orange background, dot grids and circle arc are not built: the section stays ivory like the rest of the home, and the cards take CalmaActiva's surface. Section layout as in CalmaActiva, per the user: a centred header and the five cards in a 3 + 2 grid. Client decision 2026-10-02 (post-verification): the client wants the section as currently built — 3 reviews (Uriel R., Sentir es sagrado, Diana G.), only the opening quote mark on the top-left edge, and the 3 cards in a single row on lg — so acceptance items 3, 5 and 8 were adjusted to match; the implementation is NOT to be 'fixed' to the old 5-review/closing-quote criteria. Each card also carries tooth-logo.svg as a centred low-opacity watermark behind the text, a later explicit user request (not in the section header).",
+      "source": "textos-sitio.md §1 Inicio › Bloque: Testimonios + arquitectura-informacion.md §7 + docs/source/resenas-google.md",
+      "acceptance": [
+        "Section is src/components/perpage/home/Testimonios.astro, rendered on / right after Sobre, with id='testimonios' and aria-labelledby pointing at the h2",
+        "Centred h2 'Pacientes que ya sintieron la diferencia' with the same classes as CalmaActiva's h2. No intro paragraph and no tooth logo: the brief gives this block only its title",
+        "Exactly 3 of the reviews in docs/source/resenas-google.md — in this order: Uriel R., Sentir es sagrado, Diana G. — with their text verbatim (spelling and emojis included); zero invented reviews. The remaining two (Diana M., Camilo R.) are omitted by client decision 2026-10-02: the client wants 3 reviews",
+        "Each card is a <figure>: the review in a <blockquote>, then a <figcaption> with the 'Firma en el sitio' value from docs/source/resenas-google.md as the name (semibold) and 'Reseña de Google' below it as a smaller muted subtitle. No avatar, photo or initials",
+        "Card design follows references/testimonial-card-reference.png: a rounded card with a larger top-right and bottom-left corner radius; a single large decorative opening quote mark overlapping the card's top-left edge, turquoise and aria-hidden (client decision 2026-10-02: no closing quote on the bottom-right); a row of 5 stars above the text; a short horizontal divider between the text and the signature",
+        "The 5 stars are icons imported from @/assets/icons/ (aria-hidden) in turquoise, a brand token instead of the reference's yellow, with a visually hidden '5 de 5 estrellas' for screen readers (all 5 chosen reviews are 5-star on Google)",
+        "Cards take CalmaActiva's surface: bg-ivory with shadow-lg shadow-turquoise-dark/30. The reference's orange background, dot grids and circle arc are not built",
+        "Layout per client decision 2026-10-02 (3 cards): the cards are a <ul role='list'> with 1 column on mobile, 2 on tablet (the third card at half width on its own row), and on lg a 6-col grid where each card spans 2 so the 3 cards fill a single centred row",
+        "Cards in the same row share the same height, and the divider and signature sit at the bottom of each card whatever the length of its text",
+        "The quote marks that overlap the card edges cause no horizontal scroll at 375px and don't cover the neighbouring cards or the text",
+        "Below the cards, centred, a 'Ver todas las reseñas en Google' link to COMPANY.socialMedia.googleBusiness, with target='_blank' and rel='noopener noreferrer', that says it opens in a new tab for screen readers",
+        "No Review or AggregateRating JSON-LD (brief §6 doesn't list it, and Google ignores reviews a business marks up about itself)",
+        "Icons imported from @/assets/icons/, with no inline <svg> and no raw <img>. No inline style=\"\" and no arbitrary Tailwind values, brand tokens only (no hardcoded colors)",
+        "Animation lives in src/utils/scripts/animations/home/testimonios.ts (data-testimonios-* hooks) with a gsap.matchMedia() reduced-motion branch that sets everything visible (autoAlpha: 1). The cards fade in from the bottom via ScrollTrigger.batch as they enter the viewport, once, as in CalmaActiva"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "home-cta-final",
+      "description": "Home: final CTA. Replaces the home-ubicacion feature at the client's request on 2026-10-02. Visual reference: references/cta-home-reference.png. The CTA uses existing client-supplied dental photography as the surrounding collage; no location block is rendered in this slot.",
+      "source": "textos-sitio.md §1 Inicio › CTA final + user request 2026-10-02 (references/cta-home-reference.png)",
+      "acceptance": [
+        "Section is src/components/perpage/home/CtaFinal.astro and replaces home-ubicacion in the home section order",
+        "Heading 'Agenda tu valoración y empieza tu tratamiento con calma.'",
+        "Supporting copy is present and communicates personalized dental care in the calm, warm brand voice without inventing a new service or claim",
+        "Primary button 'Escribir por WhatsApp' links to COMPANY.whatsapp and opens in a new tab with an accessible announcement",
+        "The secondary central element is the tooth-logo.svg from @/assets/icons/tooth-logo.svg, decorative and animated with the same draw treatment used in CalmaActiva",
+        "The section uses a rounded turquoise-light card with subtle abstract brand-token shapes, matching references/cta-reference-home.png without avatars",
+        "The section has no visible address/location block, map, service-image collage, or home-ubicacion copy",
+        "Layout remains usable at 375px with no horizontal scroll; the tooth logo is the only decorative visual",
+        "Colors use only global.css brand tokens; no inline styles or arbitrary Tailwind values",
+        "Any animation lives in src/utils/scripts/animations/home/cta-final.ts and respects prefers-reduced-motion"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "home-faq",
+      "description": "Home: FAQ. Decisión del cliente: las respuestas se muestran colapsadas inicialmente y se abren al activar cada pregunta.",
+      "source": "textos-sitio.md §1 Inicio › Preguntas frecuentes + arquitectura-informacion.md §5 (FAQ visible) and §6 (FAQPage)",
+      "acceptance": [
+        "Renders the 4 faqs with category 'inicio' from src/config/faqs.ts, questions and answers verbatim",
+        "Every answer is collapsed by default and opens when its question is activated by click or keyboard",
+        "The '¿Dónde queda el consultorio?' answer reads 'En la Cra 15 # 104-30, Consultorio 302, zona de Chicó, al norte de Bogotá.'",
+        "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "page-home",
+      "description": "Home page: SEO and assembly.",
+      "source": "textos-sitio.md §1 Inicio (Meta title, Meta description) + arquitectura-informacion.md §3 Enlazado interno, §4, §6",
+      "acceptance": [
+        "The head comes from seo.pageHead(PAGES.home), and PAGES.home holds textos-sitio.md §1's meta title, meta description and h1 verbatim",
+        "<title> is 'Odontóloga en Bogotá, Rehabilitación Oral | Dra. Viviana Rodríguez' (PAGES.home.title plus the suffix seo.pageHead() adds; 66 characters, a title-length warning accepted by the maintainer)",
+        "meta description is 'Odontología de Calma Activa en Bogotá (Chicó). Rehabilitación oral, blanqueamiento y diseño de sonrisa con tecnología sin dolor. Agenda tu cita hoy.'",
+        "Exactly one <h1>, rendering PAGES.home.h1",
+        "Sections in order: Hero, Calma Activa, Servicios, Sobre la Dra. Viviana, Testimonios (only once real ones exist), Ubicación, Preguntas frecuentes, CTA final",
+        "JSON-LD on / is seo.homeNodes() in one @graph: the Dentist node (NAP identical to the visible text, sameAs Instagram, TikTok and the Google Business Profile), the WebSite, and the Person viviana-rodriguez",
+        "/ links to /blanqueamiento-dental/ and /rehabilitacion-oral/ from the nav and the service cards (both paths out of PENDING_PAGES)",
+        "The scaffold title 'Home - My Website' is gone",
+        "pnpm build passes with the SEO gate green and pnpm check reports 0 errors"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "blanqueamiento-hero",
+      "description": "Blanqueamiento Dental: hero. REWRITTEN 2026-10-19 from the new brief (textos-blanqueamiento.md); status back to pending because the copy changed. Reuse src/components/perpage/blanqueamiento/Hero.astro (breadcrumb, full-bleed photo, layout and the motion hooks of specs/01): change the copy, add the highlights (2 of the brief's 3) and the CTA label. UPDATED 2026-10-19 (specs/03): the intro leaves the hero (see blanqueamiento-intro) and the highlights are final as built (own icons, 'Tres modalidades', only 2 of the brief's 3 points). The new brief puts 'en Bogotá' back in the H1, which reverses the 2026-10-17 decision; the maintainer confirmed it on 2026-10-19 and PAGES.blanqueamiento.h1, client-gaps.md and textos-sitio.md §2 already match.",
+      "source": "textos-blanqueamiento.md › Blanqueamiento Dental en Bogotá (H1, subtítulo, 3 puntos, CTA; la intro pasa a blanqueamiento-intro) + arquitectura-informacion.md §3 Breadcrumbs, §4, §5",
+      "acceptance": [
+        "Visible breadcrumb 'Inicio > Blanqueamiento Dental', with Inicio linking to /",
+        "Exactly one <h1>: 'Blanqueamiento Dental en Bogotá' (PAGES.blanqueamiento.h1 matches it)",
+        "Subtitle 'Una sonrisa más luminosa, sin perder su apariencia natural.'",
+        "2 highlights in a <ul>, in this order, bold lead + text: 'Valoración clínica previa:' revisión exhaustiva de tus dientes antes de recomendarte una opción.; 'Tres modalidades:' en consultorio, en casa o mixto. (brief wording, with 'revisión' accented and 'Tres' spelled out; the brief's third point 'En consultorio:' was dropped by the maintainer on 2026-10-19), each with a decorative icon (moodsearch, threefingers)",
+        "CTA labeled 'Agenda tu valoración' links to COMPANY.whatsapp, opens in a new tab and has the sr-only new-tab note",
+        "The hero no longer contains the intro paragraph (it lives in blanqueamiento-intro)"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "blanqueamiento-intro",
+      "description": "Blanqueamiento Dental: highlighted intro right below the hero (pull-quote style, plain <p>, no <blockquote>, no heading). Depends on specs/03-blanqueamiento-hero-intro-destacada.md being Approved: it defines the design and the short text, which is not in the approved brief and awaits the client (client-gaps.md #15). New component src/components/perpage/blanqueamiento/Intro.astro.",
+      "source": "specs/03-blanqueamiento-hero-intro-destacada.md (Source of the content; short version chosen by the maintainer on 2026-10-19) + textos-blanqueamiento.md:5 (full intro, not used as is)",
+      "acceptance": [
+        "Intro.astro is mounted between Hero and Beneficios",
+        "One <p> with exactly: 'El blanqueamiento o aclaramiento dental es un procedimiento estético que aclara el tono de tus dientes naturales y reduce pigmentaciones. En el consultorio de la Dra. Viviana Rodríguez, realizamos el procedimiento con un protocolo planificado, supervisión profesional y un ambiente diseñado para tu tranquilidad.'",
+        "No <blockquote> and no heading in the section; the text is visible at every breakpoint",
+        "The intro falls within the first 100 words of the page's main content"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "blanqueamiento-modalidades",
+      "description": "Blanqueamiento Dental: the 3 modalities (consultorio, casero, mixto). Replaces the old Beneficios and Cómo se hace sections (they do not coexist). Design and motion are defined by specs/04-blanqueamiento-modalidades-pinned.md (full lane, Approved): Pasos.astro becomes the generic ui/sections/PinnedPanels.astro (props, data-pinned* hooks, script in animations/utils/pinned-panels.ts), fed by perpage/blanqueamiento/Modalidades.astro. Each panel shows a compact 'Incluye' list under the paragraph; the big 01-03 number stays as decoration; existing photos for now (firstcheck2, calmenvironment, postservice), to be swapped later by the maintainer. Beneficios.astro stayed in the repo unmounted until 2026-11-14, when it was deleted with its icons (repo cleanup).",
+      "source": "textos-blanqueamiento.md › ¿Qué tipo de blanqueamiento dental es ideal para ti? (intro + 3 modalidades)",
+      "acceptance": [
+        "h2 '¿Qué tipo de blanqueamiento dental es ideal para ti?'",
+        "Intro paragraph verbatim: 'Todo tratamiento inicia con una valoración clínica: revisamos el color de tus dientes, tus restauraciones, tus hábitos y tus expectativas para recomendarte la modalidad adecuada.'",
+        "3 h3 in this order: 'Blanqueamiento dental en consultorio', 'Blanqueamiento dental casero', 'Blanqueamiento dental mixto', each with its description verbatim",
+        "'En consultorio' and 'casero' each render their 'Incluye:' list verbatim (3 and 4 items, bold leads kept); 'mixto' has no list",
+        "Built with the generic PinnedPanels component per specs/04-blanqueamiento-modalidades-pinned.md: the 'Incluye' list sits under each paragraph in a compact layout, the big 01-03 number is kept (aria-hidden), no 'Cómo se hace' section remains on the page",
+        "The section is readable without JavaScript and respects prefers-reduced-motion if it keeps the pinned stage"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "blanqueamiento-antes-despues",
+      "description": "Blanqueamiento Dental: before/after comparison right after Modalidades and before Seguridad. Design and motion are defined by specs/07-blanqueamiento-antes-despues-scroll.md (full lane, Approved). The generic ui/sections/BeforeAfter.astro (props, data-before-after* hooks, script in animations/utils/before-after.ts) is fed by perpage/blanqueamiento/AntesDespues.astro with beforewhitening.webp / afterwithening.webp. On scroll the 'after' layer is revealed left to right with a clip-path wipe and a divider line: pinned from 768px, scrub without pin below it, and the two photos stacked with reduced motion or without JS. Photos of a real patient with consent, confirmed by the maintainer on 2026-11-11. No h2 and no notice: the only visible copy is the 'Antes' / 'Después' labels.",
+      "source": "specs/07-blanqueamiento-antes-despues-scroll.md (Approved; content per § Source of the content)",
+      "acceptance": [
+        "AntesDespues is mounted in src/pages/blanqueamiento-dental.astro right after Modalidades and before Seguridad",
+        "The section is a <section> with aria-label 'Antes y después del blanqueamiento dental' and no h2; the page keeps exactly one <h1>",
+        "Both photos use astro:assets (beforewhitening.webp, afterwithening.webp) with alt 'Sonrisa antes del blanqueamiento dental' and 'La misma sonrisa después del blanqueamiento dental'",
+        "The only visible text is the labels 'Antes' and 'Después'",
+        "Every acceptance criterion in specs/07-blanqueamiento-antes-despues-scroll.md holds"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "blanqueamiento-seguridad",
+      "description": "Blanqueamiento Dental: is it harmful? Short answer block (direct answer, AEO). Good fit for a plain text block.",
+      "source": "textos-blanqueamiento.md › ¿El blanqueamiento dental daña los dientes?",
+      "acceptance": [
+        "h2 '¿El blanqueamiento dental daña los dientes?'",
+        "Answer paragraph verbatim, starting 'No, cuando está bien indicado.' and ending '…Por eso siempre empezamos con una valoración.'"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "blanqueamiento-contraindicaciones",
+      "description": "Blanqueamiento Dental: who should not get it, with the cross-link to Rehabilitación Oral (replaces the old blanqueamiento-enlace-cruzado). /rehabilitacion-oral/ must exist before the link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts. The brief writes the href without the trailing slash (/rehabilitacion-oral); use PAGES.rehabilitacion.path (/rehabilitacion-oral/). Beneficios.astro (icon grid of 4) did not fit 5 items as is; it was kept as a layout reference and deleted on 2026-11-14 (repo cleanup).",
+      "source": "textos-blanqueamiento.md › ¿Quién no debe hacerse un blanqueamiento dental? + arquitectura-informacion.md §3 Enlazado interno",
+      "acceptance": [
+        "h2 '¿Quién no debe hacerse un blanqueamiento dental?'",
+        "Lead-in 'El tratamiento debe posponerse o requiere una valoración especial en casos de:' present",
+        "5 items verbatim, bold lead + text, in order: Hipersensibilidad dental, Embarazo y lactancia, Caries activas o restauraciones defectuosas, Enfermedad de las encías, Fisuras o desgaste dental",
+        "Text '¿Tienes desgaste o restauraciones que corregir? Conoce nuestro servicio de Rehabilitación Oral.' present",
+        "'Rehabilitación Oral' is a descriptive-anchor link to PAGES.rehabilitacion.path (/rehabilitacion-oral/), rendered only when the page is built (isBuilt)"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "blanqueamiento-cuidados",
+      "description": "Blanqueamiento Dental: aftercare. Five care tips as icon cards, same design as the home's Odontología de Calma Activa.",
+      "source": "textos-blanqueamiento.md › Cuidados después del blanqueamiento dental",
+      "acceptance": [
+        "h2 'Cuidados después del blanqueamiento dental'",
+        "5 cards rendered as a list (<ol>), in the brief's order, each with the tip verbatim, from 'Modera el café, el té…' to 'Consúltanos si la sensibilidad es intensa o persistente.'",
+        "Each card has a decorative icon badge (coffee, smoke, citrus, dentalcream, asking, in that order) and a short editorial h3 title (not from the brief)",
+        "Card design matches home/CalmaActiva: 1 col mobile, 2 tablet, 3 + 2 centred on lg; the only animation is the tooth logo above the h2, drawn in on scroll with the shared drawToothLogo (blanqueamiento-dental/cuidados.ts), skipped under reduced motion"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "blanqueamiento-faq",
+      "description": "Blanqueamiento Dental: FAQ, now 4 questions (the old 4 are replaced in src/config/faqs.ts). D5 decided: collapsed accordion (2026-10-22). src/components/perpage/home/FAQ.astro is the reference to reuse. The brief says 'Depende de la modalidad' for the price answer: no figure is given and none is invented.",
+      "source": "textos-blanqueamiento.md › Preguntas frecuentes sobre el blanqueamiento dental + arquitectura-informacion.md §5, §6",
+      "acceptance": [
+        "h2 'Preguntas frecuentes sobre el blanqueamiento dental'",
+        "src/config/faqs.ts holds exactly 4 faqs with category 'blanqueamiento-dental', verbatim: '¿Quiénes pueden hacerse un blanqueamiento dental?', '¿Cuánto duran los resultados y cada cuánto debo hacer un retoque?', '¿El blanqueamiento dental produce sensibilidad?', '¿Cuánto cuesta un blanqueamiento dental en Bogotá?'",
+        "The page renders those 4 faqs, verbatim",
+        "Each faq is a native <details>/<summary> (collapsed by default) with a smooth open/close animation (GSAP, in src/utils/scripts/animations/blanqueamiento-dental/, reduced-motion respected); answers stay in the HTML (maintainer decision 2026-10-20, replaces 'always visible')",
+        "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "blanqueamiento-cta-final",
+      "description": "Blanqueamiento Dental: final CTA. The new brief makes the button 'Agendar por WhatsApp' (the old entry linked to /contacto/). src/components/perpage/home/CtaFinal.astro is the reference to reuse.",
+      "source": "textos-blanqueamiento.md › CTA final (Agenda tu valoración y descubre qué blanqueamiento se adapta a tu sonrisa.) + arquitectura-informacion.md §3 Enlazado interno",
+      "acceptance": [
+        "Heading 'Agenda tu valoración y descubre qué blanqueamiento se adapta a tu sonrisa.' present; the CTA section is the last section of the page",
+        "Button labeled 'Agendar por WhatsApp' links to COMPANY.whatsapp, opens in a new tab and has the sr-only new-tab note"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "page-blanqueamiento",
+      "description": "Blanqueamiento Dental page: SEO and assembly. REWRITTEN 2026-10-19 for the new brief (textos-blanqueamiento.md). Meta title and description are not in the new brief: they stay as in textos-sitio.md §2 (note: its 'sin dolor' sits next to the new FAQ on temporary sensitivity; raise it with the client, do not change it here). Service JSON-LD removed from this page by maintainer decision 2026-10-22 (D2). Its title already holds the company name, so seo.pageHead() adds no suffix. The page renders Hero + Intro + Modalidades + Antes y después + Seguridad + Contraindicaciones + Cuidados + FAQ + CTA final (Beneficios was unmounted on 2026-10-19 and kept in the repo; Pasos became ui/sections/PinnedPanels.astro and Modalidades replaced it, spec 04; Antes y después was added after Modalidades on 2026-11-11, spec 07).",
+      "source": "textos-sitio.md §2 Blanqueamiento Dental (Meta title, Meta description) + textos-blanqueamiento.md (sections and order) + arquitectura-informacion.md §4, §5, §6",
+      "acceptance": [
+        "Route src/pages/blanqueamiento-dental.astro serves /blanqueamiento-dental/",
+        "<title> is 'Blanqueamiento Dental en Bogotá | Dra. Viviana Rodríguez'",
+        "meta description is 'Blanqueamiento dental profesional en Bogotá (Chicó), en un consultorio pensado para tu calma. Resultados visibles, sin dolor y con seguimiento personalizado.'",
+        "Exactly one <h1> on the page",
+        "Sections in order: hero, modalidades, ¿daña los dientes?, ¿quién no debe?, cuidados, Preguntas frecuentes, CTA final",
+        "BreadcrumbList JSON-LD (Inicio → Blanqueamiento Dental) passed through MainLayout's schemas, matching the visible breadcrumb",
+        "No business, WebSite, Person or Service node on this page",
+        "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "rehabilitacion-hero",
+      "description": "Rehabilitación Oral: hero",
+      "source": "textos-sitio.md §3 Rehabilitación Oral (H1, subtítulo, intro; the CTA final's 'Agenda tu valoración', also used as the hero button by the maintainer's decision of 2026-10-23) + arquitectura-informacion.md §3 Breadcrumbs, §5 + the Blanqueamiento hero's entrance motion (specs/01-blanqueamiento-hero-beneficios-motion.md, Hero), requested for this hero by the maintainer on 2026-10-24",
+      "acceptance": [
+        "Visible breadcrumb 'Inicio > Rehabilitación Oral', with Inicio linking to /",
+        "A WhatsApp button 'Agenda tu valoración' right under the intro, right-aligned on lg: href COMPANY.whatsapp, target _blank with rel 'noopener noreferrer', and a visually hidden '(se abre en una pestaña nueva)', the same as the Blanqueamiento hero's",
+        "Exactly one <h1>: 'Rehabilitación Oral en Bogotá'",
+        "Subtitle 'La especialidad de la Dra. Viviana Rodríguez.'",
+        "Intro present verbatim: 'La rehabilitación oral recupera la función, la estética y la salud de tu boca cuando hay desgaste, pérdida de dientes o problemas articulares, combinando tratamientos según cada caso.'",
+        "The intro (the direct answer) falls within the first 100 words of the page's main content",
+        "Load-in GSAP entrance in src/utils/scripts/animations/rehabilitacion-oral/hero.ts, the same as the Blanqueamiento hero's: subtitle, h1 and intro rise in staggered, then the CTA; the photo settles from a slight zoom without a fade. Wrapped in gsap.matchMedia() with a prefers-reduced-motion: reduce branch that leaves everything in its final, visible state (autoAlpha 1), and nothing hidden by CSS, so the content stays visible without JS"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "rehabilitacion-cuando",
+      "description": "Rehabilitación Oral: when you need it. Shares one pinned block with rehabilitacion-tratamientos (CuandoTratamientos.astro): same bubble layout, the pin swaps from this section to the next.",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Cuándo la necesitas · specs/05-rehabilitacion-cuando-tratamientos-swap.md",
+      "acceptance": [
+        "h2 'Cuándo la necesitas'",
+        "4 items verbatim: 'Desgaste dental visible', 'Pérdida de una o varias piezas', 'Bruxismo o dolor articular', 'Buscas recuperar función y estética a la vez'",
+        "Items are bubbles (circle + pill) in the slots TL, TR, BL, BR around the centered h2, the same layout as the Tratamientos section",
+        "Each circle shows its photo from src/assets/images (worn-teeth, whitouttooth, teeth-hurt, solution, in item order; whitouttooth replaced missing-tooth in spec 08) with <Image> and alt=\"\"; the brand placeholder (turquoise-light gradient + ToothOutline, aria-hidden) is only the fallback when an image is missing"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "rehabilitacion-tratamientos",
+      "description": "Rehabilitación Oral: included treatments. Shares one pinned block with rehabilitacion-cuando (CuandoTratamientos.astro): the 4 corner bubbles stay and TC appears as the fifth.",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Tratamientos incluidos · specs/05-rehabilitacion-cuando-tratamientos-swap.md",
+      "acceptance": [
+        "h2 'Tratamientos incluidos'",
+        "5 treatments in brief order: Coronas en Zirconio, Incrustaciones Dentales, Prótesis Removibles, Placas de Bruxismo, Implantes",
+        "No invented description text for the treatments",
+        "Treatments are read from serviceCards by slug; each bubble has the title in the pill and the photo in the circle (<Image>, alt=\"\")",
+        "Slots TL, TC, TR, BL, BR, with the 4 corners in the same position as in Cuándo la necesitas"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "rehabilitacion-como-se-hace",
+      "description": "Rehabilitación Oral: how it is done",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Cómo se hace",
+      "acceptance": [
+        "h2 'Cómo se hace'",
+        "Ordered list (<ol>) of 3 steps, each title + text verbatim: Diagnóstico con escáner intraoral, Plan de tratamiento claro, Tratamiento en ambiente de calma"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "rehabilitacion-antes-despues",
+      "description": "Rehabilitación Oral: before/after comparison right after ComoSeHace and before EnlaceCruzado. Design and motion are defined by specs/08-rehabilitacion-antes-despues-scroll.md (full lane, Approved), which reuses specs/07's generic ui/sections/BeforeAfter.astro and animations/utils/before-after.ts unchanged. perpage/rehabilitacion/AntesDespues.astro feeds it with whitouttooth.webp (before) / whithtooth.webp (after). On scroll the 'after' layer is revealed left to right with a clip-path wipe and a divider line: pinned from 768px, scrub without pin below it, and the two photos stacked with reduced motion or without JS. Photos of a real patient with consent, confirmed by the maintainer on 2026-11-11. No h2 and no notice: the only visible copy is the 'Antes' / 'Después' labels.",
+      "source": "specs/08-rehabilitacion-antes-despues-scroll.md (Approved; content per § Source of the content)",
+      "acceptance": [
+        "AntesDespues is mounted in src/pages/rehabilitacion-oral.astro right after ComoSeHace and before EnlaceCruzado",
+        "The section is a <section> with aria-label 'Antes y después de la rehabilitación oral' and no h2; the page keeps exactly one <h1>",
+        "Both photos use astro:assets (whitouttooth.webp, whithtooth.webp) with alt 'Sonrisa con un diente ausente antes de la rehabilitación oral' and 'La misma sonrisa después de la rehabilitación oral'",
+        "The only visible text is the labels 'Antes' and 'Después'",
+        "Every acceptance criterion in specs/08-rehabilitacion-antes-despues-scroll.md holds"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "rehabilitacion-enlace-cruzado",
+      "description": "Rehabilitación Oral: cross-link to Blanqueamiento Dental. /blanqueamiento-dental/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Enlace cruzado + arquitectura-informacion.md §3 Enlazado interno",
+      "acceptance": [
+        "Text '¿Buscas solo aclarar el tono de tu esmalte? Conoce nuestro servicio de Blanqueamiento Dental.' present",
+        "'Blanqueamiento Dental' is a descriptive-anchor link to /blanqueamiento-dental/"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "rehabilitacion-faq",
+      "description": "Rehabilitación Oral: FAQ. D5 decided 2026-10-22: collapsed accordion, same as home-faq and blanqueamiento-faq (src/components/perpage/home/FAQ.astro is the reference).",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
+      "acceptance": [
+        "Renders the 3 faqs with category 'rehabilitacion-oral' from src/config/faqs.ts, verbatim",
+        "Each faq is a native <details>/<summary> collapsed by default, opening on click or keyboard; answers stay in the HTML (maintainer decision 2026-10-22, D5)",
+        "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "rehabilitacion-cta-final",
+      "description": "Rehabilitación Oral: final CTA. textos-sitio gives only the heading; the target comes from arquitectura §3 ('Todas las páginas terminan con CTA a Contacto'). /contacto/ must exist before this link is rendered, or the gate fails (url-resolves): build it first, or render the link with isBuilt() from src/utils/navigation.ts.",
+      "source": "textos-sitio.md §3 Rehabilitación Oral › CTA final + arquitectura-informacion.md §3 Enlazado interno",
+      "acceptance": [
+        "Final CTA with the heading 'Agenda tu valoración y descubre qué tratamiento se adapta a ti.' is the last section of the page",
+        "The CTA is labeled 'Agendar por WhatsApp' and links to COMPANY.whatsapp"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "page-rehabilitacion",
+      "description": "Rehabilitación Oral page: SEO and assembly. The anestesia digital sentence (brief §5) is not a blocker for done: it waits on client item #4 (client-gaps.md) and is added to the page once the client approves it.",
+      "source": "textos-sitio.md §3 Rehabilitación Oral (Meta title, Meta description) + arquitectura-informacion.md §4, §5, §6",
+      "acceptance": [
+        "Route src/pages/rehabilitacion-oral.astro serves /rehabilitacion-oral/",
+        "<title> is 'Rehabilitación Oral en Bogotá | Dra. Viviana Rodríguez' (PAGES.rehabilitacion.title plus the suffix seo.pageHead() adds)",
+        "meta description is 'Especialista en Rehabilitación Oral en Bogotá. Recupera función y estética dental con tecnología de punta, cero dolor y un enfoque cálido. Agenda tu cita.'",
+        "Exactly one <h1> on the page",
+        "Sections in order: hero, Cuándo la necesitas, Tratamientos incluidos, Cómo se hace, enlace cruzado, Preguntas frecuentes, CTA final",
+        "The calm environment ('ambiente de calma') is mentioned on the page",
+        "BreadcrumbList JSON-LD (Inicio → Rehabilitación Oral) passed through MainLayout's schemas, matching the visible breadcrumb",
+        "No full business, WebSite, Person or Service node on this page (only the seo.businessRef() Organization stub: @id, name, url)",
+        "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "contacto-hero",
+      "description": "Contacto: hero",
+      "source": "textos-sitio.md §4 Contacto (H1, intro)",
+      "acceptance": [
+        "Exactly one <h1>: 'Agenda tu Cita'",
+        "Intro 'Consultorio en Bogotá (Chicó). Resolvemos tus dudas antes de tu primera visita.' present"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "contacto-datos",
+      "description": "Contacto: contact details. The map and the opening hours have been available since 2026-10-02 (client-gaps.md #1, #7). Before building, choose the map's form: a static 'Ver en Google Maps' link (recommended: light, no third-party cookies) or an embedded Google Maps iframe (heavier, and its cookies must be mentioned in the privacy policy).",
+      "source": "textos-sitio.md §4 Contacto › Datos de contacto + client-gaps.md #1, #7 (Google Business Profile, 2026-10-02)",
+      "acceptance": [
+        "WhatsApp from COMPANY.phone linking to COMPANY.whatsapp",
+        "Email from COMPANY.email as a mailto: link (no hand-written address outside company.ts)",
+        "Address from COMPANY.business.address as 'Cra 15 # 104-30, Consultorio 302, Bogotá'",
+        "Payment methods: 'débito, crédito, datáfono y código QR (no EPS ni seguros)'",
+        "Instagram and TikTok links from COMPANY.socialMedia, shown as @dra.vivianarodriguez_",
+        "Opening hours rendered from COMPANY.business.hours, in Spanish, with no hand-written hours outside company.ts",
+        "A map element that opens COMPANY.socialMedia.googleBusiness, with no hand-written map URL or coordinates outside company.ts"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "contacto-faq",
+      "description": "Contacto: FAQ. D5 decided 2026-10-22: collapsed accordion, same as home-faq and blanqueamiento-faq (src/components/perpage/home/FAQ.astro is the reference).",
+      "source": "textos-sitio.md §4 Contacto › Preguntas frecuentes + arquitectura-informacion.md §5, §6",
+      "acceptance": [
+        "Renders the 2 faqs with category 'contacto' from src/config/faqs.ts, verbatim",
+        "Each faq is a native <details>/<summary> collapsed by default, opening on click or keyboard; answers stay in the HTML (maintainer decision 2026-10-22, D5)",
+        "The section emits no JSON-LD: no FAQPage (decided on 2026-10-16, client-gaps.md D7)"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "page-contacto",
+      "description": "Contacto page: SEO and assembly. D6 was resolved on 2026-10-02: the map and the opening hours now exist, so the meta description stays as written. Note (2026-10-16): a basic placeholder page exists only so the check passes — src/pages/contacto.astro with src/components/perpage/contacto/Hero.astro (the H1, the brief's intro and one WhatsApp button), and /contacto/ is already out of PENDING_PAGES. It does not implement this feature, contacto-datos or contacto-faq, which stay pending as written. Until then, PAGES.contacto.description in src/config/pages.ts is a shorter temporary text, because the brief's mentions an address, a map and hours the placeholder does not show: restore the brief's when building this feature.",
+      "source": "textos-sitio.md §4 Contacto (Meta title, Meta description) + arquitectura-informacion.md §4",
+      "acceptance": [
+        "Route src/pages/contacto.astro serves /contacto/",
+        "<title> is 'Contacto y Citas | Dra. Viviana Rodríguez — Odontóloga Bogotá'",
+        "meta description is 'Agenda tu cita con la Dra. Viviana Rodríguez en Bogotá. WhatsApp, dirección, mapa y horarios de atención. Resolvemos tus dudas antes de tu primera visita.'",
+        "Exactly one <h1> on the page",
+        "Sections in order: hero, Datos de contacto, Preguntas frecuentes",
+        "No business, WebSite, Person or Service node on this page",
+        "Its path is removed from PENDING_PAGES in src/utils/navigation.ts, so the nav, the footer and the service cards link to it"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "brief-changes-2026-11-03",
+      "description": "Maintainer content changes of 2026-11-03, applied to the code and to docs/brief/ together. (1) Intraoral scanner removed everywhere: the Calma Activa card on Home goes (4 cards remain, the last centred on lg), Rehabilitación's first 'Cómo se hace' step becomes 'Valoración y diagnóstico' (proposed text), and the credential reads 'Anestesia digital'. (2) 'Diseño de Sonrisa' removed from the 'También ofrecemos' list / serviceCards only; the home meta description and the brief's keyword mentions stay. (3) Contacto hero uses the Home hero photo. (4) 'pérdida de piezas' becomes 'pérdida de dientes'. (5) 'Reconocimiento al mejor trabajo de grado' removed. (6) Added 2026-11-03, before merge to dev: Rehabilitación 'Cómo se hace' step 3 text becomes the four Calma Activa items of the Home, as plain text (no cards). (7) Contacto hero gets the Home hero's 'Agendar por WhatsApp' button under its intro text (this reverses the 'no CTA' note in contacto/Hero.astro, so the brief's §4 and that comment are updated). (8) Added 2026-11-03: a new Home FAQ '¿Qué es la anestesia digital?' with a plain-language summary of the maintainer's pasted text (CCLAD definition, why it hurts less, patient advantages).",
+      "source": "Maintainer instruction, 2026-11-03 (conversation); brief updated in textos-sitio.md §1, §3, brand.md, arquitectura-informacion.md",
+      "acceptance": [
+        "Zero matches for 'escáner intraoral' and 'impresiones incómodas' in src/ and docs/brief/",
+        "Home Calma Activa renders 4 cards and no card is orphaned on lg (the 4th sits centred under the first three)",
+        "Rehabilitación 'Cómo se hace' step 1 is 'Valoración y diagnóstico — Evaluamos tu caso con calma y resolvemos tus dudas antes de empezar.'",
+        "serviceCards has 7 entries and none is 'Diseño de Sonrisa'; the home meta description is unchanged",
+        "src/components/perpage/contacto/Hero.astro imports Hero-home-reference-opt1.webp, the same as the Home hero",
+        "Zero matches for 'pérdida de piezas' and 'una o varias piezas' in src/ and docs/brief/",
+        "Zero matches for 'Reconocimiento al mejor trabajo' in src/ and docs/brief/",
+        "Rehabilitación 'Cómo se hace' step 3 keeps its title and its text is exactly 'Aromaterapia, música relajante, cancelación de ruido y anestesia digital.' (the four Home Calma Activa item names, plain text, no cards or icons; maintainer chose this wording on 2026-11-03); textos-sitio.md §3 is updated to match",
+        "Contacto hero shows a WhatsApp button 'Agendar por WhatsApp' (the Home hero button: same classes, WhatsApp icon, COMPANY.whatsapp, target=_blank rel='noopener noreferrer') directly under the intro text, still one <h1>",
+        "Home FAQ (src/config/faqs.ts, category 'inicio') has a new item with the question '¿Qué es la anestesia digital?', placed right after the first one ('¿Qué diferencia a la Dra. Viviana...?'); it renders in the Home FAQ section like the others",
+        "Its answer is exactly: 'Es un sistema computarizado que aplica la anestesia local de forma lenta, constante y controlada, en lugar de empujar el líquido a mano con una jeringa tradicional. Un microprocesador mide la resistencia del tejido y ajusta el flujo y la presión para que la inyección sea casi imperceptible. Por eso duele menos: adormece el trayecto de la aguja a medida que avanza y evita la distensión brusca que causa el dolor. Además, la pieza de mano parece un bolígrafo y no una jeringa, lo que reduce el miedo a las agujas. Y como permite anestesiar solo la pieza dental que se trata, en muchos casos no quedan dormidos los labios ni la lengua y puedes hablar y comer con normalidad al salir.'",
+        "textos-sitio.md §1 Preguntas frecuentes has the same question and answer, in the same position",
+        "The answer adds no claim beyond the maintainer's pasted text (summary only); the Home FAQ section emits no FAQPage JSON-LD (client-gaps.md D7)",
+        "pnpm build passes with the gate green and pnpm check is clean"
+      ],
+      "status": "done"
+    },
+    {
+      "id": "page-privacidad",
+      "description": "Privacy policy page. 2026-11-03: built and sent to dev for review (noindex, review notice RevisionAviso, placeholders highlighted). 2026-11-11: the client sent the legal data, now in docs/source/politica-privacidad-estructura.md §1 and §8. Name: 'Dra. Viviana Rodríguez (Rehabilitación oral)', spelled as in COMPANY. Identification and registro profesional are both 1.053.810.835, as given. No [placeholders] remain in the source. Decided 2026-11-03 and confirmed 2026-11-11 (maintainer): WhatsApp is the only data-capture and scheduling channel, so the page does not mention Google Calendar Appointment Schedule. 2026-11-11 implementation: put the data into Contenido.astro, remove the placeholder highlighting, and remove RevisionAviso (the maintainer approved the text on 2026-11-11; the page stays noindex). Slug /politica-de-privacidad/ (built). Wires the footer link through PAGES.privacidad.",
+      "source": "docs/source/politica-privacidad-estructura.md (all sections, once completed with client data)",
+      "acceptance": [
+        "Route src/pages/politica-de-privacidad.astro serves /politica-de-privacidad/ (slug confirmed)",
+        "Exactly one <h1>: 'Política de Tratamiento de Datos Personales y Privacidad'",
+        "The 9 sections of the source appear in order, with its text verbatim once the client has completed it",
+        "Zero '[...]' placeholders remain in the rendered page (legal name, C.C./NIT, tarjeta profesional, address, email, phone all filled in)",
+        "Responsable data matches COMPANY where it overlaps (name, address 'Cra 15 # 104-30, Consultorio 302, Bogotá', email, phone), single NAP form",
+        "External links (the WhatsApp privacy policy) open with target=_blank and rel='noopener noreferrer'",
+        "The footer anchor 'Política de Privacidad y Tratamiento de Datos' in src/components/global/Footer.astro links to the page's route and the TODO comment is removed",
+        "<title> and meta description from seo.pageHead(PAGES.privacidad), and the page is noindex (PAGES.privacidad.noindex: true) and out of the sitemap",
+        "No business, WebSite or Person node on this page"
+      ],
+      "status": "done"
+    }
+  ]
 }

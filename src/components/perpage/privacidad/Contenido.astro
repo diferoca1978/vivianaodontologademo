@@ -1,0 +1,439 @@
+---
+import { COMPANY } from "@/config/company";
+import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
+
+// Copy: docs/source/politica-privacidad-estructura.md §1–§9, verbatim and in order (the bold of
+// the source is kept as <strong>). The address, email and phone of the Responsable come from
+// COMPANY, in the site's single NAP form ("street, city", as in the footer and contacto-datos).
+// WhatsApp is the only data-capture channel for now (client, 2026-11-03): the Google Calendar
+// channel was removed from the source and from here; if it returns, re-add it to both.
+// No animation here (front-end-astro builds the markup only).
+
+const { address } = COMPANY.business;
+const fullAddress = `${address.street}, ${address.city}`;
+const phoneHref = `tel:${COMPANY.phone.replace(/\s/g, "")}`;
+
+const legalName = "Dra. Viviana Rodríguez (Rehabilitación oral)";
+const legalId = "1.053.810.835";
+const professionalRegistry = "1.053.810.835";
+
+const sections = [
+  { id: "responsable", title: "1. Responsable del Tratamiento de Datos" },
+  { id: "naturaleza", title: "2. Naturaleza del Sitio Web" },
+  {
+    id: "canales",
+    title: "3. Canal de Captación, Datos Recolectados y Finalidades",
+  },
+  { id: "datos-sensibles", title: "4. Tratamiento de Datos Sensibles (Salud)" },
+  {
+    id: "proveedores",
+    title: "5. Proveedores Tecnológicos y Transferencia Internacional",
+  },
+  { id: "conservacion", title: "6. Tiempo de Conservación" },
+  { id: "seguridad", title: "7. Medidas de Seguridad" },
+  { id: "derechos", title: "8. Derechos del Titular (Habeas Data / ARCO)" },
+  { id: "modificaciones", title: "9. Modificaciones a la Política" },
+];
+const [s1, s2, s3, s4, s5, s6, s7, s8, s9] = sections;
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise-dark";
+const linkClass = `font-medium text-turquoise-dark underline decoration-turquoise/50 decoration-2 underline-offset-4 transition-colors duration-300 hover:decoration-turquoise-dark motion-reduce:transition-none ${focusRing}`;
+const sectionClass =
+  "scroll-mt-28 border-t border-gray-light py-12 first:border-t-0 first:pt-0";
+const h2Class =
+  "text-3xl leading-tight font-medium tracking-tight text-balance text-charcoal sm:text-4xl";
+const h3Class = "text-2xl leading-snug font-medium text-charcoal";
+const bodyClass =
+  "flex flex-col gap-5 text-lg leading-relaxed text-pretty text-charcoal";
+const ulClass = "flex list-disc flex-col gap-3 pl-6 marker:text-turquoise-dark";
+const olClass =
+  "flex list-decimal flex-col gap-2 pl-6 marker:font-semibold marker:text-turquoise-dark";
+const newTab = "(se abre en una pestaña nueva)";
+---
+
+<section aria-label="Contenido de la política" class="bg-ivory">
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:py-20 lg:grid-cols-12 lg:gap-16 xl:px-8">
+    <!-- Index: a plain list on mobile, a sticky column on lg -->
+    <nav aria-labelledby="privacidad-indice" class="lg:col-span-4">
+      <div class="rounded-3xl bg-turquoise-light/40 p-6 lg:sticky lg:top-28">
+        <p
+          id="privacidad-indice"
+          class="mb-4 text-sm font-semibold tracking-widest text-charcoal uppercase"
+        >
+          Índice
+        </p>
+        <ol class="flex flex-col gap-1">
+          {sections.map(({ id, title }) => (
+            <li>
+              <a
+                href={`#${id}`}
+                class:list={[
+                  "block rounded-lg px-2 py-1.5 text-sm leading-snug text-charcoal transition-colors duration-300 hover:bg-ivory hover:text-turquoise-dark motion-reduce:transition-none",
+                  focusRing,
+                ]}
+              >
+                {title}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </nav>
+
+    <article class="max-w-3xl lg:col-span-8">
+      <!-- 1 -->
+      <section
+        id={s1.id}
+        aria-labelledby={`${s1.id}-title`}
+        class={sectionClass}
+      >
+        <h2 id={`${s1.id}-title`} class={h2Class}>
+          {s1.title}
+        </h2>
+        <dl class="mt-8 flex flex-col divide-y divide-gray-light border-y border-gray-light text-lg">
+          <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
+            <dt class="font-semibold sm:w-2/5 sm:shrink-0">
+              Profesional / Razón Social:
+            </dt>
+            <dd>
+              {legalName}
+            </dd>
+          </div>
+          <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
+            <dt class="font-semibold sm:w-2/5 sm:shrink-0">
+              Identificación Legal / Tributaria:
+            </dt>
+            <dd>
+              {legalId}
+            </dd>
+          </div>
+          <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
+            <dt class="font-semibold sm:w-2/5 sm:shrink-0">
+              Registro Profesional:
+            </dt>
+            <dd>
+              {professionalRegistry}
+            </dd>
+          </div>
+          <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
+            <dt class="font-semibold sm:w-2/5 sm:shrink-0">
+              Domicilio / Consultorio:
+            </dt>
+            <dd>
+              <address class="not-italic">{fullAddress}</address>
+            </dd>
+          </div>
+          <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
+            <dt class="font-semibold sm:w-2/5 sm:shrink-0">
+              Correo electrónico de contacto:
+            </dt>
+            <dd class="min-w-0 wrap-break-word">
+              <a href={`mailto:${COMPANY.email}`} class={linkClass}>
+                {COMPANY.email}
+              </a>
+            </dd>
+          </div>
+          <div class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
+            <dt class="font-semibold sm:w-2/5 sm:shrink-0">
+              Teléfono de atención:
+            </dt>
+            <dd>
+              <a href={phoneHref} class={linkClass}>
+                {COMPANY.phone}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- 2 -->
+      <section
+        id={s2.id}
+        aria-labelledby={`${s2.id}-title`}
+        class={sectionClass}
+      >
+        <h2 id={`${s2.id}-title`} class={h2Class}>
+          {s2.title}
+        </h2>
+        <div class:list={["mt-6", bodyClass]}>
+          <p>
+            Este sitio web tiene un propósito exclusivamente informativo acerca
+            de los servicios odontológicos y de salud oral ofrecidos por la
+            Responsable. El sitio{" "}
+            <strong>
+              no cuenta con formularios de registro interno ni almacena bases de
+              datos de usuarios dentro de los servidores del dominio web
+            </strong>
+            .
+          </p>
+          <p>
+            La recopilación de información personal ocurre únicamente cuando el
+            usuario decide voluntariamente interactuar a través de la
+            herramienta de terceros enlazada:
+            <strong>WhatsApp</strong>, único canal por el que el sitio capta
+            datos y por el que se agendan las citas.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section
+        id={s3.id}
+        aria-labelledby={`${s3.id}-title`}
+        class={sectionClass}
+      >
+        <h2 id={`${s3.id}-title`} class={h2Class}>
+          {s3.title}
+        </h2>
+
+        <div class="mt-8 flex flex-col gap-10">
+          <div class={bodyClass}>
+            <h3 class={h3Class}>
+              3.1. Contacto Directo y Agendamiento por WhatsApp
+            </h3>
+            <p>
+              Al utilizar los accesos de contacto o de agendamiento hacia
+              WhatsApp, el usuario entabla una comunicación directa operada por{" "}
+              <strong>Meta Platforms, Inc.</strong>
+            </p>
+            <ul class={ulClass}>
+              <li>
+                <strong>Datos recolectados:</strong> Nombre de perfil, número
+                telefónico móvil y la información o mensajes que el usuario
+                envíe voluntariamente durante el intercambio.
+              </li>
+              <li>
+                <strong>Finalidades del tratamiento:</strong>
+                <ol class:list={["mt-3", olClass]}>
+                  <li>
+                    Brindar orientación sobre servicios, procedimientos
+                    odontológicos, horarios de atención y tarifas.
+                  </li>
+                  <li>
+                    Coordinar, confirmar, reprogramar o cancelar citas
+                    odontológicas en la agenda del consultorio.
+                  </li>
+                  <li>
+                    Proporcionar recomendaciones previas a valoraciones
+                    presenciales.
+                  </li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section
+        id={s4.id}
+        aria-labelledby={`${s4.id}-title`}
+        class={sectionClass}
+      >
+        <h2 id={`${s4.id}-title`} class={h2Class}>
+          {s4.title}
+        </h2>
+        <div class:list={["mt-6", bodyClass]}>
+          <p>
+            De conformidad con la normatividad vigente sobre protección de datos
+            personales, la información relativa a la salud, antecedentes médicos
+            y diagnósticos tiene carácter de
+            <strong>dato sensible</strong>.
+          </p>
+          <ul class={ulClass}>
+            <li>
+              <strong>Advertencia al usuario:</strong> Se solicita expresamente
+              al usuario{" "}
+              <strong>
+                no ingresar antecedentes médicos extensos, diagnósticos
+                clínicos, resultados de laboratorio ni fotografías de
+                valoraciones sensibles
+              </strong>{" "}
+              en los chats abiertos de WhatsApp.
+            </li>
+            <li>
+              <strong>Custodia en consulta presencial:</strong> La información
+              médica formal y detallada será recopilada exclusivamente en la
+              consulta presencial e incorporada a la correspondiente
+              <strong>Historia Clínica</strong>, bajo estricto secreto
+              profesional y en cumplimiento de las directrices sanitarias
+              obligatorias.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section
+        id={s5.id}
+        aria-labelledby={`${s5.id}-title`}
+        class={sectionClass}
+      >
+        <h2 id={`${s5.id}-title`} class={h2Class}>
+          {s5.title}
+        </h2>
+        <div class:list={["mt-6", bodyClass]}>
+          <p>
+            El funcionamiento del canal de mensajería y agendamiento se apoya en
+            una plataforma tecnológica cuyos servidores pueden estar ubicados
+            fuera del país de residencia:
+          </p>
+          <ul class={ulClass}>
+            <li>
+              <strong>Meta Platforms, Inc. (WhatsApp):</strong> Canal de
+              mensajería instantánea. El tratamiento se rige por las
+              <a
+                href="https://www.whatsapp.com/legal/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                class={linkClass}
+              >
+                Condiciones del Servicio y Política de Privacidad de WhatsApp
+                <span class="sr-only">{newTab}</span>
+                <ArrowUpRight
+                  class="ml-0.5 inline h-4 w-4 align-baseline"
+                  aria-hidden="true"
+                />
+              </a>
+              .
+            </li>
+          </ul>
+          <p>
+            Al utilizar esta vía de contacto, el usuario reconoce y autoriza la
+            transferencia técnica requerida para procesar su solicitud.
+          </p>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section
+        id={s6.id}
+        aria-labelledby={`${s6.id}-title`}
+        class={sectionClass}
+      >
+        <h2 id={`${s6.id}-title`} class={h2Class}>
+          {s6.title}
+        </h2>
+        <div class:list={["mt-6", bodyClass]}>
+          <ul class={ulClass}>
+            <li>
+              <strong>Datos de contacto preliminares:</strong> Los datos
+              recopilados por WhatsApp se mantendrán durante el tiempo necesario
+              para gestionar la cita y dar el seguimiento oportuno a la
+              solicitud.
+            </li>
+            <li>
+              <strong>Pacientes atendidos:</strong> Si la consulta se concreta,
+              los datos requeridos para la atención clínica pasarán a formar
+              parte de la Historia Clínica y se regirán por los periodos legales
+              obligatorios de custodia médica.
+            </li>
+            <li>
+              <strong>Cancelaciones o consultas no concretadas:</strong> Los
+              datos de contacto serán depurados periódicamente o eliminados de
+              las listas tras la resolución de la consulta.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section
+        id={s7.id}
+        aria-labelledby={`${s7.id}-title`}
+        class={sectionClass}
+      >
+        <h2 id={`${s7.id}-title`} class={h2Class}>
+          {s7.title}
+        </h2>
+        <div class:list={["mt-6", bodyClass]}>
+          <p>
+            Se implementan medidas técnicas, administrativas y organizativas
+            razonables para resguardar los datos de contacto frente a accesos no
+            autorizados, adulteración o pérdidas. El acceso a la línea de
+            WhatsApp está limitado exclusivamente a la odontóloga y al personal
+            autorizado bajo acuerdo de confidencialidad.
+          </p>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section
+        id={s8.id}
+        aria-labelledby={`${s8.id}-title`}
+        class={sectionClass}
+      >
+        <h2 id={`${s8.id}-title`} class={h2Class}>
+          {s8.title}
+        </h2>
+        <div class:list={["mt-6", bodyClass]}>
+          <p>El titular de los datos personales tiene derecho a:</p>
+          <ol class={olClass}>
+            <li>Conocer, actualizar y rectificar sus datos personales.</li>
+            <li>
+              Solicitar prueba de la autorización conferida (cuando aplique).
+            </li>
+            <li>Ser informado sobre el uso que se ha dado a su información.</li>
+            <li>
+              Revocar la autorización o pedir la supresión de sus datos de
+              contacto de las libretas y herramientas de agenda (salvo cuando
+              exista un deber legal o reglamentario de conservación, como el de
+              las historias clínicas).
+            </li>
+          </ol>
+
+          <div class="mt-4 flex flex-col gap-5 rounded-3xl bg-charcoal p-6 text-ivory sm:p-8">
+            <h3 class="text-2xl leading-snug font-medium text-ivory">
+              Canal de atención para el ejercicio de derechos:
+            </h3>
+            <p>
+              Para ejercer cualquiera de estos derechos, envíe una comunicación
+              escrita a:
+            </p>
+            <ul class="flex list-disc flex-col gap-3 pl-6 marker:text-turquoise">
+              <li class="wrap-break-word">
+                <strong>Correo electrónico:</strong>
+                <a
+                  href={`mailto:${COMPANY.email}`}
+                  class={`font-medium text-ivory underline decoration-turquoise decoration-2 underline-offset-4 hover:text-turquoise-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ivory`}
+                >
+                  {COMPANY.email}
+                </a>
+              </li>
+              <li>
+                <strong>Asunto:</strong> Solicitud de Protección de Datos
+                Personales
+              </li>
+              <li>
+                <strong>Información requerida:</strong> Nombre completo, número
+                de contacto, documento de identificación y descripción clara de
+                la solicitud (actualización, corrección o eliminación).
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9 -->
+      <section
+        id={s9.id}
+        aria-labelledby={`${s9.id}-title`}
+        class={sectionClass}
+      >
+        <h2 id={`${s9.id}-title`} class={h2Class}>
+          {s9.title}
+        </h2>
+        <div class:list={["mt-6", bodyClass]}>
+          <p>
+            La presente política rige a partir de su publicación en el sitio
+            web. La Responsable se reserva el derecho de actualizarla en
+            cualquier momento para adaptarla a novedades legislativas o cambios
+            en las herramientas tecnológicas. Las modificaciones entrarán en
+            vigencia desde el momento de su publicación en esta misma página.
+          </p>
+        </div>
+      </section>
+    </article>
+  </div>
+</section>

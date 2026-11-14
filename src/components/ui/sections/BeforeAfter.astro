@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+
+// Generic before/after comparison (spec 07). It carries no page copy: the photos, alt texts,
+// labels and the section name all come in through props from a perpage/<page>/ section.
+// Base layout is the stacked one, visible without JS and with reduced motion: the "before" photo
+// and then the "after" photo, each in its own rounded frame inside the site container with its label; the divider is hidden.
+// The section sits on the page's ivory background in every mode.
+// The overlaid stage (layers on top of each other, "after" revealed with a clip-path wipe and the
+// divider following the cut) is switched on from
+// src/utils/scripts/animations/utils/before-after.ts through the data-before-after* hooks below:
+// the script sets `data-stage` on the stage, and the `group-data-stage/stage:` classes turn the
+// frame into one rounded 16:9 box that overlays the layers (the divider lives inside it). The "after" layer comes later in the DOM, so it paints over the "before" one.
+// Labels live inside their own layer, so they hide and show with it: "Después" top-left (its layer
+// enters from the left), "Antes" top-right.
+interface Props {
+  /** Section id. */
+  id: string;
+  /** Accessible name of the section (it has no heading). */
+  ariaLabel: string;
+  before: ImageMetadata;
+  after: ImageMetadata;
+  beforeAlt: string;
+  afterAlt: string;
+  beforeLabel: string;
+  afterLabel: string;
+}
+
+const { id, ariaLabel, before, after, beforeAlt, afterAlt, beforeLabel, afterLabel } = Astro.props;
+---
+
+<section id={id} aria-label={ariaLabel} data-before-after>
+  <div
+    class="group/stage relative md:data-stage:flex md:data-stage:items-center"
+    data-before-after-stage
+  >
+    <div
+      class="mx-auto w-full max-w-7xl px-4 py-12 sm:py-16 md:group-data-stage/stage:pt-16 md:group-data-stage/stage:pb-8 xl:px-8"
+    >
+      <div
+        class="mx-auto flex flex-col gap-6 group-data-stage/stage:relative group-data-stage/stage:block group-data-stage/stage:aspect-video group-data-stage/stage:overflow-hidden group-data-stage/stage:rounded-4xl"
+        data-before-after-frame
+      >
+        <div
+          class="relative aspect-video w-full overflow-hidden rounded-4xl group-data-stage/stage:absolute group-data-stage/stage:inset-0 group-data-stage/stage:aspect-auto group-data-stage/stage:h-full group-data-stage/stage:rounded-none"
+          data-before-after-before
+        >
+          <Image
+            src={before}
+            alt={beforeAlt}
+            widths={[640, 1024, 1536, before.width]}
+            sizes="(min-width: 1280px) 1216px, 100vw"
+            class="h-full w-full object-cover"
+          />
+          <span
+            class="absolute top-5 right-5 rounded-full bg-charcoal/70 px-5 py-2 text-base font-medium sm:px-6 sm:text-lg tracking-wide text-ivory sm:top-8 sm:right-8"
+          >
+            {beforeLabel}
+          </span>
+        </div>
+
+        <div
+          class="relative aspect-video w-full overflow-hidden rounded-4xl group-data-stage/stage:absolute group-data-stage/stage:inset-0 group-data-stage/stage:aspect-auto group-data-stage/stage:h-full group-data-stage/stage:rounded-none"
+          data-before-after-after
+        >
+          <Image
+            src={after}
+            alt={afterAlt}
+            widths={[640, 1024, 1536, after.width]}
+            sizes="(min-width: 1280px) 1216px, 100vw"
+            class="h-full w-full object-cover"
+          />
+          <span
+            class="absolute top-5 left-5 rounded-full bg-charcoal/70 px-5 py-2 text-base font-medium sm:px-6 sm:text-lg tracking-wide text-ivory sm:top-8 sm:left-8"
+          >
+            {afterLabel}
+          </span>
+        </div>
+
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-px bg-ivory group-data-stage/stage:block"
+          data-before-after-divider
+        >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import "@/utils/scripts/animations/utils/before-after";
+</script>

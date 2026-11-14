@@ -1,0 +1,32 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import Hero from "@/components/perpage/blanqueamiento/Hero.astro";
+import Intro from "@/components/perpage/blanqueamiento/Intro.astro";
+import Modalidades from "@/components/perpage/blanqueamiento/Modalidades.astro";
+import AntesDespues from "@/components/perpage/blanqueamiento/AntesDespues.astro";
+import Seguridad from "@/components/perpage/blanqueamiento/Seguridad.astro";
+import Contraindicaciones from "@/components/perpage/blanqueamiento/Contraindicaciones.astro";
+import Cuidados from "@/components/perpage/blanqueamiento/Cuidados.astro";
+import Faq from "@/components/perpage/blanqueamiento/Faq.astro";
+import CtaFinal from "@/components/perpage/blanqueamiento/CtaFinal.astro";
+import { PAGES } from "@/config/pages";
+import { seo } from "@/config/seo";
+
+const head = seo.pageHead(PAGES.blanqueamiento);
+const crumbs = [
+  { name: "Inicio", path: "/" },
+  { name: "Blanqueamiento Dental", path: PAGES.blanqueamiento.path },
+];
+---
+
+<MainLayout head={head} schemas={[seo.businessRef(), seo.breadcrumbNode(crumbs)]}>
+  <Hero crumbs={crumbs} />
+  <Intro />
+  <Modalidades />
+  <AntesDespues />
+  <Seguridad />
+  <Contraindicaciones />
+  <Cuidados />
+  <Faq />
+  <CtaFinal />
+</MainLayout>

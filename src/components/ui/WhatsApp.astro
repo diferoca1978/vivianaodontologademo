@@ -1,22 +1,31 @@
 ---
-import { COMPANY_INFO } from "@/config/companyInfo";
-import Whatsapp from "@/assets/icons/whatsApp.svg";
+import { COMPANY } from "@/config/company";
+import WhatsappIcon from "@/assets/icons/whatsApp.svg";
 ---
 
+<!-- From Uiverse.io by M4rio1 -->
 <a
-  href={COMPANY_INFO.whatsapp}
+  href={COMPANY.whatsapp}
   target="_blank"
   rel="noopener noreferrer"
-  class="group flex h-14 w-14 items-center justify-center transition-all duration-300 hover:scale-105"
+  class="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 bg-green-500 text-white w-14 h-14 rounded-full flex justify-center items-center shadow-lg hover:bg-green-600 transition-all duration-300 ease-out group z-50 hover:scale-105 active:scale-95"
+  aria-label="Chat de WhatsApp"
 >
-  <Whatsapp class="h-full w-full" />
-  <span class="sr-only">WhatsApp</span>
+
+  <WhatsappIcon class="w-7 h-7" aria-hidden="true" />
+
+  <span class="absolute inset-0 rounded-full border-4 border-ivory scale-100"
+  ></span>
+
   <div
-    class="invisible absolute top-1/2 right-14 mr-2 flex -translate-y-1/2 items-center justify-center lg:group-hover:visible"
+    class="absolute right-full mr-3 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 whitespace-nowrap"
   >
-    <span
-      class="rounded-lg bg-amber-600/80 p-2 text-sm whitespace-nowrap text-stone-50 backdrop-blur-sm group-hover:ring-2 group-hover:ring-stone-100/50"
-      >¿Necesitas asesoría profesional?</span
+    <div class="bg-turquoise text-ivory text-sm px-3 py-1 rounded shadow-lg">
+      ¿Necesitas ayuda?
+    </div>
+    <div
+      class="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-2 h-2 bg-turquoise"
     >
+    </div>
   </div>
 </a>

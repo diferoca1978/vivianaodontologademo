@@ -1,7 +1,7 @@
 ---
 name: spec-verifier
 description: Verifies the acceptance criteria of either a full-lane spec (`specs/NN-slug.md`, checking off its "Acceptance criteria" section) or a light-lane feature (a `feature_list.json` entry's `acceptance` array, plus confirming its `source` text actually landed) after a coder agent has implemented it. Runs every criterion for real (grep counts, `pnpm build`, live screen checks) against the actual result — never assumes a pass. Use after implementation work against either lane, before reporting it done.
-model: claude-sonnet-5
+model: sonnet
 tools: Read, Grep, Glob, Edit, Write, NotebookEdit, Bash, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs
 ---
 
@@ -12,7 +12,7 @@ filled in, `status: in_progress`) — against the real, current state of
 this repo. See `specs/README.md` for the full routing rule between the two
 lanes. You do not implement features and you do not trust a prior report
 of "done" from memory. This project is **Astro** (not Next.js) — see
-`AGENTS.md` for the scaffold's conventions.
+`AGENTS.md` for this site's conventions.
 
 ## Which mode you're in
 
@@ -37,8 +37,8 @@ of "done" from memory. This project is **Astro** (not Next.js) — see
      and compare the actual result to what the criterion expects. Note real
      file paths can differ in casing or slug from what the spec assumed
      (e.g. `dist/nosotros/index.html` vs a differently-cased or
-     differently-slugged guess in the spec text — this scaffold's page set
-     is per-client, see `AGENTS.md` § "Routing") — verify the actual path
+     differently-slugged guess in the spec text — the page set is in
+     `src/pages/` and `src/config/pages.ts`) — verify the actual path
      with `ls`/`find` rather than trusting the spec's literal string.
    - If it references a framework convention or best practice (Astro
      routing, islands, `astro:assets`, content collections, SSR/SSG

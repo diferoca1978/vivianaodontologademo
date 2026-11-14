@@ -1,3 +1,205 @@
-<footer>
-    <p>Footer</p>
+---
+import { Image } from "astro:assets";
+import { COMPANY } from "@/config/company";
+import { MainNavigation } from "@/utils/navigation";
+import { PAGES } from "@/config/pages";
+import { formatOpeningHours } from "@/utils/openingHours";
+import logo from "@/assets/images/logonobg.png";
+import Phone from "@/assets/icons/phone.svg";
+import Mail from "@/assets/icons/mail.svg";
+import MapPin from "@/assets/icons/map-pin.svg";
+import Clock from "@/assets/icons/clock.svg";
+import Instagram from "@/assets/icons/instagram.svg";
+import Tiktok from "@/assets/icons/tiktok.svg";
+import ArrowUp from "@/assets/icons/arrow-up.svg";
+
+// Layout from references/footer-reference.png; content only from the brief (COMPANY).
+// Opening hours come from the Google Business Profile, still to be confirmed with the client
+// (client-gaps.md #1). The privacy policy link reads its route from PAGES.privacidad.
+const { address } = COMPANY.business.kind === "local" ? COMPANY.business : { address: undefined };
+const openingHours = formatOpeningHours(COMPANY.business.hours ?? []);
+
+const socials = [
+  { name: "Instagram", href: COMPANY.socialMedia.instagram, Icon: Instagram },
+  { name: "TikTok", href: COMPANY.socialMedia.tiktok, Icon: Tiktok },
+];
+
+const contactItems = [
+  {
+    label: "WhatsApp",
+    text: COMPANY.phone,
+    href: COMPANY.whatsapp,
+    external: true,
+    Icon: Phone,
+  },
+  {
+    label: "Correo",
+    text: COMPANY.email,
+    href: `mailto:${COMPANY.email}`,
+    external: false,
+    Icon: Mail,
+  },
+];
+
+const ringClass =
+  "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-turquoise/40 bg-charcoal text-turquoise transition-colors motion-reduce:transition-none hover:bg-turquoise hover:text-charcoal focus-visible:bg-turquoise focus-visible:text-charcoal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ivory";
+
+const iconRingClass =
+  "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-turquoise/40 bg-charcoal text-turquoise";
+
+const linkClass =
+  "text-ivory underline-offset-4 decoration-turquoise decoration-2 hover:underline focus-visible:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ivory";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-charcoal text-ivory">
+  <div class="mx-auto max-w-7xl px-4 pt-14 xl:px-8">
+    <div class="grid gap-12 md:grid-cols-2 xl:grid-cols-3 xl:gap-0">
+      <!-- Brand + social -->
+      <div class="flex flex-col items-start gap-6 xl:pr-10">
+        <a
+          href="/"
+          class="rounded-2xl bg-ivory px-4 py-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
+        >
+          <Image src={logo} alt="Dra. Viviana Rodríguez — Odontóloga" class="h-14 w-auto" />
+        </a>
+        <p class="max-w-sm text-sm leading-relaxed text-gray-light">
+          {COMPANY.description}
+        </p>
+        <ul class="flex items-center gap-3">
+          {
+            socials.map(({ name, href, Icon }) => (
+              <li>
+                <a href={href} target="_blank" rel="noopener noreferrer" class={ringClass}>
+                  <span class="sr-only">{name} (se abre en una pestaña nueva)</span>
+                  <Icon class="h-5 w-5" aria-hidden="true" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Navigation -->
+      <nav aria-label="Pie de página" class="xl:border-x xl:border-gray-neutral/30 xl:px-10">
+        <h2 class="mb-6 text-3xl font-semibold text-ivory">Explora</h2>
+        <ul class="flex flex-col gap-3">
+          {
+            MainNavigation.map((l) => (
+              <li>
+                <a href={l.path} class={linkClass}>
+                  {l.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <!-- Contact -->
+      <div class="md:col-span-2 xl:col-span-1 xl:pl-10">
+        <h2 class="mb-6 text-3xl font-semibold text-ivory">Contacto</h2>
+        <ul class="flex flex-col gap-5">
+          {
+            contactItems.map(({ label, text, href, external, Icon }) => (
+              <li class="flex items-center gap-4">
+                <span class={iconRingClass} aria-hidden="true">
+                  <Icon class="h-5 w-5" />
+                </span>
+                <div class="flex flex-col">
+                  <span class="text-sm text-gray-light">{label}</span>
+                  <a
+                    href={href}
+                    class={linkClass}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                  >
+                    {text}
+                    {external && <span class="sr-only">(se abre en una pestaña nueva)</span>}
+                  </a>
+                </div>
+              </li>
+            ))
+          }
+          {
+            address && (
+              <li class="flex items-center gap-4">
+                <span class={iconRingClass} aria-hidden="true">
+                  <MapPin class="h-5 w-5" />
+                </span>
+                <div class="flex flex-col">
+                  <span class="text-sm text-gray-light">Consultorio</span>
+                  <address class="not-italic">
+                    <a
+                      href={COMPANY.socialMedia.googleBusiness}
+                      class={linkClass}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {address.street}, {address.city}
+                      <span class="sr-only">(ver en Google Maps, se abre en una pestaña nueva)</span>
+                    </a>
+                  </address>
+                </div>
+              </li>
+            )
+          }
+          {
+            openingHours.length > 0 && (
+              <li class="flex items-start gap-4">
+                <span class={iconRingClass} aria-hidden="true">
+                  <Clock class="h-5 w-5" />
+                </span>
+                <div class="flex flex-col">
+                  <span id="footer-horario" class="text-sm text-gray-light">Horario</span>
+                  <table aria-labelledby="footer-horario" class="text-left">
+                    <tbody>
+                      {openingHours.map(({ days, hours }) => (
+                        <tr>
+                          <th scope="row" class="py-0.5 pr-4 font-normal text-ivory">
+                            {days}
+                          </th>
+                          <td class="whitespace-nowrap py-0.5 text-gray-light">{hours}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Divider with back-to-top -->
+    <div class="relative mt-14 flex justify-center border-t border-gray-neutral/30">
+      <button
+        id="back-to-top"
+        type="button"
+        class="absolute top-0 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-turquoise text-charcoal transition-colors motion-reduce:transition-none hover:bg-turquoise-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ivory"
+      >
+        <span class="sr-only">Volver arriba</span>
+        <ArrowUp class="h-5 w-5" aria-hidden="true" />
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-4 py-8 pt-10 text-sm text-gray-light md:flex-row md:items-center md:justify-between">
+      <p>© {year} {COMPANY.name}. Todos los derechos reservados.</p>
+      <a href={PAGES.privacidad.path} class="hover:text-turquoise-light">Política de Privacidad y Tratamiento de Datos</a>
+    </div>
+  </div>
 </footer>
+
+<script>
+  const btnToTop = document.querySelector('#back-to-top')
+
+  btnToTop?.addEventListener('click', () => {
+    window.scrollTo({
+      top:0,
+      left:0,
+      behavior: 'smooth'
+    })
+  })
+</script>
