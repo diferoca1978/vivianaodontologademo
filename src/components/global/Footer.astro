@@ -12,6 +12,7 @@ import Clock from "@/assets/icons/clock.svg";
 import Instagram from "@/assets/icons/instagram.svg";
 import Tiktok from "@/assets/icons/tiktok.svg";
 import ArrowUp from "@/assets/icons/arrow-up.svg";
+import LogoShine from "@/assets/images/logoShine.svg";
 
 // Layout from references/footer-reference.png; content only from the brief (COMPANY).
 // Opening hours come from the Google Business Profile, still to be confirmed with the client
@@ -187,6 +188,18 @@ const year = new Date().getFullYear();
 
     <div class="flex flex-col gap-4 py-8 pt-10 text-sm text-gray-light md:flex-row md:items-center md:justify-between">
       <p>© {year} {COMPANY.name}. Todos los derechos reservados.</p>
+      <p class="flex items-center gap-2 text-xs text-ivory">
+        Desarrollado por:
+        <a
+          href="https://shineagencia.com/"
+          target="_blank"
+          rel="noopener"
+          class="rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ivory"
+        >
+          <span class="sr-only">Shine Agencia (se abre en una pestaña nueva)</span>
+          <LogoShine class="h-10 w-24" aria-hidden="true" />
+        </a>
+      </p>
       <a href={PAGES.privacidad.path} class="hover:text-turquoise-light">Política de Privacidad y Tratamiento de Datos</a>
     </div>
   </div>
