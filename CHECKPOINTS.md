@@ -21,31 +21,41 @@ item depends on the ones above it.
 
 ## 3. Email for the contact form (only if the site has a form)
 
-- [ ] The form follows the rules in `AGENTS.md` § Contact forms.
-- [ ] The API key and the addresses are environment variables on the host, never in
+> **Does not apply (2026-11-14):** the site has no form; contact is through WhatsApp,
+> phone and email links. No Resend integration, API key or sending domain. If a form
+> (or the booking spec) is added later, reopen this section.
+
+- [x] N/A: The form follows the rules in `AGENTS.md` § Contact forms.
+- [x] N/A: The API key and the addresses are environment variables on the host, never in
       the repo.
-- [ ] The sending domain is verified in Resend (SPF, DKIM and DMARC at the DNS
+- [x] N/A: The sending domain is verified in Resend (SPF, DKIM and DMARC at the DNS
       provider), and a test message from the form arrives.
 
 ## 4. The gate, with the real domain
 
 - [x] `pnpm build` passes with the real `site`. No `[CLIENTE]` or other placeholder is
       left: once `site` is the real domain, `placeholder-text` is an error.
-- [ ] The favicon, the logo and the `og-image` in `public/` are the client's, not the
-      placeholders (the gate cannot see what an image shows).
+- [x] The favicon, the logo and the `og-image` in `public/` are the client's, not the
+      placeholders (the gate cannot see what an image shows). Checked by eye on
+      2026-11-14; the `og-image` was rebuilt because it still printed the old domain.
 - [x] Every entry in `shineSeo({ ignore })` still has a valid reason.
 
 ## 5. AI bot policies (only on Cloudflare)
 
-- [ ] Security Settings → Bot traffic → AI bot policies: the *Search*, *Agent* and
+> **Does not apply (2026-11-14):** both records are **DNS only** (grey cloud), so
+> traffic goes straight to Netlify and no Cloudflare bot setting, WAF rule or Bot Fight
+> Mode touches it. Netlify serves the repo's `robots.txt` unchanged (checked live). If
+> the proxy is ever turned on, reopen this section and set SSL/TLS to Full (strict).
+
+- [x] N/A: Security Settings → Bot traffic → AI bot policies: the *Search*, *Agent* and
       *Training* policies are decided with the client. *Search* affects search results:
       never block it without an explicit decision.
-- [ ] With *Bot Preference Sync* on, Cloudflare adds its own directives in front of the
+- [x] N/A: With *Bot Preference Sync* on, Cloudflare adds its own directives in front of the
       site's `robots.txt`. Check the robots.txt the site **serves**
       (`https://odontologavivianarodriguez.com/robots.txt`), not the one in the repo. Search Console may
       flag `Content-signal` as "Syntax not understood"; according to Cloudflare, it does
       not affect crawling.
-- [ ] If the zone is the agency's (`"cloudflare": "own"` in harness-tools'
+- [x] N/A: If the zone is the agency's (`"cloudflare": "own"` in harness-tools'
       `clients.json`): the `seo-watch` WAF rule is first in the custom rules, and Bot
       Fight Mode is off (it cannot be skipped). Steps in harness-tools' README §
       Cloudflare.
