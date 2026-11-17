@@ -25,6 +25,14 @@ const { head, schemas } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+    <!-- Google Tag Manager -->
+    <script is:inline async src="https://www.googletagmanager.com/gtm.js?id=GTM-T5NZ2BZC"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
+
     <!-- SEO Head -->
     <SeoHead head={head} schemas={schemas} />
 
