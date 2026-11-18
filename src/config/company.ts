@@ -38,7 +38,7 @@ export const COMPANY: SiteCompany = {
     'Odontología de Calma Activa: cuidamos tu sonrisa y tu tranquilidad. Consultorio particular en Bogotá, con tecnología sin dolor y atención personalizada.',
   phone: '+57 302 544 5760',
   email: 'vivianarodriguezod@gmail.com',
-  whatsapp: 'https://wa.me/573025445760',
+  whatsapp: 'https://wa.me/573004725830', // TEMP: número del chatbot de pruebas (whatsapp-bot-viviana SIM_NUMBER). Real: 573025445760
   business: {
     kind: 'local',
     type: 'Dentist',

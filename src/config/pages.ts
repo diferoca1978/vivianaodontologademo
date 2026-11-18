@@ -8,7 +8,7 @@ import type { PageSeo } from '@shine/seo-core';
 // pageHead() adds " | Dra. Viviana Rodríguez" unless the title already holds the name.
 // privacidad: h1 is the source's title; title and description are drawn from its content.
 
-export const PAGES = {
+const BASE_PAGES = {
   home: {
     path: '/',
     keyword: 'odontóloga especialista en Bogotá / odontología sin dolor Bogotá',
@@ -56,3 +56,17 @@ export const PAGES = {
     source: 'docs/source/politica-privacidad-estructura.md',
   },
 } satisfies Record<string, PageSeo>;
+
+// Testing clone (WhatsApp chatbot demo): every page is noindex, so this copy never competes
+// with the real site (odontologavivianarodriguez.com) in search. seo-core then emits
+// `noindex`, leaves the pages out of the sitemap and drops their JSON-LD. robots.txt stays
+// open on purpose: a crawler must fetch a page to see its noindex. Set to false only on the
+// real site.
+const CLONE_NOINDEX = true;
+
+export const PAGES = Object.fromEntries(
+  Object.entries(BASE_PAGES).map(([key, page]) => [
+    key,
+    CLONE_NOINDEX ? { ...page, noindex: true } : page,
+  ]),
+) as typeof BASE_PAGES;

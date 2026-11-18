@@ -25,6 +25,11 @@ import ArrowUpRight from "@/assets/icons/arrow-up-right.svg";
 // lines are aria-hidden; "Chicó" is the brief's neighbourhood (textos §1, arquitectura §1).
 // The scroll reveal lives in src/utils/scripts/animations/contacto/datos.ts (data-datos-item hooks).
 
+// The WhatsApp card shows the number its link opens, derived from COMPANY.whatsapp
+// (wa.me/57XXXXXXXXXX → "+57 XXX XXX XXXX"), so it never drifts from the link.
+const waDigits = COMPANY.whatsapp.replace(/\D/g, "");
+const whatsappDisplay = waDigits.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})$/, "+$1 $2 $3 $4");
+
 const { address } = COMPANY.business;
 const fullAddress = `${address.street}, ${address.city}`;
 const openingHours = formatOpeningHours(COMPANY.business.hours ?? []);
@@ -86,7 +91,7 @@ const newTab = "(se abre en una pestaña nueva)";
                 rel="noopener noreferrer"
                 class={linkClass}
               >
-                {COMPANY.phone}
+                {whatsappDisplay}
                 <span class="sr-only">{newTab}</span>
               </a>
             </dd>

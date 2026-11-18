@@ -41,7 +41,7 @@ export const faqs: FAQItem[] = [
   {
     category: 'inicio',
     question: '¿Cómo agendo una cita?',
-    answer: 'Por WhatsApp al 302 544 5760, indicando el servicio de tu interés.',
+    answer: 'Por WhatsApp al 300 472 5830, indicando el servicio de tu interés.',
   },
 
   // Blanqueamiento Dental — textos-blanqueamiento.md › Preguntas frecuentes sobre el
