@@ -21,5 +21,8 @@ guia-de-uso.md
 
 
 
-# Local Netlify folder
+# Local Vercel folder
+.vercel
+
+# Local Netlify folder (old host)
 .netlify

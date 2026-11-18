@@ -7,9 +7,12 @@ here.
 
 The website of **Dra. Viviana Rodríguez** (dentist, Rehabilitación Oral, Bogotá): an Astro
 site whose SEO core comes from the `@shine/seo-core` package (absolute URLs, head tags,
-JSON-LD, robots.txt and a build gate). Host: **Netlify**. Domain:
-**odontologavivianarodriguez.com** (bought on Shine's Cloudflare account on 2026-11-14),
-already in `astro.config.mjs`.
+JSON-LD, robots.txt and a build gate). Host: **Vercel**. This repo is a
+**testing clone** (the WhatsApp chatbot demo): it has no custom domain. `site` in
+`astro.config.mjs` comes from Vercel's `VERCEL_PROJECT_PRODUCTION_URL` (fallback
+`http://localhost:4321`). The real site's domain, odontologavivianarodriguez.com, does not
+belong here. Every page is `noindex` (`CLONE_NOINDEX` in `src/config/pages.ts`),
+so the gate's `sitemap-coverage` rule is ignored in `astro.config.mjs` (no sitemap is written).
 
 The package's README (`node_modules/@shine/seo-core/README.md`) documents its API and
 every rule the gate checks, for the exact version this site installs.
@@ -21,7 +24,7 @@ pnpm dev                                              # dev server at localhost:
 pnpm build                                            # build + the SEO gate: fails on any SEO error
 pnpm check                                            # astro check (types and .astro diagnostics)
 pnpm preview                                          # preview the build
-pnpm exec check-seo --url https://odontologavivianarodriguez.com   # the gate's rules against the live site
+pnpm exec check-seo --url https://<project>.vercel.app   # the gate's rules against the deployed clone
 pnpm prettier --write .                               # formatting (no eslint)
 ```
 
@@ -29,7 +32,7 @@ There is no test runner: `pnpm build` (with the gate) and `pnpm check` are the t
 
 ## Tech stack (see `package.json`)
 
-- **Astro 7**, static output, with the `@astrojs/netlify` adapter.
+- **Astro 7**, static output, with the `@astrojs/vercel` adapter.
 - **TypeScript 6**, pinned on purpose: `astro check` refuses TypeScript 7.
   `pnpm-workspace.yaml` (`update.ignoreDeps`) keeps `pnpm up --latest` from raising it.
   Never let `astro check` install `@astrojs/check` on its own.
@@ -130,7 +133,7 @@ Fix the cause in the page, `pages.ts` or the config. Do not work around a rule.
 - Never hardcode client data in a component: read it from `src/config/*`.
 - The page scrollbar is hidden on `<html>` in `global.css` (`scrollbar-width: none`), by the maintainer's decision on 2026-10-17. Scrolling itself must keep working.
 - `public/` holds the favicon, the logo (at least 112 px) and the `og-image`.
-- The Netlify adapter stays while the site may need server code (the booking spec);
+- The Vercel adapter stays while the site may need server code (the booking spec);
   every page is prerendered.
 
 ## Animation strategy: GSAP

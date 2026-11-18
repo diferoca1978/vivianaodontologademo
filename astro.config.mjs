@@ -3,7 +3,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
-import netlify from '@astrojs/netlify';
+import vercel from '@astrojs/vercel';
 
 import sitemap from '@astrojs/sitemap';
 
@@ -13,8 +13,13 @@ import { PAGES } from './src/config/pages.ts';
 
 // https://astro.build/config
 export default defineConfig({
-  // The client's domain. Every absolute URL comes from it through siteUrl() (src/utils/url.ts).
-  site: 'https://odontologavivianarodriguez.com',
+  // Testing clone: no custom domain. On Vercel, `site` is the project's production URL
+  // (VERCEL_PROJECT_PRODUCTION_URL, set at build time, without the https:// scheme); locally
+  // it falls back to the dev server. Every absolute URL comes from it through siteUrl()
+  // (src/utils/url.ts). The real site's domain is odontologavivianarodriguez.com.
+  site: process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:4321',
 
   // Every page URL ends in '/'; siteUrl() in src/utils/url.ts builds them the same way.
   trailingSlash: 'always',
@@ -42,7 +47,18 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  adapter: netlify(),
+  adapter: vercel(),
   // The SEO gate goes last: it reads the sitemap that @astrojs/sitemap writes at the end of the build.
-  integrations: [sitemap({ filter: sitemapFilter(PAGES) }), shineSeo()]
+  integrations: [
+    sitemap({ filter: sitemapFilter(PAGES) }),
+    shineSeo({
+      ignore: [
+        {
+          rule: 'sitemap-coverage',
+          reason:
+            'Testing clone: every page is noindex (CLONE_NOINDEX in src/config/pages.ts), so there is no page to list and @astrojs/sitemap writes no sitemap.',
+        },
+      ],
+    }),
+  ]
 });
